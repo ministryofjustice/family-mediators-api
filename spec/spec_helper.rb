@@ -102,5 +102,9 @@ RSpec.configure do |config|
 =end
 end
 
+ENV['RACK_ENV'] = 'test'
+
 require 'rack/test'
-require_relative '../lib/mediators_api'
+require 'factory_girl'
+require 'mongoid_cleaner'
+require_relative '../lib/mediators'
