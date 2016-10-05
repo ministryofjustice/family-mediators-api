@@ -6,7 +6,7 @@ gem 'mongoid'
 
 group :development do
   gem 'rake'
-    gem 'rubocop', require: false
+  gem 'rubocop', require: false
 end
 
 group :test do
