@@ -3,8 +3,10 @@ ENV['RACK_ENV'] = 'test'
 require 'rack/test'
 require 'factory_girl'
 require 'mongoid_cleaner'
-require_relative '../lib/mediators'
-require_relative 'factories/mediator'
+$LOAD_PATH.unshift("#{__dir__}/..")
+
+require 'lib/mediators'
+require 'factories/mediator'
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
