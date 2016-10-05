@@ -7,7 +7,11 @@ Install Mongo DB (Assumes Mac OS):
 
     brew install mongodb
 
-Run:
+Run Mongo:
+
+    mongod --config /usr/local/etc/mongod.conf
+
+Run the app:
 
     rackup
 
