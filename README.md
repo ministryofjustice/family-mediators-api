@@ -3,13 +3,11 @@
 
 ## Local set up
 
-Install Mongo DB (Assumes Mac OS):
+Assumes Postgres DB is up and running on your machine.
 
-    brew install mongodb
+Set up the DB if this is the first time:
 
-Run Mongo:
-
-    mongod --config /usr/local/etc/mongod.conf
+    bundle exec rake db:setup
 
 Run the app:
 
