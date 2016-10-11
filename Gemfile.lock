@@ -3,17 +3,21 @@ GEM
   specs:
     activemodel (5.0.0.1)
       activesupport (= 5.0.0.1)
+    activerecord (5.0.0.1)
+      activemodel (= 5.0.0.1)
+      activesupport (= 5.0.0.1)
+      arel (~> 7.0)
     activesupport (5.0.0.1)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (~> 0.7)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+    arel (7.1.4)
     ast (2.3.0)
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
       thread_safe (~> 0.3, >= 0.3.1)
-    bson (4.1.1)
     builder (3.2.2)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
@@ -35,23 +39,25 @@ GEM
       rack (>= 1.3.0)
       rack-accept
       virtus (>= 1.0.0)
+    grape-entity (0.5.1)
+      activesupport
+      multi_json (>= 1.3.2)
     hashie (3.4.6)
+    hashie-forbidden_attributes (0.1.1)
+      hashie (>= 3.0)
     i18n (0.7.0)
     ice_nine (0.11.2)
     minitest (5.9.1)
-    mongo (2.3.0)
-      bson (~> 4.1)
-    mongoid (6.0.0)
-      activemodel (~> 5.0)
-      mongo (~> 2.3)
-    mongoid_cleaner (1.2.0)
-      mongoid (>= 4.0)
     multi_json (1.12.1)
     multi_xml (0.5.5)
     mustermann19 (0.4.4)
       enumerable-lazy
+    otr-activerecord (1.2.0)
+      activerecord (>= 4.0, < 5.1)
+      hashie-forbidden_attributes (~> 0.1)
     parser (2.3.1.4)
       ast (~> 2.2)
+    pg (0.19.0)
     powerpack (0.1.1)
     rack (2.0.1)
     rack-accept (0.4.5)
@@ -96,8 +102,9 @@ PLATFORMS
 DEPENDENCIES
   factory_girl
   grape
-  mongoid
-  mongoid_cleaner
+  grape-entity
+  otr-activerecord
+  pg
   rack-test
   rake
   rspec

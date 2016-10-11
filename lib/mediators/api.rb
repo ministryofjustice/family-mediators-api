@@ -6,7 +6,8 @@ module Mediators
 
     resource :mediators do
       get do
-        Models::Mediator.all.to_a
+        mediators = Models::Mediator.all
+        present mediators, with: Mediators::Entities::Mediator
       end
     end
   end
