@@ -2,7 +2,6 @@ ENV['RACK_ENV'] = 'test'
 
 require 'rack/test'
 require 'factory_girl'
-require 'mongoid_cleaner'
 $LOAD_PATH.unshift("#{__dir__}/..")
 
 require 'lib/mediators'
@@ -42,16 +41,4 @@ RSpec.configure do |config|
   # We put this to use the create & build methods
   # directly without the prefix FactoryGirl
   config.include FactoryGirl::Syntax::Methods
-
-  # Setup Mongoid Cleaner to clean everything before
-  # and between each test
-  config.before(:suite) do
-    MongoidCleaner.strategy = :drop
-  end
-
-  config.around(:each) do |example|
-    MongoidCleaner.cleaning do
-      example.run
-    end
-  end
 end
