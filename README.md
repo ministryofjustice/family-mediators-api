@@ -1,7 +1,7 @@
 # Family Mediators API
 [![Code Climate](https://codeclimate.com/github/ministryofjustice/family-mediators-api/badges/gpa.svg)](https://codeclimate.com/github/ministryofjustice/family-mediators-api)
 
-## Local set up
+## Local set-up
 
 Assumes Postgres DB is up and running on your machine.
 
