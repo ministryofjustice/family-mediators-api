@@ -1,1 +1,2 @@
+# Tsuru reads this file to install this list of required libs
 libpq-dev
