@@ -5,9 +5,9 @@ gem 'grape'
 gem 'grape-entity'
 gem 'pg'
 gem 'otr-activerecord'
+gem 'rake'
 
 group :development do
-  gem 'rake'
   gem 'rubocop', require: false
 end
 
@@ -15,4 +15,5 @@ group :test do
   gem 'rack-test'
   gem 'rspec'
   gem 'factory_girl'
+  gem 'database_cleaner'
 end

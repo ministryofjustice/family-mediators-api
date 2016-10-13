@@ -2,6 +2,8 @@ ENV['RACK_ENV'] = 'test'
 
 require 'rack/test'
 require 'factory_girl'
+require 'database_cleaner'
+
 $LOAD_PATH.unshift("#{__dir__}/..")
 
 require 'lib/mediators'
@@ -41,4 +43,15 @@ RSpec.configure do |config|
   # We put this to use the create & build methods
   # directly without the prefix FactoryGirl
   config.include FactoryGirl::Syntax::Methods
+
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.around(:each) do |example|
+    DatabaseCleaner.cleaning do
+      example.run
+    end
+  end
 end
