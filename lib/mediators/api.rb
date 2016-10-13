@@ -10,5 +10,11 @@ module Mediators
         present mediators, with: Mediators::Entities::Mediator
       end
     end
+
+    resource :healthcheck do
+      get do
+        {"status":"OKAY"}
+      end
+    end
   end
 end

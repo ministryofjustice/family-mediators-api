@@ -1,0 +1,7 @@
+healthcheck:
+  path: /api/v1/healthcheck
+  method: GET
+  status: 200
+  match: .*OKAY.*
+  allowed_failures: 0
+  use_in_router: false

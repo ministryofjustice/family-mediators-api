@@ -5,9 +5,9 @@ gem 'grape'
 gem 'grape-entity'
 gem 'pg'
 gem 'otr-activerecord'
+gem 'rake'
 
 group :development do
-  gem 'rake'
   gem 'rubocop', require: false
 end
 
