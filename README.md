@@ -22,3 +22,8 @@ Run the app:
     irb> require_relative 'lib/mediators'
     irb> Mediators::Models::Mediator.all.to_a
     irb> ...etc
+
+
+## Deploy to cloud development environment via Tsuru
+
+See [MoJ Tsuru documentation](https://docs.google.com/document/d/11xQRRJ_KH4Oipn9qYCt-wk-PEaUbUrrd8pLCi1pijLE/)

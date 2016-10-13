@@ -8,7 +8,8 @@ require_relative 'mediators/entities/mediator'
 require_relative 'mediators/api'
 
 LOGGER = Logger.new(STDOUT)
-LOGGER.level = Logger::DEBUG
+LOGGER.level = ENV['LOG_LEVEL'] ? Kernel.const_get("Logger::#{ENV['LOG_LEVEL']}") : Logger::DEBUG
+LOGGER.info "LOG_LEVEL: #{LOGGER.level}"
 
 if ENV['DATABASE_URL']
   LOGGER.info "Configuring DB connection from DATABASE_URL env var"
