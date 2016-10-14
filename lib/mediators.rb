@@ -1,12 +1,3 @@
-require 'logger'
-require 'grape'
-require 'grape-entity'
-require 'otr-activerecord'
-
-require_relative 'mediators/models/mediator'
-require_relative 'mediators/entities/mediator'
-require_relative 'mediators/api'
-
 LOGGER = Logger.new(STDOUT)
 LOGGER.level = ENV['LOG_LEVEL'] ? Kernel.const_get("Logger::#{ENV['LOG_LEVEL']}") : Logger::DEBUG
 LOGGER.info "LOG_LEVEL: #{LOGGER.level}"

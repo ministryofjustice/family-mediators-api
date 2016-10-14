@@ -6,7 +6,9 @@ require 'database_cleaner'
 
 $LOAD_PATH.unshift("#{__dir__}/..")
 
+require 'lib/env'
 require 'lib/mediators'
+
 require 'factories/mediator'
 
 RSpec.configure do |config|

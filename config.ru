@@ -1,6 +1,7 @@
-ROOT_DIR = File.dirname(__FILE__)
-$LOAD_PATH.unshift("#{ROOT_DIR}/lib")
+$LOAD_PATH.unshift File.dirname(__FILE__)
+$LOAD_PATH.unshift("#{File.dirname(__FILE__)}/lib")
 
-require 'mediators'
+require 'lib/env'
+require 'lib/mediators'
 
 run Mediators::API

@@ -3,8 +3,8 @@ source 'https://rubygems.org'
 
 gem 'grape'
 gem 'grape-entity'
-gem 'pg'
 gem 'otr-activerecord'
+gem 'pg'
 gem 'rake'
 
 group :development do
@@ -12,8 +12,8 @@ group :development do
 end
 
 group :test do
-  gem 'rack-test'
-  gem 'rspec'
-  gem 'factory_girl'
   gem 'database_cleaner'
+  gem 'factory_girl'
+  gem 'rack-test', require: 'rack/test'
+  gem 'rspec'
 end
