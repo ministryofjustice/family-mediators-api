@@ -15,6 +15,7 @@ describe API::App do
         expect(JSON.parse(last_response.body)).to eq []
       end
     end
+
     context "Some mediators" do
       before do
         create :mediator
@@ -24,9 +25,5 @@ describe API::App do
         expect(JSON.parse(last_response.body).size).to eq 1
       end
     end
-  end
-
-  context 'GET /api/mediators?postcode=BN2' do
-    pending
   end
 end

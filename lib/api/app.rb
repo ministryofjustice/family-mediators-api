@@ -8,7 +8,8 @@ module API
     format :json
     version :v1
 
-    mount ::API::Mediators
     mount ::API::Healthcheck
+    mount ::API::Mediators
+    mount ::API::UploadFile
   end
 end
