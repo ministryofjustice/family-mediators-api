@@ -4,6 +4,13 @@ require 'rack/test'
 require 'factory_girl'
 require 'database_cleaner'
 
+if ENV['coverage'] == 'true'
+  require 'simplecov'
+  SimpleCov.start do
+    add_filter '/spec/'
+  end
+end
+
 $LOAD_PATH.unshift("#{__dir__}/..")
 
 require 'lib/env'
