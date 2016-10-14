@@ -12,8 +12,10 @@ group :development do
 end
 
 group :test do
+  gem 'codeclimate-test-reporter', '1.0.0.pre.rc2', require: nil
   gem 'database_cleaner'
   gem 'factory_girl'
   gem 'rack-test', require: 'rack/test'
   gem 'rspec'
+  gem 'simplecov', :require => false
 end
