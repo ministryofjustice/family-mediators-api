@@ -1,4 +1,4 @@
-module Mediators
+module API
   module Models
     class Mediator < ActiveRecord::Base
     end

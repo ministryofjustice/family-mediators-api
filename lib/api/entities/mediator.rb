@@ -1,4 +1,4 @@
-module Mediators
+module API
   module Entities
     class Data < Grape::Entity
       expose :name

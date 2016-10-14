@@ -1,15 +1,15 @@
 require 'spec_helper'
 
-describe Mediators::API do
+describe API::App do
   include Rack::Test::Methods
 
   def app
-    Mediators::API
+    API::App
   end
 
   context 'GET /api/v1/mediators' do
     context 'No mediators' do
-      it 'returns a list of mediators' do
+      it 'returns an empty list' do
         get '/api/v1/mediators'
         expect(last_response.status).to eq(200)
         expect(JSON.parse(last_response.body)).to eq []
@@ -19,7 +19,7 @@ describe Mediators::API do
       before do
         create :mediator
       end
-      it 'Finds them' do
+      it 'returns a list of mediators' do
         get '/api/v1/mediators'
         expect(JSON.parse(last_response.body).size).to eq 1
       end

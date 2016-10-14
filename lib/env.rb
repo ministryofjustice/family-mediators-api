@@ -1,6 +1,6 @@
 require 'bundler'
 Bundler.require
 
-require 'mediators/api'
-require 'mediators/entities/mediator'
-require 'mediators/models/mediator'
+require 'api/app'
+require 'api/entities/mediator'
+require 'api/models/mediator'

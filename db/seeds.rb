@@ -1,4 +1,4 @@
-module Mediators
+module API
   module Models
     Mediator.create! data: '{
       "name": "Ned Kelly",
