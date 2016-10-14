@@ -3,5 +3,5 @@ require 'codeclimate-test-reporter'
 SimpleCov.formatters  = [SimpleCov::Formatter::HTMLFormatter]
 
 SimpleCov.start do
-  add_filter '/spec/'
+  add_group "API", "lib/api"
 end
