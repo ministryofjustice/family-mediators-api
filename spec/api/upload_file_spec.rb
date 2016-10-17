@@ -7,21 +7,30 @@ describe API::App do
     API::App
   end
 
-  it 'uploads a file' do
+  let(:file_path) { fixture_path 'spreadsheet.xlsx' }
 
-    file_path = fixture_path 'spreadsheet.xlsx'
-
+  before do
     post '/api/v1/upload', {
-        file: Rack::Test::UploadedFile.new(file_path,
-             'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-             true)
+        file: {
+          title: 'my first spreadsheet',
+          file: Rack::Test::UploadedFile.new(file_path,
+                                             'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                                             true)
+        }
     }
-
-    expect(last_response.status).to eq(201)
-    expect(last_response.body).to eq({
-                                         'filename' => 'spreadsheet.xlsx',
-                                         'size' => File.size(file_path)
-                                     }.to_json)
-
   end
+
+  it 'uploads a file' do
+    expect(last_response.status).to eq(201)
+  end
+
+  it 'retrieves the content for the new file' do
+    expect(last_response.body).to include('my first spreadsheet')
+  end
+
+  it 'retrieves the actual filename' do
+    expect(last_response.body).to include('spreadsheet.xlsx')
+  end
+
+
 end
