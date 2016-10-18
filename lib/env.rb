@@ -1,8 +1,10 @@
 require 'bundler'
 Bundler.require
 
-require 'api/models/asset'
+require 'admin/models/asset'
+require 'admin/uploaders/asset'
+require 'admin/app'
+
 require 'api/models/mediator'
-require 'api/uploaders/asset'
 require 'api/entities/mediator'
 require 'api/app'

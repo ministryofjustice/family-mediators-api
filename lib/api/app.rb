@@ -10,6 +10,5 @@ module API
 
     mount ::API::Healthcheck
     mount ::API::Mediators
-    mount ::API::UploadFile
   end
 end
