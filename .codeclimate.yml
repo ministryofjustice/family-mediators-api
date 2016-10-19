@@ -17,3 +17,4 @@ ratings:
   - "**.rb"
 exclude_paths:
 - spec/
+- db/schema.rb

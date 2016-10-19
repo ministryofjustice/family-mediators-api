@@ -18,6 +18,10 @@ require 'lib/mediators'
 
 require 'factories/mediator'
 
+def fixture_path file
+  File.expand_path("../support/fixtures/#{file}", __FILE__)
+end
+
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
