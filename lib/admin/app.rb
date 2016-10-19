@@ -3,6 +3,10 @@ require 'sinatra/json'
 module Admin
   class App < Sinatra::Base
 
+    get '/hello' do
+      'hello'
+    end
+
     get '/healthcheck' do
       json :status => 'OKAY'
     end
