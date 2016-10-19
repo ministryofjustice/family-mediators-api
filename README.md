@@ -2,6 +2,15 @@
 [![Code Climate](https://codeclimate.com/github/ministryofjustice/family-mediators-api/badges/gpa.svg)](https://codeclimate.com/github/ministryofjustice/family-mediators-api)
 [![Test Coverage](https://codeclimate.com/github/ministryofjustice/family-mediators-api/badges/coverage.svg)](https://codeclimate.com/github/ministryofjustice/family-mediators-api/coverage)
 
+Maintains a list of family mediators. Provides an API and an HTML admin UI for
+uploading spreadsheets of mediator data. 
+
+## API Endpoints
+
+* /api/v1/healthcheck - Check health of service
+* /api/v1/mediators - List all mediators
+* /api/v1/mediators/:id - Show a mediator
+
 ## Local set-up
 
 Assumes Postgres DB is up and running on your machine.
