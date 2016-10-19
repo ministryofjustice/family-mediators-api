@@ -1,5 +1,5 @@
 Feature: Admin app
 
-  Scenario: Upload a file
-    Given I visit the upload page
-    Then I should see hello
+  Scenario: Admin homepage
+    Given I visit the Mediators Admin homepage
+    Then I should see 'Mediators Admin'

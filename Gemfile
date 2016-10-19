@@ -9,6 +9,7 @@ gem 'pg'
 gem 'rake'
 gem 'sinatra'
 gem 'sinatra-contrib'
+gem 'slim'
 
 group :development do
   gem 'rubocop', require: false
