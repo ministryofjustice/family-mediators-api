@@ -4,7 +4,7 @@ $LOAD_PATH.unshift("#{File.dirname(__FILE__)}/lib")
 require 'lib/env'
 require 'lib/mediators'
 
-map '/' do
+map '/api' do
   run API::App
 end
 

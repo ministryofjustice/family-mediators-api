@@ -1,10 +1,10 @@
-require 'sinatra/base'
+require 'sinatra/json'
 
 module Admin
   class App < Sinatra::Base
 
-    get '/hello' do
-      'hello'
+    get '/healthcheck' do
+      json :status => 'OKAY'
     end
 
     post '/upload' do

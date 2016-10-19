@@ -4,7 +4,6 @@ end
 
 module API
   class App < Grape::API
-    prefix :api
     format :json
     version :v1
 

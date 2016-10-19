@@ -8,6 +8,7 @@ gem 'otr-activerecord'
 gem 'pg'
 gem 'rake'
 gem 'sinatra'
+gem 'sinatra-contrib'
 
 group :development do
   gem 'rubocop', require: false
