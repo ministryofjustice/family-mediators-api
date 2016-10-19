@@ -1,3 +1,5 @@
 require_relative 'models/mediator'
 require_relative 'entities/mediator'
+require_relative 'entities/meta'
+require_relative 'entities/collection'
 require_relative 'app'
