@@ -1,10 +1,6 @@
 require 'bundler'
 Bundler.require
+Bundler.require(Sinatra::Base.environment)
 
-require 'admin/models/asset'
-require 'admin/uploaders/asset'
-require 'admin/app'
-
-require 'api/models/mediator'
-require 'api/entities/mediator'
-require 'api/app'
+require 'admin/admin'
+require 'api/api'
