@@ -5,6 +5,10 @@
 Maintains a list of family mediators. Provides an API and an HTML admin UI for
 uploading spreadsheets of mediator data. 
 
+## Admin App
+
+* /admin - Homepage
+
 ## API Endpoints
 
 * /api/v1/healthcheck - Check health of service
@@ -24,6 +28,14 @@ Run the app:
     rackup
 
 ...and goto http://localhost:9292/api/v1/mediators/
+
+### Run build
+
+The default rake command runs specs, features, generates coverage report and runs Rubocop. 
+
+    rake
+
+The coverage report is available under `/coverage/index.html`.
 
 
 ## Play around in IRB
