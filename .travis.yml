@@ -5,7 +5,7 @@ addons:
   postgresql: “9.4”
 
 before_script:
-  - psql -c ‘create database mediators_test;’ -U postgres
+  - psql -c ‘create database mediators_ci_test;’ -U postgres
   - cp config/database.yml.travis config/database.yml
 #deploy:
 #  - provider: ???
