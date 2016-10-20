@@ -9,12 +9,16 @@ gem 'pg'
 gem 'rake'
 gem 'sinatra'
 gem 'sinatra-contrib'
+gem 'slim'
 
 group :development do
   gem 'rubocop', require: false
 end
 
 group :test do
+  gem 'cucumber'
+  gem 'poltergeist', ">= 1.4.0"
+  gem 'selenium-webdriver'
   gem 'codeclimate-test-reporter', '1.0.0.pre.rc2', require: nil
   gem 'database_cleaner'
   gem 'factory_girl'

@@ -3,6 +3,12 @@ require 'sinatra/json'
 module Admin
   class App < Sinatra::Base
 
+    set :views, File.dirname(__FILE__) + '/../../views'
+
+    get '/' do
+      slim :index
+    end
+
     get '/healthcheck' do
       json :status => 'OKAY'
     end
