@@ -7,6 +7,11 @@ addons:
 before_script:
   - psql -c 'create database mediators_ci_test;' -U postgres
   - cp config/database.yml.travis config/database.yml
+script:
+  - ENV=test bundle exec rake db:setup
+  - bundle exec rake spec
+  - bundle exec rake features
+
 #deploy:
 #  - provider: ???
 #  api_key:
