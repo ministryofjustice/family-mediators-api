@@ -1,0 +1,18 @@
+language: ruby
+rvm:
+  - 2.3.1
+addons:
+  postgresql: “9.4”
+
+before_script:
+  - psql -c ‘create database mediators_test;’ -U postgres
+  - cp config/database.yml.travis config/database.yml
+#deploy:
+#  - provider: ???
+#  api_key:
+#  environment:
+#    development: staging
+#	master: production
+#  migrate: !ruby/string:Highline::String rake db:migrate
+#  on:
+#    repo: ministryofjustice/mediator-register-api
