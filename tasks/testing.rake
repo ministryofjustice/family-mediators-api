@@ -8,5 +8,6 @@ if Gem::Specification.all_names.grep(/^rspec-core/).any?
   require 'cucumber/rake/task'
   Cucumber::Rake::Task.new(:features) do |t|
     t.cucumber_opts = "mode=regression features --format pretty"
+    ENV['coverage'] = 'true'
   end
 end
