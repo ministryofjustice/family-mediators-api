@@ -9,8 +9,7 @@ before_script:
   - cp config/database.yml.travis config/database.yml
 script:
   - ENV=test bundle exec rake db:setup
-  - bundle exec rake spec
-  - bundle exec rake features
+  - bundle exec rake test
 
 #deploy:
 #  - provider: ???
