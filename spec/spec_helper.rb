@@ -1,12 +1,5 @@
 ENV['RACK_ENV'] = 'test'
-
-if ENV['coverage'] == 'true'
-  require 'simplecov'
-  SimpleCov.start do
-    add_filter '/spec/'
-  end
-end
-
+require 'simplecov'
 $LOAD_PATH.unshift("#{__dir__}/..")
 
 require 'lib/env'

@@ -36,7 +36,7 @@ The default rake command runs specs, features, generates coverage report and run
 
     rake
 
-The coverage report is available under `/coverage/index.html`.
+The coverage report is available under `/coverage/index.html`
 
 
 ## Play around in IRB
