@@ -10,7 +10,7 @@ script:
   - bundle exec rake db:setup
   - bundle exec rake
 after_success:
-  bundle exec codeclimate-test-reporter
+  - bundle exec codeclimate-test-reporter
 #  - "[[ $TRAVIS_BRANCH =~ (master) ]] && bundle exec codeclimate-test-reporter"
 
 #deploy:

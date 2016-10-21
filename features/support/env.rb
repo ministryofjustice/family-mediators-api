@@ -1,11 +1,6 @@
 ENV['RACK_ENV'] = 'test'
 
-if ENV['coverage'] == 'true'
-  require 'simplecov'
-  SimpleCov.start do
-    add_filter '/spec/'
-  end
-end
+require 'simplecov'
 
 require 'capybara/cucumber'
 require 'capybara/poltergeist'
