@@ -1,4 +1,5 @@
 # Family Mediators API
+[![Travis CI](https://travis-ci.org/ministryofjustice/family-mediators-api.svg?branch=master)](https://travis-ci.org/ministryofjustice/family-mediators-api)
 [![Code Climate](https://codeclimate.com/github/ministryofjustice/family-mediators-api/badges/gpa.svg)](https://codeclimate.com/github/ministryofjustice/family-mediators-api)
 [![Test Coverage](https://codeclimate.com/github/ministryofjustice/family-mediators-api/badges/coverage.svg)](https://codeclimate.com/github/ministryofjustice/family-mediators-api/coverage)
 
