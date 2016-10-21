@@ -10,15 +10,4 @@ script:
   - bundle exec rake db:setup
   - bundle exec rake
 after_success:
-  - bundle exec codeclimate-test-reporter
-#  - "[[ $TRAVIS_BRANCH =~ (master) ]] && bundle exec codeclimate-test-reporter"
-
-#deploy:
-#  - provider: ???
-#  api_key:
-#  environment:
-#    development: staging
-#	master: production
-#  migrate: !ruby/string:Highline::String rake db:migrate
-#  on:
-#    repo: ministryofjustice/mediator-register-api
+  - "[[ $TRAVIS_BRANCH =~ (master) ]] && bundle exec codeclimate-test-reporter"
