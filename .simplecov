@@ -1,5 +1,3 @@
-require 'codeclimate-test-reporter'
-
 SimpleCov.formatters  = [SimpleCov::Formatter::HTMLFormatter]
 
 SimpleCov.start do
