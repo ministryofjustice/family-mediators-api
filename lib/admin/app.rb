@@ -15,20 +15,20 @@ module Admin
     end
 
     post '/upload' do
-      if params[:spreadsheet_file] && params[:spreadsheet_file][:filename]
+      begin
         filename = params[:spreadsheet_file][:filename]
         file = params[:spreadsheet_file][:tempfile]
-        path = "./public/uploads/#{filename}"
+        path = "#{UPLOAD_FOLDER}/#{filename}"
 
         File.open(path, 'wb') do |f|
           f.write(file.read)
         end
 
         redirect to "/upload-success?filename=#{filename}"
+
+      rescue
+        redirect to '/upload-fail'
       end
-
-      redirect to '/upload-fail'
-
     end
 
     get '/upload-success' do

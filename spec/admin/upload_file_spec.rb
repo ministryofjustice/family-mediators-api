@@ -9,6 +9,10 @@ describe Admin::App do
 
   let(:file_path) { fixture_path 'spreadsheet.xlsx' }
 
+  before(:each) do
+    delete_uploads
+  end
+
   context 'successfully uploads file' do
     it 'redirects to /upload-success' do
       post '/upload', {
