@@ -16,15 +16,8 @@ module Admin
 
     post '/upload' do
       begin
-        filename = params[:spreadsheet_file][:filename]
         file = params[:spreadsheet_file][:tempfile]
-        path = "#{UPLOAD_FOLDER}/#{filename}"
-
-        File.open(path, 'wb') do |f|
-          f.write(file.read)
-        end
-
-        redirect to "/upload-success?filename=#{filename}"
+        redirect to "/upload-success?filesize=#{file.size}"
 
       rescue
         redirect to '/upload-fail'
@@ -32,9 +25,7 @@ module Admin
     end
 
     get '/upload-success' do
-      path = "./public/uploads/#{params[:filename]}"
-      file = File.open(path, 'r')
-      slim :upload_success, locals: { size: file.size }
+      slim :upload_success, locals: { size: params[:filesize] }
     end
 
     get '/upload-fail' do

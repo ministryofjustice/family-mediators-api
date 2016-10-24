@@ -10,7 +10,6 @@ When(/^I upload a file$/) do
   file_path = File.expand_path('../../support/fixtures/uploaded_spreadsheet.xlsx', __FILE__)
   attach_file('spreadsheet_file', file_path)
   find('input[type="submit"]').click
-  sleep 1
 end
 
 Then(/^I should see the size of the file$/) do
