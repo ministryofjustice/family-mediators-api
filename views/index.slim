@@ -3,3 +3,10 @@ html
     title Mediators Admin
   body
     h1 Mediators Admin
+
+    form method='post' action='/admin/upload' enctype='multipart/form-data'
+      label
+        | Upload file:
+        input type='file' name='spreadsheet_file'
+
+      input type='submit'

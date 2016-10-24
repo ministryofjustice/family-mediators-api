@@ -6,6 +6,7 @@ module Admin
     set :views, File.dirname(__FILE__) + '/../../views'
 
     get '/' do
+
       slim :index
     end
 
@@ -14,10 +15,21 @@ module Admin
     end
 
     post '/upload' do
-      status 201
-      asset = Models::Asset.new params[:file]
-      asset.save
-      asset.inspect
+      begin
+        file = params[:spreadsheet_file][:tempfile]
+        redirect to "/upload-success?filesize=#{file.size}"
+
+      rescue
+        redirect to '/upload-fail'
+      end
+    end
+
+    get '/upload-success' do
+      slim :upload_success, locals: { size: params[:filesize] }
+    end
+
+    get '/upload-fail' do
+      slim :upload_fail
     end
 
   end
