@@ -11,13 +11,6 @@ def fixture_path file
   File.expand_path("../support/fixtures/#{file}", __FILE__)
 end
 
-def delete_uploads
-  upload_dir = File.expand_path('../../public/uploads', __FILE__)
-  Dir["#{upload_dir}/*"].each do |file|
-    File.delete file
-  end
-end
-
 RSpec.configure do |config|
 
   config.expect_with :rspec do |expectations|
@@ -45,3 +38,5 @@ RSpec.configure do |config|
     end
   end
 end
+
+ActiveRecord::Base.logger = nil # Get rid of Sinatra's noisy logging in tests

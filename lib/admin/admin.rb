@@ -1,7 +1,3 @@
 require_relative 'app'
-
-module Admin
-
-  UPLOAD_FOLDER = './public/uploads'
-
-end
+require_relative 'spreadsheet_processor'
+require_relative 'headings_processor'

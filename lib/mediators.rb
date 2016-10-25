@@ -1,5 +1,5 @@
 LOGGER = Logger.new(STDOUT)
-LOGGER.level = ENV['LOG_LEVEL'] ? Kernel.const_get("Logger::#{ENV['LOG_LEVEL']}") : Logger::DEBUG
+LOGGER.level = ENV['LOG_LEVEL'] ? ENV['LOG_LEVEL'].to_sym : Logger::DEBUG
 LOGGER.info "LOG_LEVEL: #{LOGGER.level}"
 
 if ENV['DATABASE_URL']

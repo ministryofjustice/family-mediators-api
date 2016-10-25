@@ -1,6 +1,7 @@
 Feature: Admin app
 
-  Scenario: Admin homepage
-    Given I visit the Mediators Admin homepage
-    When I upload a file
-    Then I should see the size of the file
+  Scenario: Upload file successfully
+    Given I upload a well-formed spreadsheet
+    And I see 'File uploaded'
+    When I visit '/api/v1/mediators'
+    Then the response data should have 7 items

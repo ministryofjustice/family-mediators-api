@@ -9,16 +9,14 @@ describe Admin::App do
 
   let(:file_path) { fixture_path 'spreadsheet.xlsx' }
 
-  before(:each) do
-    delete_uploads
-  end
-
   context 'successfully uploads file' do
     it 'redirects to /upload-success' do
       post '/upload', {
-        spreadsheet_file: Rack::Test::UploadedFile.new(file_path,
-                                           'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                                           true)
+        spreadsheet_file: Rack::Test::UploadedFile.new(
+          file_path,
+          'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+          true
+        )
       }
       expect(last_response.redirect?).to be true
       follow_redirect!
@@ -28,7 +26,7 @@ describe Admin::App do
 
   context 'unsuccessfully uploads file' do
     it 'redirects to /upload-fail' do
-      post '/upload'
+      post '/upload', { spreadsheet_file: nil }
       follow_redirect!
       expect(last_request.path).to eq '/upload-fail'
     end

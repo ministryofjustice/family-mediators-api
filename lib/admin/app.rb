@@ -6,7 +6,6 @@ module Admin
     set :views, File.dirname(__FILE__) + '/../../views'
 
     get '/' do
-
       slim :index
     end
 
@@ -16,10 +15,15 @@ module Admin
 
     post '/upload' do
       begin
+        raise "No file specified" unless params[:spreadsheet_file]
+        
         file = params[:spreadsheet_file][:tempfile]
+        SpreadsheetProcessor.new(file.path).process
+
         redirect to "/upload-success?filesize=#{file.size}"
 
-      rescue
+      rescue => e
+        LOGGER.fatal "Failed /upload: #{e.message}"
         redirect to '/upload-fail'
       end
     end
