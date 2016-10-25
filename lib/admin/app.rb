@@ -6,7 +6,6 @@ module Admin
     set :views, File.dirname(__FILE__) + '/../../views'
 
     get '/' do
-
       slim :index
     end
 
@@ -17,11 +16,12 @@ module Admin
     post '/upload' do
       begin
         file = params[:spreadsheet_file][:tempfile]
-        FileProcessor.new(file.path).process
+        SpreadsheetProcessor.new(file.path).process
 
         redirect to "/upload-success?filesize=#{file.size}"
 
-      rescue
+      rescue => e
+        LOGGER.fatal "Failed /upload, backtrace follows: #{e.backtrace}"
         redirect to '/upload-fail'
       end
     end
