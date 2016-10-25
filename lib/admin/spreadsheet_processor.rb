@@ -2,14 +2,14 @@ module Admin
 
   class SpreadsheetProcessor
     def initialize file_path
-      @workbook = RubyXL::Parser.parse file_path
+      @file_path = file_path
     end
 
     def process
       # read
       extract_data
       extract_headers
-      # validate TODO
+      # validate - this will come later
       create_mediators
     end
 
@@ -27,7 +27,11 @@ module Admin
     end
 
     def extract_data
-      @data ||= @workbook[0].inject([]) do |row_result, row |
+      raise "File not found: #{@file_path}" unless File.exist?(@file_path)
+      
+      workbook = RubyXL::Parser.parse @file_path
+
+      @data ||= workbook[0].inject([]) do |row_result, row |
         cells = row.cells.map do |cell|
           cell && cell.value.to_s || ''
         end
