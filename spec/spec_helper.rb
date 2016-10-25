@@ -38,3 +38,5 @@ RSpec.configure do |config|
     end
   end
 end
+
+ActiveRecord::Base.logger = nil # Get rid of Sinatra's noisy logging in tests
