@@ -28,7 +28,7 @@ module Admin
             end
           end
 
-          API::Models::Mediator.create(data: row_data.to_json)
+          API::Models::Mediator.create(data: row_data)
         end
       end
 

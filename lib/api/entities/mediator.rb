@@ -6,15 +6,11 @@ module API
       end
 
       expose :id
-      expose :jsonified_data, merge: true
+      expose :data, merge: true
 
       with_options(format_with: :iso_timestamp) do
         expose :created_at, as: 'createdAt'
         expose :updated_at, as: 'updatedAt'
-      end
-
-      def jsonified_data
-        JSON.parse object.data
       end
     end
   end
