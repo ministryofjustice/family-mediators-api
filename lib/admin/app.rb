@@ -16,9 +16,9 @@ module Admin
     post '/upload' do
       begin
         raise "No file specified" unless params[:spreadsheet_file]
-        
+
         file = params[:spreadsheet_file][:tempfile]
-        SpreadsheetProcessor.new(file.path).process
+        Processing::Spreadsheet.new(file.path).process
 
         redirect to "/upload-success?filesize=#{file.size}"
 
