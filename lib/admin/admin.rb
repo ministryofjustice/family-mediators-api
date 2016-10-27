@@ -1,3 +1,4 @@
 require_relative 'app'
-require_relative 'spreadsheet_processor'
-require_relative 'headings_processor'
+require_relative 'processing/spreadsheet'
+require_relative 'processing/headings'
+require_relative 'processing/practice_parser'
