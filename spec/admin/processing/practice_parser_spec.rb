@@ -8,14 +8,14 @@ module Admin
   949 Bloopers Blvd, Normalville  TS1 2RQ'
       end
 
-      let(:ooo_data) do
+      let(:alternatively_ordered_data) do
         '01273 678345 : boosh@beesh.com : 77 Waddle Way, Bongtown, Wessex WE45 4TY
   http://www.cribbins.com : 0 Beelk Ave, Oooofville, Oooofshire O99 0PP : 09876 564432 : me@ooof.com
   09876-567773'
       end
 
       let(:result) { PracticeParser.parse(data) }
-      let(:ooo_result) { PracticeParser.parse(ooo_data) }
+      let(:alternatively_ordered_result) { PracticeParser.parse(alternatively_ordered_data) }
 
       it 'Return 6 elements' do
         expect(result.size).to eq data.split("\n").size
@@ -66,10 +66,11 @@ module Admin
       end
 
       it 'Handles elements in any order' do
-        expect(ooo_result[0]["address"]).to eq "77 Waddle Way, Bongtown, Wessex WE45 4TY"
-        expect(ooo_result[0]["tel"]).to eq "01273 678345"
-        expect(ooo_result[0]["email"]).to eq "boosh@beesh.com"
-        expect(ooo_result[0]["url"]).to be_nil
+        result = alternatively_ordered_result.first
+        expect(result["address"]).to eq "77 Waddle Way, Bongtown, Wessex WE45 4TY"
+        expect(result["tel"]).to eq "01273 678345"
+        expect(result["email"]).to eq "boosh@beesh.com"
+        expect(result["url"]).to be_nil
       end
     end
   end
