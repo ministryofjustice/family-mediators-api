@@ -16,10 +16,10 @@ module Admin
         elements = practice.split(':').map { |element| sanitise(element) }
 
         {
-          "address" => find(elements, POSTCODE_REGEX),
-          "tel" => find(elements, TEL_REGEX),
-          "email" => find(elements, EMAIL_REGEX),
-          "url" => find(elements, URL_REGEX)
+          'address' => find(elements, POSTCODE_REGEX),
+          'tel' => find(elements, TEL_REGEX),
+          'email' => find(elements, EMAIL_REGEX),
+          'url' => find(elements, URL_REGEX)
         }
       end
 
@@ -28,7 +28,7 @@ module Admin
       end
 
       def self.find(elements, regex)
-        elements.each { |element| return element if element =~ regex }
+        elements.each { |ele| return elements.delete(ele) if ele =~ regex }
         nil
       end
     end
