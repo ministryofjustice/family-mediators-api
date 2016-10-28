@@ -18,6 +18,7 @@ module Admin
       private
 
       def create_mediators
+        mediators = []
         @data.each do |mediator_row|
           row_data = {}
           mediator_row.each_with_index do |value, index|
@@ -27,8 +28,12 @@ module Admin
               row_data[@headings[index]] = value
             end
           end
+          mediators << { data: row_data }
+        end
 
-          API::Models::Mediator.create(data: row_data)
+        ActiveRecord::Base.transaction do
+          API::Models::Mediator.delete_all
+          API::Models::Mediator.create(mediators)
         end
       end
 
