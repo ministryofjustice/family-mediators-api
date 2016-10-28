@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 module Admin
   module Processing
     describe Spreadsheet do
