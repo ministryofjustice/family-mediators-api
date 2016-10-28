@@ -1,0 +1,17 @@
+{
+  "name": "family-mediators-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": {
+    "url": "git@github.com:ministryofjustice/family-mediators-api.git",
+    "type": "git"
+  },
+  "scripts": {
+    "start": "./node_modules/.bin/aglio -i ./api.apib --server -p 3000"
+  },
+  "author": "nick.rowlands@digital.justice.gov.uk",
+  "license": "MIT",
+  "dependencies": {
+    "aglio": "^2.2.1"
+  }
+}

@@ -1,3 +1,4 @@
 .idea/
 coverage/
 benchmarks/
+node_modules/
