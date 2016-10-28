@@ -5,7 +5,18 @@ require 'lib/env'
 require 'lib/mediators'
 
 map '/api' do
-  run API::App
+  map '/' do
+    run API::App
+  end
+  map '/documentation' do
+    class Doc < Sinatra::Base
+      get '/' do
+        send_file 'documentation/output.html'
+      end
+    end
+    run Doc
+  end
+
 end
 
 map '/admin' do
