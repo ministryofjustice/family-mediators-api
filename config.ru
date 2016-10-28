@@ -8,6 +8,7 @@ map '/api' do
   map '/' do
     run API::App
   end
+
   map '/documentation' do
     class Doc < Sinatra::Base
       get '/' do
@@ -16,7 +17,6 @@ map '/api' do
     end
     run Doc
   end
-
 end
 
 map '/admin' do
