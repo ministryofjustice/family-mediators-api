@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe API::App do
   include Rack::Test::Methods
 
@@ -15,12 +13,16 @@ describe API::App do
         expect(last_response.status).to eq 404
       end
 
-      it 'return meta count of zero' do
-        expect(JSON.parse(last_response.body)['meta']['count']).to eq 0
-      end
+      context 'response body' do
+        subject(:response_body) { JSON.parse(last_response.body) }
 
-      it 'returns an empty data list' do
-        expect(JSON.parse(last_response.body)['data']).to eq []
+        it 'return meta count of zero' do
+          expect(response_body['meta']['count']).to eq 0
+        end
+
+        it 'returns an empty data list' do
+          expect(response_body['data']).to eq []
+        end
       end
     end
 
@@ -34,16 +36,15 @@ describe API::App do
         expect(last_response.status).to eq 200
       end
 
-      it 'has a meta member' do
-        expect(JSON.parse(last_response.body)).to include 'meta'
-      end
+      context 'response body' do
+        subject(:response_body) { JSON.parse(last_response.body) }
 
-      it 'has a data member' do
-        expect(JSON.parse(last_response.body)).to include 'data'
-      end
+        it { should include('meta') }
+        it { should include('data') }
 
-      it 'returns a list of mediators' do
-        expect(JSON.parse(last_response.body)['data'].size).to eq 1
+        it 'returns an array of mediators' do
+          expect(response_body['data'].size).to eq(1)
+        end
       end
     end
   end

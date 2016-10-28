@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe API::App do
   include Rack::Test::Methods
 
@@ -7,9 +5,18 @@ describe API::App do
     API::App
   end
 
-  it 'has healthcheck path' do
-    get '/v1/healthcheck'
-    expect(last_response.status).to eq(200)
-    expect(last_response.body).to eq({ status: 'OKAY'}.to_json)
+  context 'GET /v1/healthcheck' do
+
+    before do
+      get '/v1/healthcheck'
+    end
+
+    it 'returns 200' do
+      expect(last_response.status).to eq(200)
+    end
+
+    it 'returns status OKAY message' do
+      expect(JSON.parse(last_response.body)['status']).to eq('OKAY')
+    end
   end
 end
