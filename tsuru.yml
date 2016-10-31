@@ -8,4 +8,5 @@ healthcheck:
 hooks:
   build:
     - sudo ln -s /usr/bin/nodejs /usr/bin/node
+    - mkdir documentation
     - npm install && npm run build
