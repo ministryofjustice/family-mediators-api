@@ -1,0 +1,42 @@
+FORMAT: 1A
+
+# Mediators
+
+Mediators is a simple API allowing consumers to view family mediators.
+
+# Group Mediators
+Resources related to mediators in the API
+
+## Mediators Collection [/mediators]
+### List All Mediators [GET]
++ Response 200 (application/json)
+    + Attributes
+        + meta (object)
+            + count: 1 (number)
+        + data (array[Mediator])
+        
+# Group Mediator
+## Mediator [/mediators/{id}]
+### View Mediator [GET]
++ Parameters
+    + id: 1 (number)
++ Response 200 (application/json)
+    + Attributes
+        + Include (Mediator)
+    
+# Data Structures
+
+## Mediator
++ id: 1 (number)    
++ registrationNo: 1234A
++ mdFirstName: John
++ mdLastName: Doe
++ mdPractices: (array)
+    + (object)
+        + address: 22 Blue Lion Square, London WC1R 4QR (string)
+        + email: john.doe@email.com
+        + tel: 07123 456 789
+        + url: www.joe.doe
++ mdMediationLegalAid: N
++ mdOffersDcc: Y
++ mdPpcId: 1211A

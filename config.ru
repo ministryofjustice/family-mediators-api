@@ -5,7 +5,13 @@ require 'lib/env'
 require 'lib/mediators'
 
 map '/api' do
-  run API::App
+  map '/' do
+    run API::App
+  end
+
+  map '/documentation' do
+    run Documentation::App
+  end
 end
 
 map '/admin' do

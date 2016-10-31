@@ -1,0 +1,11 @@
+{
+  "name": "family-mediators-api",
+  "scripts": {
+    "start": "aglio -i ./api.apib --server -p 3000",
+    "build": "aglio -i ./api.apib -o documentation/output.html"
+  },
+  "author": "nick.rowlands@digital.justice.gov.uk",
+  "dependencies": {
+    "aglio": "^2.2.1"
+  }
+}
