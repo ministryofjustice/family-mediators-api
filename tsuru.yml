@@ -7,4 +7,5 @@ healthcheck:
   use_in_router: false
 hooks:
   build:
+    - sudo ln -s /usr/bin/nodejs /usr/bin/node
     - npm install && npm run build
