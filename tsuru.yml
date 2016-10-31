@@ -5,3 +5,6 @@ healthcheck:
   match: .*OKAY.*
   allowed_failures: 0
   use_in_router: false
+hooks:
+  build:
+    - chmod a+x scripts/generate_docs.sh && ./scripts/generate_docs.sh
