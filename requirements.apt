@@ -1,3 +1,4 @@
 libpq-dev
 build-essential
 nodejs
+python
