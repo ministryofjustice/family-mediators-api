@@ -766,6 +766,10 @@ glob@3.2.x:
     inherits "2"
     minimatch "0.3"
 
+govuk_frontend_toolkit:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/govuk_frontend_toolkit/-/govuk_frontend_toolkit-5.0.0.tgz#425845bb74b1cd6197b2e70b3c012e626b6296ba"
+
 graceful-fs@^4.1.2:
   version "4.1.9"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.9.tgz#baacba37d19d11f9d146d3578bc99958c3787e29"

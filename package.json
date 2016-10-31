@@ -1,11 +1,13 @@
 {
   "name": "family-mediators-api",
   "scripts": {
+    "css": "sass --style compressed --load-path node_modules/govuk_frontend_toolkit/stylesheets input.scss output.css",
     "start": "aglio -i ./api.apib --server -p 3000",
     "build": "aglio -i ./api.apib -o documentation/output.html"
   },
   "author": "nick.rowlands@digital.justice.gov.uk",
   "dependencies": {
-    "aglio": "^2.2.1"
+    "aglio": "^2.2.1",
+    "govuk_frontend_toolkit": "^5.0.0"
   }
 }
