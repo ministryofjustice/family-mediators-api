@@ -1,17 +1,14 @@
-development:
+default: &default
   adapter: postgresql
-  host: localhost
-  database: mediators_development
-  username: <%= %x<whoami>.chomp %>
   encoding: utf8
+  host: localhost
   pool: 10
   timeout: 5000
 
+development:
+  <<: *default
+  database: mediators_development
+
 test:
-  adapter: postgresql
-  host: localhost
+  <<: *default
   database: mediators_test
-  username: <%= %x<whoami>.chomp %>
-  encoding: utf8
-  pool: 10
-  timeout: 5000

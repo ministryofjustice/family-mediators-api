@@ -1,4 +1,8 @@
 test:
   adapter: postgresql
   database: mediators_ci_test
+  encoding: utf8
+  host: localhost
+  pool: 10
+  timeout: 5000
   username: postgres
