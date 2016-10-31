@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 source 'https://rubygems.org'
 
+gem 'activerecord'
 gem 'grape'
 gem 'grape-entity'
-gem 'otr-activerecord'
 gem 'pg'
 gem 'rake'
 gem 'rubyXL'
