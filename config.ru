@@ -10,12 +10,7 @@ map '/api' do
   end
 
   map '/documentation' do
-    class Doc < Sinatra::Base
-      get '/' do
-        send_file 'documentation/output.html'
-      end
-    end
-    run Doc
+    run Documentation::App
   end
 end
 
