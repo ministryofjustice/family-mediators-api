@@ -1,0 +1,28 @@
+html
+  head
+    title Mediators Admin
+    link href='style.css' media='screen' rel='stylesheet' type='text/css'
+  body
+    main#content role="main"
+      h1.heading-xlarge
+        | Family Mediator API: Data update service
+      .grid-row
+        .column-half
+          h2.heading-medium Upload mediators spreadsheet
+          p Updates will be processed immediately.
+          p
+            a.button.button-start href="upload" role="button"  Upload now
+        .column-half
+          h2.heading-medium You'll need:
+          ul.list.list-bullet
+            li the mediators spreadsheet saved in XSLX format.
+      aside.govuk-related-items role="complementary"
+        h2#subsection-title.heading-medium Other actions
+        nav aria-labelledby="subsection-title" role="navigation"
+          ul.font-xsmall
+            li
+              a href="/api/documentation"  View API documentation
+            li
+              a href="#"  When was Family Mediators API data last updated?
+            li
+              a href="#"  What are the basic usage analytics of Family Mediators API?
