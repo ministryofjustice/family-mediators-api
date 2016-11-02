@@ -3,14 +3,15 @@ module Admin
     class Spreadsheet
       PRACTICES_HEADING = 'md_practices'
 
-      def initialize file_path
+      attr_reader :data
+
+      def initialize(file_path)
         @file_path = file_path
       end
 
       def process
-        # read
         extract_data
-        extract_headers
+
         # validate - this will come later
         create_mediators
       end
@@ -18,17 +19,12 @@ module Admin
       private
 
       def create_mediators
-        mediators = []
-        @data.each do |mediator_row|
-          row_data = {}
-          mediator_row.each_with_index do |value, index|
-            if @headings[index] == PRACTICES_HEADING
-              row_data[@headings[index]] = PracticeParser.parse(value)
-            else
-              row_data[@headings[index]] = value
-            end
+        mediators = @data.map do |mediator|
+          if mediator[PRACTICES_HEADING]
+            mediator[PRACTICES_HEADING] = PracticeParser.parse(mediator[PRACTICES_HEADING])
           end
-          mediators << { data: row_data }
+
+          { 'data' => mediator }
         end
 
         ActiveRecord::Base.transaction do
@@ -42,19 +38,29 @@ module Admin
 
         workbook = RubyXL::Parser.parse @file_path
 
-        @data ||= workbook[0].inject([]) do |row_result, row |
+        data = workbook[0].inject([]) do |row_result, row |
           cells = row.cells.map do |cell|
             cell && cell.value.to_s || ''
           end
           row_result << cells
           row_result
         end
+
+        headings = Headings.process(data.shift)
+
+        mediators = []
+
+        data.each do |mediator_row|
+          row_data = {}
+          mediator_row.each_with_index do |value, index|
+            row_data[headings[index]] = value
+          end
+          mediators << row_data
+        end
+
+        @data = mediators
       end
 
-      def extract_headers
-        headings = @data.shift
-        @headings = Headings.process(headings)
-      end
     end
   end
 end
