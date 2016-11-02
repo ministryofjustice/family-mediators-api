@@ -1,6 +1,6 @@
 module Admin
-  module Processing
-    class PracticeParser
+  module Parsers
+    class Practice
       RECORD_SEPARATOR = "\n"
       PART_SEPARATOR = '|'
       EMAIL_REGEX = /([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})/i

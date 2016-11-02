@@ -47,8 +47,6 @@ module Admin
 
       before do
         allow(RubyXL::Parser).to receive(:parse).and_return([workbook])
-        allow(PracticeParser).to receive(:parse).and_return({})
-        # allow(Admin::Processing::Headings).to receive(:process) { [] }
         allow(API::Models::Mediator).to receive(:create)
       end
 

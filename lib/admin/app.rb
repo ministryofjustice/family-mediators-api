@@ -27,7 +27,8 @@ module Admin
         raise "No file specified" unless params[:spreadsheet_file]
 
         file = params[:spreadsheet_file][:tempfile]
-        Processing::Spreadsheet.new(file.path).process
+        parser = Parsers::Mediators.new
+        Processing::Spreadsheet.new(file.path, parser).process
 
         redirect to "/upload-success?filesize=#{file.size}"
 

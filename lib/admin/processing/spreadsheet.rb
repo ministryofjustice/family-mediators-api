@@ -1,35 +1,28 @@
 module Admin
+
   module Processing
     class Spreadsheet
-      PRACTICES_HEADING = 'md_practices'
 
-      attr_reader :data
+      attr_reader :data, :parser
 
-      def initialize(file_path)
+      def initialize(file_path, parser=nil)
         @file_path = file_path
+        @parser = parser
       end
 
       def process
         extract_data
-
         # validate - this will come later
-        create_mediators
+        @data = parser.parse(data) if parser
+        save
       end
 
       private
 
-      def create_mediators
-        mediators = @data.map do |mediator|
-          if mediator[PRACTICES_HEADING]
-            mediator[PRACTICES_HEADING] = PracticeParser.parse(mediator[PRACTICES_HEADING])
-          end
-
-          { 'data' => mediator }
-        end
-
+      def save
         ActiveRecord::Base.transaction do
           API::Models::Mediator.delete_all
-          API::Models::Mediator.create(mediators)
+          API::Models::Mediator.create(data)
         end
       end
 
