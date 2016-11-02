@@ -4,8 +4,17 @@ module Admin
   class App < Sinatra::Base
 
     set :views, File.dirname(__FILE__) + '/../../views'
+    set :public_folder, 'public'
 
     get '/' do
+      slim :start
+    end
+
+    get '/actions' do
+      slim :actions
+    end
+
+    get '/upload' do
       slim :index
     end
 
