@@ -20,9 +20,13 @@ module Admin
       private
 
       def save
+        saved_data = []
+        data.each do |item|
+            saved_data << { data: item}
+        end
         ActiveRecord::Base.transaction do
           API::Models::Mediator.delete_all
-          API::Models::Mediator.create(data)
+          API::Models::Mediator.create(saved_data)
         end
       end
 

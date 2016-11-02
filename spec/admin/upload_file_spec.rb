@@ -3,8 +3,10 @@ require 'spec_helper'
 describe Admin::App do
   include Rack::Test::Methods
 
+  let(:parser) { nil }
+
   def app
-    Admin::App
+    Admin::App.set :parser, parser
   end
 
   let(:file_path) { fixture_path 'spreadsheet.xlsx' }
