@@ -3,7 +3,7 @@ module Admin
   module Processing
     class Spreadsheet
 
-      attr_reader :data, :parser
+      attr_reader :parser
 
       def initialize(file_path, parser = nil)
         @file_path = file_path
@@ -11,19 +11,17 @@ module Admin
       end
 
       def process
-        extract_data
+        data = extract_data
         # validate - this will come later
-        @data = parser.parse(data) if parser
-        save
+        data = parser.parse(data) if parser
+        save(data)
       end
 
       private
 
-      def save
-        saved_data = []
-        data.each do |item|
-          saved_data << { data: item}
-        end
+      def save(data)
+        saved_data = data.map { |item| {'data' => item} }
+
         ActiveRecord::Base.transaction do
           API::Models::Mediator.delete_all
           API::Models::Mediator.create(saved_data)
@@ -35,7 +33,7 @@ module Admin
 
         headings = Headings.process(workbook.delete_row(0).cells.map {|cell| cell.value})
 
-        @data = workbook.map do |row|
+        workbook.map do |row|
           row.cells.each_with_index.inject({}) do |hash, (cell, index)|
             hash.merge({ headings[index] => cell.value.to_s })
           end

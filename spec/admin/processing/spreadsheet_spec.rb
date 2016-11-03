@@ -25,8 +25,7 @@ module Admin
 
       context '#extract_data' do
         it 'Transforms data' do
-          subject.send :extract_data
-          expect(subject.data).to eq(expected_data)
+          expect(subject.send(:extract_data)).to eq(expected_data)
         end
       end
 
