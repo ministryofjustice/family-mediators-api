@@ -6,47 +6,16 @@ module Admin
         File.expand_path('../../../support/fixtures/spreadsheet.xlsx', __FILE__)
       end
 
-      class FakeCell
-        attr_reader :value
-
-        def initialize(val)
-          @value = val
-        end
-      end
-
-      class FakeRow
-        def initialize(vals)
-          @vals = vals
-        end
-
-        def cells
-          [
-            FakeCell.new(@vals[0]),
-            FakeCell.new(@vals[1]),
-            FakeCell.new(@vals[2])
-          ]
-        end
-      end
-
-      let(:workbook) do
-        [
-          FakeRow.new(['name', 'age', 'gender']),
-          FakeRow.new(['Bob', 56, 'male'])
-        ]
-      end
-
       let(:expected_data) do
         [
-          {
-            'name' => 'Bob',
-            'age' => '56',
-            'gender' => 'male'
-          }
+          {"month_number"=>"1.0", "month_name"=>"January"},
+          {"month_number"=>"2.0", "month_name"=>"February"},
+          {"month_number"=>"3.0", "month_name"=>"March"}
         ]
       end
 
       before do
-        allow(RubyXL::Parser).to receive(:parse).and_return([workbook])
+        # allow(RubyXL::Parser).to receive(:parse).and_return([workbook])
         allow(API::Models::Mediator).to receive(:create)
       end
 
@@ -62,7 +31,6 @@ module Admin
       end
 
       it 'should process headings' do
-        #expect(Admin::Processing::Headings).to receive(:process)
         subject.process
       end
 

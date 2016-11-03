@@ -5,7 +5,7 @@ module Admin
 
       attr_reader :data, :parser
 
-      def initialize(file_path, parser=nil)
+      def initialize(file_path, parser = nil)
         @file_path = file_path
         @parser = parser
       end
@@ -22,7 +22,7 @@ module Admin
       def save
         saved_data = []
         data.each do |item|
-            saved_data << { data: item}
+          saved_data << { data: item}
         end
         ActiveRecord::Base.transaction do
           API::Models::Mediator.delete_all
@@ -33,29 +33,17 @@ module Admin
       def extract_data
         raise "File not found: #{@file_path}" unless File.exist?(@file_path)
 
-        workbook = RubyXL::Parser.parse @file_path
+        headings = Headings.process(workbook.delete_row(0).cells.map {|cell| cell.value})
 
-        data = workbook[0].inject([]) do |row_result, row |
-          cells = row.cells.map do |cell|
-            cell && cell.value.to_s || ''
+        @data = workbook.map do |row|
+          row.cells.each_with_index.inject({}) do |hash, (cell, index)|
+            hash.merge({ headings[index] => cell.value.to_s })
           end
-          row_result << cells
-          row_result
         end
+      end
 
-        headings = Headings.process(data.shift)
-
-        mediators = []
-
-        data.each do |mediator_row|
-          row_data = {}
-          mediator_row.each_with_index do |value, index|
-            row_data[headings[index]] = value
-          end
-          mediators << row_data
-        end
-
-        @data = mediators
+      def workbook
+        @workbook ||= RubyXL::Parser.parse(@file_path)[0]
       end
 
     end
