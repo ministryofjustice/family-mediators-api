@@ -1,60 +1,49 @@
 module Admin
+
   module Processing
     class Spreadsheet
-      PRACTICES_HEADING = 'md_practices'
 
-      def initialize file_path
+      attr_reader :parser
+
+      def initialize(file_path, parser = nil)
         @file_path = file_path
+        @parser = parser
       end
 
       def process
-        # read
-        extract_data
-        extract_headers
+        data = extract_data
         # validate - this will come later
-        create_mediators
+        data = parser.parse(data) if parser
+        save(data)
       end
 
       private
 
-      def create_mediators
-        mediators = []
-        @data.each do |mediator_row|
-          row_data = {}
-          mediator_row.each_with_index do |value, index|
-            if @headings[index] == PRACTICES_HEADING
-              row_data[@headings[index]] = PracticeParser.parse(value)
-            else
-              row_data[@headings[index]] = value
-            end
-          end
-          mediators << { data: row_data }
-        end
+      def save(data)
+        saved_data = data.map { |item| {'data' => item} }
 
         ActiveRecord::Base.transaction do
           API::Models::Mediator.delete_all
-          API::Models::Mediator.create(mediators)
+          API::Models::Mediator.create(saved_data)
         end
       end
 
       def extract_data
         raise "File not found: #{@file_path}" unless File.exist?(@file_path)
 
-        workbook = RubyXL::Parser.parse @file_path
+        headings = Headings.process(workbook.delete_row(0).cells.map {|cell| cell.value})
 
-        @data ||= workbook[0].inject([]) do |row_result, row |
-          cells = row.cells.map do |cell|
-            cell && cell.value.to_s || ''
+        workbook.map do |row|
+          row.cells.each_with_index.inject({}) do |hash, (cell, index)|
+            hash.merge({ headings[index] => cell.value.to_s })
           end
-          row_result << cells
-          row_result
         end
       end
 
-      def extract_headers
-        headings = @data.shift
-        @headings = Headings.process(headings)
+      def workbook
+        @workbook ||= RubyXL::Parser.parse(@file_path)[0]
       end
+
     end
   end
 end

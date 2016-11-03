@@ -1,6 +1,6 @@
 module Admin
-  module Processing
-    class PracticeParser
+  module Parsers
+    class Practice
       RECORD_SEPARATOR = "\n"
       PART_SEPARATOR = '|'
       EMAIL_REGEX = /([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})/i
@@ -9,6 +9,7 @@ module Admin
       URL_REGEX = /\A((http|https):\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?\Z/i
 
       def self.parse(data)
+        return if data.nil?
         data.split(RECORD_SEPARATOR).map { |practice| parse_address(practice) }
       end
 

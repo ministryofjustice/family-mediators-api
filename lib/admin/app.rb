@@ -3,6 +3,10 @@ require 'sinatra/json'
 module Admin
   class App < Sinatra::Base
 
+    configure do
+      set :parser, Admin::Parsers::Mediators.new
+    end
+
     set :views, File.dirname(__FILE__) + '/../../views'
     set :public_folder, 'public'
 
@@ -27,7 +31,7 @@ module Admin
         raise "No file specified" unless params[:spreadsheet_file]
 
         file = params[:spreadsheet_file][:tempfile]
-        Processing::Spreadsheet.new(file.path).process
+        Processing::Spreadsheet.new(file.path, settings.parser).process
 
         redirect to "/upload-success?filesize=#{file.size}"
 

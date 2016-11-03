@@ -6,17 +6,30 @@ module Admin
         File.expand_path('../../../support/fixtures/spreadsheet.xlsx', __FILE__)
       end
 
+      let(:expected_data) do
+        [
+          {"month_number"=>"1.0", "month_name"=>"January"},
+          {"month_number"=>"2.0", "month_name"=>"February"},
+          {"month_number"=>"3.0", "month_name"=>"March"}
+        ]
+      end
+
+      before do
+        # allow(RubyXL::Parser).to receive(:parse).and_return([workbook])
+        allow(API::Models::Mediator).to receive(:create)
+      end
+
       subject do
         Admin::Processing::Spreadsheet.new(filepath)
       end
 
-      before do
-        allow(Admin::Processing::Headings).to receive(:process) { [] }
-        allow(API::Models::Mediator).to receive(:create)
+      context '#extract_data' do
+        it 'Transforms data' do
+          expect(subject.send(:extract_data)).to eq(expected_data)
+        end
       end
 
       it 'should process headings' do
-        expect(Admin::Processing::Headings).to receive(:process)
         subject.process
       end
 
