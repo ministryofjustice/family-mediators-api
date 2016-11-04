@@ -19,14 +19,15 @@ module Admin
       def initialize(mediators)
         @errors = []
         @mediators = mediators
-        @indexes = {}
-        @indexes[:registration_nos] = get_registration_numbers(mediators)
+        @lookups = {
+          registration_nos: get_registration_numbers(mediators)
+        }
       end
 
       def validate
-        @mediators.each_with_index do |mediator, index|
+        @mediators.each_with_index do |_mediator, index|
           VALIDATIONS.each do |field, rules|
-            check_rules(field.to_s, mediator, index + 1, rules)
+            check_rules(field.to_s, index, rules)
           end
         end
 
@@ -35,34 +36,31 @@ module Admin
 
       private
 
-      def check_rules(field, mediator, row_no, rules)
-        return unless mediator.has_key?(field)
-
-        rules.each do |args|
-          return unless send *args, row_no, field, mediator
-        end
+      def check_rules(field, index, rules)
+        return unless @mediators[index].has_key?(field)
+        rules.each { |args| break unless send(*args, index, field) }
       end
 
       # Return false to stop further rules being checked
-      def must_be_populated(level, message, row_no, field, mediator)
-        if mediator[field].nil? || mediator[field].gsub(/\W/, '').size == 0
-          error(row_no, field, level, message)
+      def must_be_populated(level, message, index, field)
+        if @mediators[index][field].nil? || @mediators[index][field].gsub(/\W/, '').size == 0
+          error(index+1, field, level, message)
           return false
         end
         true
       end
 
-      def must_match(regex, level, message, row_no, field, mediator)
-        unless mediator[field] =~ regex
-          error(row_no, field, level, message)
+      def must_match(regex, level, message, index, field)
+        unless @mediators[index][field] =~ regex
+          error(index+1, field, level, message)
         end
         true
       end
 
-      def must_occur_once_within(index_name, level, message, row_no, field, mediator)
-        count = @indexes[index_name].select { |e| e == mediator[field] }.size
+      def must_occur_once_within(lookup_name, level, message, index, field)
+        count = @lookups[lookup_name].select { |e| e == @mediators[index][field] }.size
         unless count == 1
-          error(row_no, field, level, message)
+          error(index+1, field, level, message)
           return false
         end
         true
