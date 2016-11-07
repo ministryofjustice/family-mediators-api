@@ -5,13 +5,13 @@ module Admin
 
       attr_reader :parser
 
-      def initialize(file_path, parser = nil)
-        @file_path = file_path
+      def initialize(workbook, parser = nil)
+        @workbook = workbook
         @parser = parser
       end
 
       def process
-        data = extract_data
+        data = to_h
         # validate - this will come later
         data = parser.parse(data) if parser
         save(data)
@@ -28,20 +28,18 @@ module Admin
         end
       end
 
-      def extract_data
-        raise "File not found: #{@file_path}" unless File.exist?(@file_path)
+      def to_h
+        processed_headings = Headings.process(first_worksheet[0].cells.map { |cell| cell.value })
 
-        headings = Headings.process(workbook.delete_row(0).cells.map {|cell| cell.value})
-
-        workbook.map do |row|
+        first_worksheet[1..-1].map do |row|
           row.cells.each_with_index.inject({}) do |hash, (cell, index)|
-            hash.merge({ headings[index] => cell.value.to_s })
+            hash.merge({ processed_headings[index] => cell.value.to_s })
           end
         end
       end
 
-      def workbook
-        @workbook ||= RubyXL::Parser.parse(@file_path)[0]
+      def first_worksheet
+        @workbook[0]
       end
 
     end
