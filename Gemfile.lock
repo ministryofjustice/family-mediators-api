@@ -31,7 +31,7 @@ GEM
     childprocess (0.5.9)
       ffi (~> 1.0, >= 1.0.11)
     cliver (0.3.2)
-    codeclimate-test-reporter (1.0.0.pre.rc2)
+    codeclimate-test-reporter (1.0.1)
     coderay (1.1.1)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
@@ -182,7 +182,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord
-  codeclimate-test-reporter (= 1.0.0.pre.rc2)
+  codeclimate-test-reporter (~> 1.0.0)
   cucumber
   database_cleaner
   factory_girl
