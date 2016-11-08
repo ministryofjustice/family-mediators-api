@@ -28,15 +28,16 @@ module Admin
 
     post '/upload' do
       begin
-        raise "No file specified" unless params[:spreadsheet_file]
-
+        raise 'No file specified' unless params[:spreadsheet_file]
         file = params[:spreadsheet_file][:tempfile]
-        Processing::Spreadsheet.new(file.path, settings.parser).process
+
+        spreadsheet = Processing::Spreadsheet.new(RubyXL::Parser.parse(file.path), settings.parser)
+        spreadsheet.process
 
         redirect to "/upload-success?filesize=#{file.size}"
 
-      rescue => e
-        LOGGER.fatal "Failed /upload: #{e.message}"
+      rescue => error
+        LOGGER.fatal "Failed /upload: #{error.message}"
         redirect to '/upload-fail'
       end
     end
