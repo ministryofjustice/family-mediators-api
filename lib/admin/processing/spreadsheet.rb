@@ -11,8 +11,7 @@ module Admin
       end
 
       def process
-        data = to_h
-        # validate - this will come later
+        data = to_hash
         data = parser.parse(data) if parser
         save(data)
       end
@@ -28,7 +27,7 @@ module Admin
         end
       end
 
-      def to_h
+      def to_hash
         processed_headings = Headings.process(first_worksheet[0].cells.map { |cell| cell.value })
 
         first_worksheet[1..-1].map do |row|

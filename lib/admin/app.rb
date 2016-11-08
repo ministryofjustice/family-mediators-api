@@ -36,8 +36,8 @@ module Admin
 
         redirect to "/upload-success?filesize=#{file.size}"
 
-      rescue => e
-        LOGGER.fatal "Failed /upload: #{e.message}"
+      rescue => error
+        LOGGER.fatal "Failed /upload: #{error.message}"
         redirect to '/upload-fail'
       end
     end
