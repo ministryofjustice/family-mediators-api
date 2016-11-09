@@ -1,0 +1,26 @@
+html
+  head
+    title Mediators Admin
+    link href='style.css' media='screen' rel='stylesheet' type='text/css'
+  body
+
+    main#content role="main"
+      h1.heading-xlarge Mediators Admin
+
+      p There were #{errors.size} fatal errors
+
+      table
+        thead
+          tr
+            th Row
+            th Field
+            th Level
+            th Message
+
+        - errors.each do |error|
+          tr
+            td = error[:row_no] + 1
+            td = error[:field]
+            td = error[:level]
+            td = error[:message]
+

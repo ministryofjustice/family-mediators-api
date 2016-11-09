@@ -13,10 +13,9 @@ module Admin
       def process
         data = to_hash
         data = parser.parse(data) if parser
-        save(data)
+        # save(data)
+        data
       end
-
-      private
 
       def save(data)
         saved_data = data.map { |item| {'data' => item} }
@@ -26,6 +25,8 @@ module Admin
           API::Models::Mediator.create(saved_data)
         end
       end
+
+      private
 
       def to_hash
         processed_headings = Headings.process(first_worksheet[0].cells.map { |cell| cell.value })

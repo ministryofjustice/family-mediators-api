@@ -10,4 +10,5 @@ Capybara.app = Rack::Builder.parse_file(File.expand_path('../../config.ru', __di
 ActiveRecord::Base.logger = nil # Get rid of Sinatra's noisy logging in tests
 
 require_relative '../../spec/factories/mediator'
+require_relative '../../support/factories/spreadsheet'
 World(FactoryGirl::Syntax::Methods)
