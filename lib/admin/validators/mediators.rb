@@ -34,6 +34,10 @@ module Admin
         errors.empty?
       end
 
+      def valid?
+        erros.empty?
+      end
+
       private
 
       def check_rules(field, index, rules)

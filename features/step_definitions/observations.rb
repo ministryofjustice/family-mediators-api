@@ -7,3 +7,7 @@ Then(/^the response data should have (.*) items$/) do |num|
   data = result['data']
   expect(data.count).to eq(num.to_i)
 end
+
+Then(/^I should see '(\d+) fatal errors'$/) do |fatal_count|
+  expect(page.body).to include("#{fatal_count} fatal errors")
+end

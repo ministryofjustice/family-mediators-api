@@ -3,15 +3,9 @@ module Admin
     describe Spreadsheet do
 
       let(:workbook) do
-        workbook = RubyXL::Workbook.new
-        worksheet = workbook[0]
-        worksheet.add_cell(0,0, 'First Name')
-        worksheet.add_cell(0,1, 'Last Name')
-        worksheet.add_cell(1,0, 'John')
-        worksheet.add_cell(1,1, 'Smith')
-        worksheet.add_cell(2,0, 'Donna')
-        worksheet.add_cell(2,1, 'Jones')
-        workbook
+        headings = ['First Name', 'Last Name']
+        data = [ %w{ John Smith }, %w{ Donna Jones } ]
+        Support::Factories::Spreadsheet.build(headings, data)
       end
 
       let(:expected_data) do
@@ -37,7 +31,7 @@ module Admin
 
       it 'should insert into DB' do
         expect(API::Models::Mediator).to receive(:create).at_least(:once)
-        subject.process
+        subject.save expected_data
       end
     end
   end

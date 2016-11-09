@@ -6,6 +6,8 @@ require 'lib/env'
 require 'lib/mediators'
 
 require 'factories/mediator'
+require 'support/factories/spreadsheet'
+
 
 def fixture_path file
   File.expand_path("../support/fixtures/#{file}", __FILE__)

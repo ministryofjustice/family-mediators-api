@@ -5,6 +5,7 @@ module Admin
 
     configure do
       set :parser, Admin::Parsers::Mediators.new
+      set :validator, Admin::Validators::Mediators
     end
 
     set :views, File.dirname(__FILE__) + '/../../views'
@@ -32,9 +33,16 @@ module Admin
         file = params[:spreadsheet_file][:tempfile]
 
         spreadsheet = Processing::Spreadsheet.new(RubyXL::Parser.parse(file.path), settings.parser)
-        spreadsheet.process
+        processed_data = spreadsheet.process
+        validator = settings.validator.new(processed_data)
+        valid = validator.validate
 
-        redirect to "/upload-success?filesize=#{file.size}"
+        if valid
+          spreadsheet.save(processed_data)
+          redirect to "/upload-success?filesize=#{file.size}"
+        else
+          slim :errors, locals: { errors: validator.errors }
+        end
 
       rescue => error
         LOGGER.fatal "Failed /upload: #{error.message}"
