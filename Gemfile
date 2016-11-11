@@ -2,6 +2,7 @@
 source 'https://rubygems.org'
 
 gem 'activerecord'
+gem 'hanami-validations'
 gem 'grape'
 gem 'grape-entity'
 gem 'pg'

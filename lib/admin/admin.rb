@@ -1,6 +1,6 @@
 require_relative 'parsers/mediators'
 require_relative 'parsers/practice'
-require_relative 'validators/mediators'
+require_relative 'validators/mediator_validations'
 require_relative 'processing/spreadsheet'
 require_relative 'processing/headings'
 require_relative 'app'

@@ -1,5 +1,7 @@
 require 'spec_helper'
 
+require_relative '../../support/helpers/temporary_workbook'
+
 describe Admin::App do
   include Rack::Test::Methods
 
@@ -9,13 +11,14 @@ describe Admin::App do
     Admin::App.set :parser, parser
   end
 
-  let(:file_path) { fixture_path 'spreadsheet.xlsx' }
-
   context 'successfully uploads file' do
+
+    temp_workbook = TemporaryWorkbook.new(['registration no'], [%w(0123T), %w(0124T)])
+
     it 'redirects to /upload-success' do
       post '/upload', {
         spreadsheet_file: Rack::Test::UploadedFile.new(
-          file_path,
+          temp_workbook.file_path,
           'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
           true
         )

@@ -1,3 +1,5 @@
+require_relative '../../../lib/admin/validators/mediators'
+
 module Admin
   module Validators
     describe Mediators do
