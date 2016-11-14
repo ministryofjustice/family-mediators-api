@@ -18,9 +18,9 @@ html
             th Message
 
         - item_errors.each do |error|
-          - error[:messages].each do |field_name, message|
+          - error.message.each do |field_name, message|
             tr
-              td = error[:row_number]
+              td = error.row_number
               td = field_name
               td Fatal
               td = message
