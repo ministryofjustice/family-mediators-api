@@ -7,7 +7,7 @@ html
     main#content role="main"
       h1.heading-xlarge Mediators Admin
 
-      p There were #{errors.size} fatal errors
+      p There were #{item_errors.size} fatal errors
 
       table
         thead
@@ -17,7 +17,7 @@ html
             th Level
             th Message
 
-        - errors.each do |error|
+        - item_errors.each do |error|
           - error[:messages].each do |field_name, message|
             tr
               td = error[:row_number]

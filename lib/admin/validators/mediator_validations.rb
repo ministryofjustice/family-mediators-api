@@ -27,7 +27,7 @@ module Admin
         validations.all? {|result| result.success? }
       end
 
-      def error_messages
+      def item_errors
         error_messages = []
         validations.each_with_index do |result, index|
           unless result.messages.empty?

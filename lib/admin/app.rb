@@ -40,7 +40,7 @@ module Admin
           spreadsheet.save(processed_data)
           redirect to "/upload-success?filesize=#{file.size}"
         else
-          slim :errors, locals: { errors: validations.error_messages }
+          slim :errors, locals: { item_errors: validations.item_errors }
         end
 
       rescue => error

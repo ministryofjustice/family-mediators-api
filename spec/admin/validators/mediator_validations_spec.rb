@@ -46,26 +46,26 @@ module Admin
           it 'returns an empty array' do
             data = [valid_input_1, valid_input_2]
             validations = MediatorValidations.new(data)
-            expect(validations.error_messages).to eq([])
+            expect(validations.item_errors).to eq([])
           end
         end
 
         context 'when one mediator is invalid' do
-          let(:error_messages) do
+          let(:item_errors) do
             data = [valid_input_1, valid_input_2.merge('registration_no' => 'invalid_reg_no')]
-            MediatorValidations.new(data).error_messages
+            MediatorValidations.new(data).item_errors
           end
 
           it 'returns 1 message' do
-            expect(error_messages.count).to eq(1)
+            expect(item_errors.count).to eq(1)
           end
 
           it 'has row number that is 1-based' do
-            expect(error_messages[0][:row_number]).to eq(3)
+            expect(item_errors[0][:row_number]).to eq(3)
           end
 
           it 'has error messages' do
-            expect(error_messages[0]).to include(:messages)
+            expect(item_errors[0]).to include(:messages)
           end
         end
 
@@ -79,7 +79,7 @@ module Admin
         end
 
         it 'returns 1 message' do
-          expect(validations.error_messages.count).to eq(1)
+          expect(validations.item_errors.count).to eq(1)
         end
       end
 
