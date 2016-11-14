@@ -2,17 +2,19 @@ module Admin
   module Validators
     describe MediatorValidations do
 
-      let(:input) do
-        Hash[
-            'registration_no'  => '1234A',
-            'md_offers_dcc' => 'Y'
-        ]
+      let(:valid_input) do
+        {
+            'registration_no' => '1234A',
+            'md_offers_dcc' => 'Y',
+            'md_first_name' => 'John',
+            'md_last_name' => 'Smith'
+        }
       end
 
       describe '#valid?' do
         context 'when all mediators are valid' do
           it 'returns true' do
-            data = [input, input]
+            data = [valid_input, valid_input]
             validations = MediatorValidations.new(data)
             expect(validations.valid?).to eq(true)
           end
@@ -20,7 +22,7 @@ module Admin
 
         context 'when one mediator is invalid' do
           it 'returns false' do
-            data = [input, input.merge('registration_no' => 'invalid_reg_no')]
+            data = [valid_input, valid_input.merge('registration_no' => 'invalid_reg_no')]
             validations = MediatorValidations.new(data)
             expect(validations.valid?).to eq(false)
           end
@@ -31,7 +33,7 @@ module Admin
 
         context 'when all mediators are valid' do
           it 'returns an empty array' do
-            data = [input, input]
+            data = [valid_input, valid_input]
             validations = MediatorValidations.new(data)
             expect(validations.error_messages).to eq([])
           end
@@ -39,8 +41,8 @@ module Admin
 
         context 'when one mediator is invalid' do
           let(:error_messages) do
-            data = [input, input]
-            data[1] = input.merge('registration_no' => 'invalid_reg_no')
+            data = [valid_input, valid_input]
+            data[1] = valid_input.merge('registration_no' => 'invalid_reg_no')
             MediatorValidations.new(data).error_messages
           end
 

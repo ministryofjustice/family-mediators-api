@@ -2,10 +2,12 @@ module Admin
   module Validators
     describe Mediator do
 
-      let(:input) do
+      let(:valid_input) do
         {
           'registration_no' => '1234A',
-          'md_offers_dcc' => 'Y'
+          'md_offers_dcc' => 'Y',
+          'md_first_name' => 'John',
+          'md_last_name' => 'Smith'
         }
       end
 
@@ -17,52 +19,95 @@ module Admin
         end
 
         it 'matches pattern ####T' do
-          data   = input.merge('registration_no' => '1234T')
+          data   = valid_input.merge('registration_no' => '1234T')
           result = Mediator.new(data).validate
           expect(result.success?).to eq(true)
         end
 
         it 'matches pattern ####A' do
-          data   = input.merge('registration_no' => '3456A')
+          data   = valid_input.merge('registration_no' => '3456A')
           result = Mediator.new(data).validate
           expect(result.success?).to eq(true)
         end
 
         it 'matches pattern ####P' do
-          data   = input.merge('registration_no' => '6789P')
+          data   = valid_input.merge('registration_no' => '6789P')
           result = Mediator.new(data).validate
           expect(result.success?).to eq(true)
         end
 
         it 'does not match pattern #####P' do
-          data   = input.merge('registration_no' => '16789P')
+          data   = valid_input.merge('registration_no' => '16789P')
           result = Mediator.new(data).validate
           expect(result.success?).to eq(false)
         end
       end
 
-      context 'md offers dcc' do
+      describe 'md offers dcc' do
         %w{Y N}.each do |val|
           it "is valid when '#{val}'" do
-            data   = input.merge('md_offers_dcc' => val)
+            data   = valid_input.merge('md_offers_dcc' => val)
             result = Mediator.new(data).validate
             expect(result.success?).to eq(true)
           end
         end
 
         it "is invalid when 'a'" do
-          data   = input.merge('md_offers_dcc' => 'a')
+          data   = valid_input.merge('md_offers_dcc' => 'a')
           result = Mediator.new(data).validate
           expect(result.success?).to eq(false)
         end
 
         it 'is invalid when it is missing' do
-          data   = input.merge('md_offers_dcc' => '')
+          data   = valid_input.merge('md_offers_dcc' => '')
           result = Mediator.new(data).validate
           expect(result.success?).to eq(false)
         end
 
       end
+
+      describe 'first name' do
+
+        it 'valid when it is a non-blank string' do
+          data   = valid_input.merge('md_first_name' => 'John')
+          result = Mediator.new(data).validate
+          expect(result.success?).to eq(true)
+        end
+
+        it 'is invalid when it is missing' do
+          data   = valid_input.merge('md_first_name' => '')
+          result = Mediator.new(data).validate
+          expect(result.success?).to eq(false)
+        end
+
+        it 'is invalid when it is a number' do
+          data   = valid_input.merge('md_first_name' => 123)
+          result = Mediator.new(data).validate
+          expect(result.success?).to eq(false)
+        end
+      end
+
+      describe 'last name' do
+
+        it 'valid when it is a non-blank string' do
+          data   = valid_input.merge('md_last_name' => 'John')
+          result = Mediator.new(data).validate
+          expect(result.success?).to eq(true)
+        end
+
+        it 'is invalid when it is missing' do
+          data   = valid_input.merge('md_last_name' => '')
+          result = Mediator.new(data).validate
+          expect(result.success?).to eq(false)
+        end
+
+        it 'is invalid when it is a number' do
+          data   = valid_input.merge('md_last_name' => 123)
+          result = Mediator.new(data).validate
+          expect(result.success?).to eq(false)
+        end
+      end
+
     end
   end
 end

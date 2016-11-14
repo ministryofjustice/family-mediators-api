@@ -10,11 +10,11 @@ module UploadHelpers
   end
 
   def headings
-    ['registration no', 'md offers dc']
+    ['registration no', 'md offers dcc', 'md_first_name', 'md_last_name']
   end
 
   def valid_data
-    [%w(0123T Y), %w(0124T Y)]
+    [%w(0123T Y John Doe), %w(0124T Y Jane Smith)]
   end
 
   def fatal_data_sample
