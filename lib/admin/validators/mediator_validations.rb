@@ -33,7 +33,7 @@ module Admin
           unless result.messages.empty?
             error_messages << {
                 messages: result.messages,
-                row_number: index + 1
+                row_number: index + 2
             }
           end
         end

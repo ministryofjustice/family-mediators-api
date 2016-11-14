@@ -61,7 +61,7 @@ module Admin
           end
 
           it 'has row number that is 1-based' do
-            expect(error_messages[0][:row_number]).to eq(2)
+            expect(error_messages[0][:row_number]).to eq(3)
           end
 
           it 'has error messages' do
