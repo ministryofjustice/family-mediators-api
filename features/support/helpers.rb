@@ -1,15 +1,4 @@
-class TemporaryWorkbook
-  def initialize headings, data
-    dir = Dir.mktmpdir
-    @file = File.new("#{dir}/foo.xlsx", 'w+')
-    workbook = Support::Factories::Spreadsheet.build(headings, data)
-    workbook.write(@file.path)
-  end
-
-  def file_path
-    @file.path
-  end
-end
+require_relative '../../support/helpers/temporary_workbook'
 
 module UploadHelpers
 
@@ -21,15 +10,18 @@ module UploadHelpers
   end
 
   def headings
-    ['registration no', 'md offers dc']
+    ['registration no', 'md offers dcc', 'md_first_name', 'md_last_name', 'md_mediation_legal_aid']
   end
 
   def valid_data
-    [%w(0123T Y), %w(0124T Y)]
+    [
+        %w(0123T Y John Doe   N),
+        %w(0124T Y Jane Smith Y)
+    ]
   end
 
   def fatal_data_sample
-    [ nil, 'Y' ]
+    [ rand.to_s[-4..-1]+'X', 'Y' ]
   end
 
 end

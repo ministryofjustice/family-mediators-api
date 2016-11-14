@@ -18,9 +18,10 @@ html
             th Message
 
         - errors.each do |error|
-          tr
-            td = error[:row_no] + 1
-            td = error[:field]
-            td = error[:level]
-            td = error[:message]
+          - error[:messages].each do |field_name, message|
+            tr
+              td = error[:row_number]
+              td = field_name
+              td Fatal
+              td = message
 
