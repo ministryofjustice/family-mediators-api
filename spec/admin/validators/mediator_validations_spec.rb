@@ -79,7 +79,7 @@ module Admin
         end
 
         it 'returns 1 message' do
-          expect(validations.item_errors.count).to eq(1)
+          expect(validations.collection_errors.count).to eq(1)
         end
       end
 

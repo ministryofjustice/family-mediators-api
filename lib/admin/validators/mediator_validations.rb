@@ -27,6 +27,20 @@ module Admin
         validations.all? {|result| result.success? }
       end
 
+      def collection_errors
+        collection_errors = []
+        if @duplicate_registration_nos.length > 0
+          msg = {
+              'registration_no': ["Duplicate registration_no: #{@duplicate_registration_nos}"]
+          }
+          collection_errors << {
+            messages: msg,
+            row_number: 'n/a'
+          }
+        end
+        collection_errors
+      end
+
       def item_errors
         error_messages = []
         validations.each_with_index do |result, index|
@@ -36,15 +50,6 @@ module Admin
                 row_number: index + 2
             }
           end
-        end
-        if @duplicate_registration_nos.length > 0
-          msg = {
-              'registration_no': ["Duplicate registration_no: #{@duplicate_registration_nos}"]
-          }
-          error_messages << {
-              messages: msg,
-              row_number: 'n/a'
-          }
         end
         error_messages
       end
