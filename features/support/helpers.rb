@@ -14,11 +14,14 @@ module UploadHelpers
   end
 
   def valid_data
-    [%w(0123T Y John Doe N), %w(0124T Y Jane Smith Y)]
+    [
+        %w(0123T Y John Doe   N),
+        %w(0124T Y Jane Smith Y)
+    ]
   end
 
   def fatal_data_sample
-    [ nil, 'Y' ]
+    [ rand.to_s[-4..-1]+'X', 'Y' ]
   end
 
 end
