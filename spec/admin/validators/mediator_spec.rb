@@ -7,7 +7,8 @@ module Admin
           'registration_no' => '1234A',
           'md_offers_dcc' => 'Y',
           'md_first_name' => 'John',
-          'md_last_name' => 'Smith'
+          'md_last_name' => 'Smith',
+          'md_mediation_legal_aid' => 'Y'
         }
       end
 
@@ -64,6 +65,12 @@ module Admin
           expect(result.success?).to eq(false)
         end
 
+        it "is invalid when it is 'YN'" do
+          data   = valid_input.merge('md_offers_dcc' => 'YN')
+          result = Mediator.new(data).validate
+          expect(result.success?).to eq(false)
+        end
+
       end
 
       describe 'first name' do
@@ -89,7 +96,7 @@ module Admin
 
       describe 'last name' do
 
-        it 'valid when it is a non-blank string' do
+        it ' is valid when it is a non-blank string' do
           data   = valid_input.merge('md_last_name' => 'John')
           result = Mediator.new(data).validate
           expect(result.success?).to eq(true)
@@ -106,6 +113,36 @@ module Admin
           result = Mediator.new(data).validate
           expect(result.success?).to eq(false)
         end
+      end
+
+      describe 'MD_Mediation_Legal_Aid' do
+
+        %w{Y N}.each do |val|
+          it "is valid when '#{val}'" do
+            data   = valid_input.merge('md_mediation_legal_aid' => val)
+            result = Mediator.new(data).validate
+            expect(result.success?).to eq(true)
+          end
+        end
+
+        it "is invalid when not 'Y' or 'N'" do
+          data   = valid_input.merge('md_mediation_legal_aid' => 'a')
+          result = Mediator.new(data).validate
+          expect(result.success?).to eq(false)
+        end
+
+        it 'is invalid when it is missing' do
+          data   = valid_input.merge('md_mediation_legal_aid' => '')
+          result = Mediator.new(data).validate
+          expect(result.success?).to eq(false)
+        end
+
+        it "is invalid when it is 'YN'" do
+          data   = valid_input.merge('md_mediation_legal_aid' => 'YN')
+          result = Mediator.new(data).validate
+          expect(result.success?).to eq(false)
+        end
+
       end
 
     end
