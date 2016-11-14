@@ -13,7 +13,7 @@ describe Admin::App do
 
   context 'successfully uploads file' do
 
-    temp_workbook = TemporaryWorkbook.new(['registration no', 'md offers dcc', 'md_first_name', 'md_last_name'], [%w(0123T Y John Doe), %w(0124T Y Jane Smith)])
+    temp_workbook = TemporaryWorkbook.new([], [])
 
     it 'redirects to /upload-success' do
       post '/upload', {

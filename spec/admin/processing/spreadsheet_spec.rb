@@ -33,6 +33,21 @@ module Admin
         expect(API::Models::Mediator).to receive(:create).at_least(:once)
         subject.save expected_data
       end
+
+      context 'empty workbook' do
+        let(:workbook) do
+          headings = []
+          data = []
+          Support::Factories::Spreadsheet.build(headings, data)
+        end
+
+        context '#extract_data' do
+          it 'Transforms data' do
+            expect(subject.send(:to_hash)).to eq([])
+          end
+        end
+
+      end
     end
   end
 end
