@@ -4,7 +4,8 @@ module Admin
 
       let(:input) do
         Hash[
-            'registration_no'  => '1234A'
+            'registration_no'  => '1234A',
+            'md_offers_dcc' => 'Y'
         ]
       end
 
@@ -37,11 +38,9 @@ module Admin
         end
 
         context 'when one mediator is invalid' do
-
-          let(:row_number) { 1 }
           let(:error_messages) do
             data = [input, input]
-            data[row_number] = input.merge('registration_no' => 'invalid_reg_no')
+            data[1] = input.merge('registration_no' => 'invalid_reg_no')
             MediatorValidations.new(data).error_messages
           end
 
@@ -50,7 +49,7 @@ module Admin
           end
 
           it 'has row number that is 1-based' do
-            expect(error_messages[0][:row_number]).to eq(row_number + 1)
+            expect(error_messages[0][:row_number]).to eq(2)
           end
 
           it 'has error messages' do
