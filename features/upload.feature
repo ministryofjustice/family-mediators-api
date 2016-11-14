@@ -16,4 +16,4 @@ Feature: Admin app
 
   Scenario: Display fatal errors
     Given I upload a spreadsheet with 0 warnings and 4 errors
-    Then I see 'There were 4 fatal errors'
+    Then I see 'There were 4 item errors'
