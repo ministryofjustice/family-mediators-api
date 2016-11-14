@@ -7,7 +7,8 @@ module Admin
             'registration_no' => '1234A',
             'md_offers_dcc' => 'Y',
             'md_first_name' => 'John',
-            'md_last_name' => 'Smith'
+            'md_last_name' => 'Smith',
+            'md_mediation_legal_aid' => 'Y'
         }
       end
 
