@@ -8,3 +8,18 @@ Then(/^the response data should have (.*) items$/) do |num|
   expect(data.count).to eq(num.to_i)
 end
 
+
+And(/^I should see the following collection errors:$/) do |expected_results|
+  results = []
+  page.all('#collection-errors thead tr').map do |tr|
+    heading_1 = tr.all('th')[0].text
+    heading_2 = tr.all('th')[1].text
+    results << [heading_1, heading_2]
+  end
+  page.all('#collection-errors tbody tr').map do |tr|
+    error = tr.all('td')[0].text
+    value = tr.all('td')[1].text
+    results << [error, value]
+  end
+  expected_results.diff!(results)
+end

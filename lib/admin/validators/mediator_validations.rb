@@ -25,18 +25,14 @@ module Admin
       end
 
       def valid?
-        validations.all? {|result| result.success? }
+        validations.all? {|result| result.success? } && @duplicate_registration_nos.length == 0
       end
 
       def collection_errors
         collection_errors = []
         if @duplicate_registration_nos.length > 0
-          msg = {
-              'registration_no': ["Duplicate registration_no: #{@duplicate_registration_nos}"]
-          }
           collection_errors << {
-            messages: msg,
-            row_number: 'n/a'
+            'Duplicate registration numbers': @duplicate_registration_nos
           }
         end
         collection_errors
