@@ -8,7 +8,8 @@ module Admin
             'md_offers_dcc' => 'Y',
             'md_first_name' => 'John',
             'md_last_name' => 'Smith',
-            'md_mediation_legal_aid' => 'Y'
+            'md_mediation_legal_aid' => 'Y',
+            'md_ppc_id' => '8297A'
         }
       end
 
@@ -18,7 +19,8 @@ module Admin
             'md_offers_dcc' => 'Y',
             'md_first_name' => 'Jane',
             'md_last_name' => 'Doe',
-            'md_mediation_legal_aid' => 'Y'
+            'md_mediation_legal_aid' => 'Y',
+            'md_ppc_id' => '8297A'
         }
       end
 

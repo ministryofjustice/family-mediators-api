@@ -1,4 +1,4 @@
-require_relative 'mediator'
+require_relative 'mediator_validator'
 require_relative 'validation_error'
 
 module Admin
@@ -10,7 +10,7 @@ module Admin
 
       def initialize(mediators)
         @validations = mediators.map do |mediator|
-          result = Mediator.new(mediator).validate
+          result = MediatorValidator.new(mediator).validate
           result
         end
         @duplicate_registration_nos = duplicate_registration_nos(mediators)
