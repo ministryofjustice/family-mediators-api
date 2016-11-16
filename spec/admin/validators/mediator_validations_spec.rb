@@ -60,13 +60,10 @@ module Admin
             expect(item_errors.count).to eq(1)
           end
 
-          it 'has row number that is 1-based' do
-            expect(item_errors[0][:row_number]).to eq(3)
+          it 'returns ValidationError class' do
+            expect(item_errors[0]).to be_kind_of(Admin::Validators::ValidationError)
           end
 
-          it 'has error messages' do
-            expect(item_errors[0]).to include(:messages)
-          end
         end
 
       end
@@ -79,7 +76,7 @@ module Admin
         end
 
         it 'returns 1 message' do
-          expect(validations.item_errors.count).to eq(1)
+          expect(validations.collection_errors.count).to eq(1)
         end
       end
 
