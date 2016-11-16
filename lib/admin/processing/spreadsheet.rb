@@ -13,7 +13,6 @@ module Admin
       def process
         data = to_hash
         data = parser.parse(data) if parser
-        # save(data)
         data
       end
 
@@ -31,7 +30,9 @@ module Admin
       def to_hash
         return [] if first_worksheet[0].nil?
 
-        processed_headings = Headings.process(first_worksheet[0].cells.map { |cell| cell.value })
+        processed_headings = Headings.process(
+          first_worksheet[0].cells.map { |cell| cell.value }
+        )
 
         first_worksheet[1..-1].map do |row|
           row.cells.each_with_index.inject({}) do |hash, (cell, index)|

@@ -28,16 +28,26 @@ module Admin
     end
 
     post '/upload' do
+      handle_upload
+    end
+
+    get '/upload-success' do
+      slim :upload_success, locals: { size: params[:filesize] }
+    end
+
+    get '/upload-fail' do
+      slim :upload_fail
+    end
+
+    def handle_upload
       begin
         raise 'No file specified' unless params[:spreadsheet_file]
-        file = params[:spreadsheet_file][:tempfile]
-
-        spreadsheet = Processing::Spreadsheet.new(RubyXL::Parser.parse(file.path), settings.parser)
-        processed_data = spreadsheet.process
-        validations = settings.validator.new(processed_data)
+        sheet = spreadsheet(file.path)
+        sheet_as_hash = sheet.process
+        validations = settings.validator.new(sheet_as_hash)
 
         if validations.valid?
-          spreadsheet.save(processed_data)
+          sheet.save(sheet_as_hash)
           redirect to "/upload-success?filesize=#{file.size}"
         else
           slim :errors, locals: { item_errors: validations.item_errors, collection_errors: validations.collection_errors }
@@ -49,12 +59,12 @@ module Admin
       end
     end
 
-    get '/upload-success' do
-      slim :upload_success, locals: { size: params[:filesize] }
+    def file
+      params[:spreadsheet_file][:tempfile]
     end
 
-    get '/upload-fail' do
-      slim :upload_fail
+    def spreadsheet(path)
+      Processing::Spreadsheet.new(RubyXL::Parser.parse(path), settings.parser)
     end
 
   end

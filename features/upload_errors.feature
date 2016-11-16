@@ -36,3 +36,4 @@ Feature: A spreadsheet upload is validated against a set of rules. If there are 
     And I should see the following collection errors:
       | Error                    | Value(s) |
       | MD_PPC_ID not recognised | 5647T    |
+
