@@ -1,4 +1,5 @@
 require_relative 'mediator'
+require_relative 'validation_error'
 
 module Admin
   module Validators
@@ -24,27 +25,26 @@ module Admin
       end
 
       def valid?
-        validations.all? {|result| result.success? }
+        validations.all? {|result| result.success? } && @duplicate_registration_nos.length == 0
       end
 
-      def error_messages
+      def collection_errors
+        collection_errors = []
+        if @duplicate_registration_nos.length > 0
+          collection_errors << {
+            'Duplicate registration numbers': @duplicate_registration_nos
+          }
+        end
+        collection_errors
+      end
+
+      def item_errors
         error_messages = []
         validations.each_with_index do |result, index|
-          unless result.messages.empty?
-            error_messages << {
-                messages: result.messages,
-                row_number: index + 1
-            }
+          result_messages = result.messages
+          unless result_messages.empty?
+            error_messages << ValidationError.new(index + 2, result_messages)
           end
-        end
-        if @duplicate_registration_nos.length > 0
-          msg = {
-              'registration_no': ["Duplicate registration_no: #{@duplicate_registration_nos}"]
-          }
-          error_messages << {
-              messages: msg,
-              row_number: 'n/a'
-          }
         end
         error_messages
       end
