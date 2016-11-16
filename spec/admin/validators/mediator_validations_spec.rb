@@ -63,8 +63,12 @@ module Admin
           end
 
           it 'returns ValidationErrorMessage class' do
-            expect(item_errors[0]).to be_kind_of(Admin::Validators::ValidationErrorMessage)
+            expect(item_errors[0]).to be_kind_of(Admin::Validators::ErrorMessage)
           end
+
+          # it 'sets heading to equal row number' do
+          #   expect(item_errors[0].heading).to eq(3)
+          # end
 
         end
 
@@ -80,6 +84,11 @@ module Admin
         it 'returns 1 message' do
           expect(validations.collection_errors.count).to eq(1)
         end
+
+        it 'returns IntegrityErrorMessage class' do
+          expect(validations.collection_errors[0]).to be_kind_of(Admin::Validators::ErrorMessage)
+        end
+
       end
 
     end

@@ -18,10 +18,9 @@ html
               th Value(s)
           tbody
             - collection_errors.each do |error|
-              - error.each do |error_title, error_list|
                 tr
-                  td = error_title
-                  td = error_list.join(' ')
+                  td = error.heading
+                  td = error.values.join(' ')
 
       - if item_errors.size > 0
         h2.heading-large Data errors
@@ -36,9 +35,9 @@ html
               th Message
 
           - item_errors.each do |error|
-            - error.message.each do |field_name, message|
+            - error.values.each do |field_name, message|
               tr
-                td = error.row_number
+                td = error.heading + 2
                 td = field_name
-                td = message
+                td = message.join(' AND ')
 
