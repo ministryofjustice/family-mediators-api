@@ -9,7 +9,6 @@ html
 
       - if collection_errors.size > 0
         h2.heading-large Reference errors
-        p There were #{collection_errors.size} collection errors
 
         table#collection-errors
           thead
@@ -25,19 +24,17 @@ html
       - if item_errors.size > 0
         h2.heading-large Data errors
 
-        p There were #{item_errors.size} item errors
-
-        table
+        table#item-errors
           thead
             tr
               th Row
               th Field
               th Message
-
-          - item_errors.each do |error|
-            - error.values.each do |field_name, message|
-              tr
-                td = error.heading + 2
-                td = field_name
-                td = message.join(' AND ')
+          tbody
+            - item_errors.each do |error|
+              - error.values.each do |field_name, message|
+                tr
+                  td = error.heading + 2
+                  td = field_name
+                  td = message.join(' AND ')
 

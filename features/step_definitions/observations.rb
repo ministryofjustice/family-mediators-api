@@ -23,3 +23,20 @@ And(/^I should see the following collection errors:$/) do |expected_results|
   end
   expected_results.diff!(results)
 end
+
+And(/^I should see the following item errors:$/) do |expected_results|
+  results = []
+  page.all('#item-errors thead tr').map do |tr|
+    col_1 = tr.all('th')[0].text
+    col_2 = tr.all('th')[1].text
+    col_3 = tr.all('th')[2].text
+    results << [col_1, col_2, col_3]
+  end
+  page.all('#item-errors tbody tr').map do |tr|
+    col_1 = tr.all('td')[0].text
+    col_2 = tr.all('td')[1].text
+    col_3 = tr.all('td')[2].text
+    results << [col_1, col_2, col_3]
+  end
+  expected_results.diff!(results)
+end
