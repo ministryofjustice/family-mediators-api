@@ -41,8 +41,9 @@ module Admin
       def item_errors
         error_messages = []
         validations.each_with_index do |result, index|
-          unless result.messages.empty?
-            error_messages << ValidationError.new(index + 2, result.messages)
+          result_messages = result.messages
+          unless result_messages.empty?
+            error_messages << ValidationError.new(index + 2, result_messages)
           end
         end
         error_messages
