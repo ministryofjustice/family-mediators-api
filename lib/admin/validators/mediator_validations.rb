@@ -1,5 +1,5 @@
 require_relative 'mediator_validator'
-require_relative 'validation_error'
+require_relative 'validation_error_message'
 
 module Admin
   module Validators
@@ -43,7 +43,7 @@ module Admin
         validations.each_with_index do |result, index|
           result_messages = result.messages
           unless result_messages.empty?
-            error_messages << ValidationError.new(index + 2, result_messages)
+            error_messages << ValidationErrorMessage.new(index + 2, result_messages)
           end
         end
         error_messages

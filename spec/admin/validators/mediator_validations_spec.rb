@@ -62,8 +62,8 @@ module Admin
             expect(item_errors.count).to eq(1)
           end
 
-          it 'returns ValidationError class' do
-            expect(item_errors[0]).to be_kind_of(Admin::Validators::ValidationError)
+          it 'returns ValidationErrorMessage class' do
+            expect(item_errors[0]).to be_kind_of(Admin::Validators::ValidationErrorMessage)
           end
 
         end

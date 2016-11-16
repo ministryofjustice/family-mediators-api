@@ -1,6 +1,6 @@
 module Admin
   module Validators
-    describe ValidationError do
+    describe ValidationErrorMessage do
 
       let(:message) do
         {
@@ -8,7 +8,7 @@ module Admin
         }
       end
 
-      subject(:validation_error) { Admin::Validators::ValidationError.new(1, message)}
+      subject(:validation_error) { Admin::Validators::ValidationErrorMessage.new(1, message)}
 
       it 'has row number that is 1-based' do
         expect(validation_error.row_number).to eq(1)

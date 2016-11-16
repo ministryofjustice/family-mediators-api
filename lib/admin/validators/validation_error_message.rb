@@ -1,6 +1,6 @@
 module Admin
   module Validators
-    class ValidationError
+    class ValidationErrorMessage
 
       attr_reader :row_number, :message
 
