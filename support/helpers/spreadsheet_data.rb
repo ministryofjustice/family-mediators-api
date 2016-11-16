@@ -39,11 +39,4 @@ class SpreadsheetData
     rand.to_s[-4..-1]+postfix
   end
 
-  # def collection
-  #   data = []
-  #   data << valid_mediator.values
-  #   data << data[0]
-  #   data
-  # end
-
 end
