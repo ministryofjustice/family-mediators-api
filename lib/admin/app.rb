@@ -43,14 +43,20 @@ module Admin
       begin
         raise 'No file specified' unless params[:spreadsheet_file]
         sheet = spreadsheet(file.path)
-        sheet_as_hash = sheet.process
-        validations = settings.validator.new(sheet_as_hash)
+        sheet_as_array = sheet.to_a
+
+
+
+        validations = settings.validator.new(sheet_as_array)
 
         if validations.valid?
-          sheet.save(sheet_as_hash)
+          sheet.save(sheet_as_array)
           redirect to "/upload-success?filesize=#{file.size}"
         else
-          slim :errors, locals: { item_errors: validations.item_errors, collection_errors: validations.collection_errors }
+          slim :errors, locals: {
+            item_errors: validations.item_errors,
+            collection_errors: validations.collection_errors
+          }
         end
 
       rescue => error

@@ -25,7 +25,7 @@ module Admin
 
       context '#extract_data' do
         it 'Transforms data' do
-          expect(subject.send(:to_hash)).to eq(expected_data)
+          expect(subject.send(:to_array)).to eq(expected_data)
         end
       end
 
@@ -43,7 +43,7 @@ module Admin
 
         context '#extract_data' do
           it 'Transforms data' do
-            expect(subject.send(:to_hash)).to eq([])
+            expect(subject.send(:to_array)).to eq([])
           end
         end
 

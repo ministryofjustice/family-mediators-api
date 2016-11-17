@@ -10,8 +10,8 @@ module Admin
         @parser = parser
       end
 
-      def process
-        data = to_hash
+      def to_a
+        data = to_array
         data = parser.parse(data) if parser
         data
       end
@@ -27,7 +27,7 @@ module Admin
 
       private
 
-      def to_hash
+      def to_array
         return [] if first_worksheet[0].nil?
 
         processed_headings = Headings.process(
