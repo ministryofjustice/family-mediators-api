@@ -12,6 +12,14 @@ module UploadHelpers
     find('input[type="submit"]').click
   end
 
+  def get_table_data(selector)
+    page.all(selector + ' tr').collect do |row|
+      row.all(:xpath, './/th|td').collect do |cell|
+        cell.text
+      end
+    end
+  end
+
 end
 
 World(UploadHelpers)

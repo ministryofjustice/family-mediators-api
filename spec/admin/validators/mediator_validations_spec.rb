@@ -8,7 +8,8 @@ module Admin
             'md_offers_dcc' => 'Y',
             'md_first_name' => 'John',
             'md_last_name' => 'Smith',
-            'md_mediation_legal_aid' => 'Y'
+            'md_mediation_legal_aid' => 'Y',
+            'md_ppc_id' => '8297A'
         }
       end
 
@@ -18,7 +19,8 @@ module Admin
             'md_offers_dcc' => 'Y',
             'md_first_name' => 'Jane',
             'md_last_name' => 'Doe',
-            'md_mediation_legal_aid' => 'Y'
+            'md_mediation_legal_aid' => 'Y',
+            'md_ppc_id' => '8297A'
         }
       end
 
@@ -60,9 +62,13 @@ module Admin
             expect(item_errors.count).to eq(1)
           end
 
-          it 'returns ValidationError class' do
-            expect(item_errors[0]).to be_kind_of(Admin::Validators::ValidationError)
+          it 'returns ValidationErrorMessage class' do
+            expect(item_errors[0]).to be_kind_of(Admin::Validators::ErrorMessage)
           end
+
+          # it 'sets heading to equal row number' do
+          #   expect(item_errors[0].heading).to eq(3)
+          # end
 
         end
 
@@ -78,6 +84,11 @@ module Admin
         it 'returns 1 message' do
           expect(validations.collection_errors.count).to eq(1)
         end
+
+        it 'returns IntegrityErrorMessage class' do
+          expect(validations.collection_errors[0]).to be_kind_of(Admin::Validators::ErrorMessage)
+        end
+
       end
 
     end
