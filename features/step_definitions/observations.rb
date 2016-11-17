@@ -8,7 +8,10 @@ Then(/^the response data should have (.*) items$/) do |num|
   expect(data.count).to eq(num.to_i)
 end
 
-And(/^I should see the following (#{ERROR_TABLE_SELECTOR}):$/) do |selector, expected_results|
+
+And(/^I should see the following (.*):$/) do |selector, expected_results|
+  selector = '#' + selector.downcase.tr(' ', '-')
   results = get_table_data(selector)
   expected_results.diff!(results)
 end
+
