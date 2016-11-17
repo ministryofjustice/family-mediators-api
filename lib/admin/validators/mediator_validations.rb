@@ -16,11 +16,11 @@ module Admin
         @duplicate_registration_nos = duplicate_registration_nos(mediators)
       end
 
-      def duplicate_registration_nos mediators
+      def duplicate_registration_nos(mediators)
         registration_numbers = mediators.map do |mediator|
           mediator['registration_no']
         end
-        duplicates = registration_numbers.select{|registration_number| registration_numbers.count(registration_number) > 1 }
+        duplicates = registration_numbers.select { |registration_number| registration_numbers.count(registration_number) > 1 }
         duplicates.uniq
       end
 
