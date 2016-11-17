@@ -1,5 +1,5 @@
-require_relative 'mediator'
-require_relative 'validation_error'
+require_relative 'mediator_validator'
+require_relative 'error_message'
 
 module Admin
   module Validators
@@ -10,17 +10,17 @@ module Admin
 
       def initialize(mediators)
         @validations = mediators.map do |mediator|
-          result = Mediator.new(mediator).validate
+          result = MediatorValidator.new(mediator).validate
           result
         end
         @duplicate_registration_nos = duplicate_registration_nos(mediators)
       end
 
-      def duplicate_registration_nos mediators
+      def duplicate_registration_nos(mediators)
         registration_numbers = mediators.map do |mediator|
           mediator['registration_no']
         end
-        duplicates = registration_numbers.select{|registration_number| registration_numbers.count(registration_number) > 1 }
+        duplicates = registration_numbers.select { |registration_number| registration_numbers.count(registration_number) > 1 }
         duplicates.uniq
       end
 
@@ -31,9 +31,7 @@ module Admin
       def collection_errors
         collection_errors = []
         if @duplicate_registration_nos.length > 0
-          collection_errors << {
-            'Duplicate registration numbers': @duplicate_registration_nos
-          }
+          collection_errors << ErrorMessage.new(heading: 'Duplicate registration numbers', values: @duplicate_registration_nos)
         end
         collection_errors
       end
@@ -43,7 +41,7 @@ module Admin
         validations.each_with_index do |result, index|
           result_messages = result.messages
           unless result_messages.empty?
-            error_messages << ValidationError.new(index + 2, result_messages)
+            error_messages << ErrorMessage.new(heading: index, values: result_messages)
           end
         end
         error_messages
