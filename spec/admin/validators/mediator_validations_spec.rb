@@ -9,7 +9,7 @@ module Admin
             'md_first_name' => 'John',
             'md_last_name' => 'Smith',
             'md_mediation_legal_aid' => 'Y',
-            'md_ppc_id' => '8297A'
+            'md_ppc_id' => '1456T'
         }
       end
 
@@ -20,7 +20,7 @@ module Admin
             'md_first_name' => 'Jane',
             'md_last_name' => 'Doe',
             'md_mediation_legal_aid' => 'Y',
-            'md_ppc_id' => '8297A'
+            'md_ppc_id' => '1234A'
         }
       end
 
@@ -74,22 +74,7 @@ module Admin
 
       end
 
-      describe '#unique' do
-        let(:validations) do
-          data = [valid_input_1, valid_input_2]
-          data[1] = data[1].merge('registration_no' => data[0]['registration_no'])
-          MediatorValidations.new(data)
-        end
 
-        it 'returns 1 message' do
-          expect(validations.collection_errors.count).to eq(1)
-        end
-
-        it 'returns IntegrityErrorMessage class' do
-          expect(validations.collection_errors[0]).to be_kind_of(Admin::Validators::ErrorMessage)
-        end
-
-      end
 
     end
   end
