@@ -9,11 +9,12 @@ module Admin
           'md_first_name' => 'John',
           'md_last_name' => 'Smith',
           'md_mediation_legal_aid' => 'Y',
-          'md_ppc_id' => '8297A'
+          'md_ppc_id' => '8297A',
+          'fmca_cert' => '21/11/2016'
         }
       end
 
-      describe 'registration no' do
+      describe 'registration_no' do
 
         context 'when blank' do
           it 'is invalid' do
@@ -51,7 +52,7 @@ module Admin
 
       end
 
-      describe 'md offers dcc' do
+      describe 'md_offers_dcc' do
 
         context 'when blank' do
           it 'is invalid' do
@@ -97,7 +98,7 @@ module Admin
 
       end
 
-      describe 'first name' do
+      describe 'md_first_name' do
 
         context 'when blank' do
           it 'is invalid' do
@@ -133,7 +134,7 @@ module Admin
 
       end
 
-      describe 'last name' do
+      describe 'md_last_name' do
 
         context 'when blank' do
           it 'is invalid' do
@@ -169,7 +170,7 @@ module Admin
 
       end
 
-      describe 'MD_Mediation_Legal_Aid' do
+      describe 'md_mediation_legal_aid' do
 
         context 'when blank' do
           it 'is invalid' do
@@ -215,7 +216,7 @@ module Admin
 
       end
 
-      describe 'MD_PPC_ID' do
+      describe 'md_ppc_id' do
 
         context 'when missing' do
           it 'is invalid' do
@@ -248,6 +249,64 @@ module Admin
             data = valid_input.merge('md_ppc_id' => 'not known')
             result = MediatorValidator.new(data).validate
             expect(result.success?).to eq(true)
+          end
+        end
+
+      end
+
+      describe 'fmca_cert' do
+
+        context 'when missing' do
+          it 'is invalid' do
+            valid_input.delete('fmca_cert')
+            result = MediatorValidator.new(valid_input).validate
+            expect(result.success?).to eq(false)
+          end
+        end
+
+        context 'when blank' do
+          it 'is invalid' do
+            data = valid_input.merge('fmca_cert' => '')
+            result = MediatorValidator.new(data).validate
+            expect(result.success?).to eq(false)
+          end
+        end
+
+        ['unknown','working towards'].each do |val|
+          context "when '#{val}'" do
+            it 'is valid' do
+              data = valid_input.merge('fmca_cert' => val)
+              result = MediatorValidator.new(data).validate
+              expect(result.success?).to eq(true)
+            end
+          end
+        end
+
+        ['2016', '05/2016', '24/07/2016'].each do |val|
+          context "when '#{val}'" do
+            it 'is valid' do
+              data = valid_input.merge('fmca_cert' => val)
+              result = MediatorValidator.new(data).validate
+              expect(result.success?).to eq(true)
+            end
+          end
+        end
+
+        ['13/2016','32/04/2016'].each do |val|
+          context "when '#{val}'" do
+            it 'is invalid' do
+              data = valid_input.merge('fmca_cert' => val)
+              result = MediatorValidator.new(data).validate
+              expect(result.success?).to eq(false)
+            end
+          end
+        end
+
+        context "when 'blah'" do
+          it 'is invalid' do
+            data = valid_input.merge('fmca_cert' => 'blah')
+            result = MediatorValidator.new(data).validate
+            expect(result.success?).to eq(false)
           end
         end
 
