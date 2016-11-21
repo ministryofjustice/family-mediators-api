@@ -19,7 +19,7 @@ html
             - collection_errors.each do |error|
                 tr
                   td = error.heading
-                  td = error.values.join(' ')
+                  td = error.values.join(' | ')
 
       - if item_errors.size > 0
         h2.heading-large Data errors
