@@ -1,5 +1,6 @@
 require_relative 'mediator_validator'
 require_relative 'error_message'
+require_relative 'referential_validator'
 
 module Admin
   module Validators
@@ -10,30 +11,17 @@ module Admin
 
       def initialize(mediators)
         @validations = mediators.map do |mediator|
-          result = MediatorValidator.new(mediator).validate
-          result
+          MediatorValidator.new(mediator).validate
         end
-        @duplicate_registration_nos = duplicate_registration_nos(mediators)
-      end
-
-      def duplicate_registration_nos(mediators)
-        registration_numbers = mediators.map do |mediator|
-          mediator['registration_no']
-        end
-        duplicates = registration_numbers.select { |registration_number| registration_numbers.count(registration_number) > 1 }
-        duplicates.uniq
+        @referential_validations = ReferentialValidator.new(mediators).validate
       end
 
       def valid?
-        validations.all? {|result| result.success? } && @duplicate_registration_nos.length == 0
+        validations.all? {|result| result.success? } && @referential_validations.messages.count == 0
       end
 
       def collection_errors
-        collection_errors = []
-        if @duplicate_registration_nos.length > 0
-          collection_errors << ErrorMessage.new(heading: 'Duplicate registration numbers', values: @duplicate_registration_nos)
-        end
-        collection_errors
+        @referential_validations.messages
       end
 
       def item_errors

@@ -18,7 +18,6 @@ Given(/^there's (\d+) records in the database$/) do |num|
 end
 
 Given(/^I upload a spreadsheet like this:$/) do |table|
-  # table is a table.hashes.keys # => [:Registration No, :MD_Offers_DCC, :MD_Last_name, :MD_First_name, :MD_Mediation_legal_aid]
   table_data = table.raw
   headings = table_data[0]
   data = table_data[1..-1]

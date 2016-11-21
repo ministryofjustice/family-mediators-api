@@ -1,6 +1,5 @@
 require_relative '../../support/helpers/temporary_workbook'
 
-
 module UploadHelpers
 
   require_relative '../../support/helpers/spreadsheet_data'
@@ -13,11 +12,12 @@ module UploadHelpers
   end
 
   def get_table_data(selector)
-    page.all(selector + ' tr').collect do |row|
+    data = page.all(selector + ' tr').collect do |row|
       row.all(:xpath, './/th|td').collect do |cell|
         cell.text
       end
     end
+    !data.empty? ? data : [[]]
   end
 
 end

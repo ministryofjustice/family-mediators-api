@@ -26,3 +26,12 @@ Feature: A spreadsheet upload is validated against a set of rules. If there are 
     And I should see the following collection errors:
       | Error                          | Value(s) |
       | Duplicate registration numbers | 1234T    |
+
+  Scenario: MD_PPC_ID not recognised
+    Given I upload a spreadsheet like this:
+      | Registration No | MD_Offers_DCC | MD_Last_name | MD_First_name | MD_Mediation_legal_aid | MD_PPC_ID |
+      | 1234T           | Y             | Irons        | John          | Y                      | 4567E     |
+      | 4567E           | Y             | Wayne        | Bruce         | Y                      | 5647T     |
+    And I should see the following collection errors:
+      | Error                 | Value(s) |
+      | MD_PPC_ID not recognised | 5647T    |
