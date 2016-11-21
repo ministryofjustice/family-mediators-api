@@ -1,6 +1,5 @@
 require_relative '../../support/helpers/temporary_workbook'
 
-
 module UploadHelpers
 
   require_relative '../../support/helpers/spreadsheet_data'
