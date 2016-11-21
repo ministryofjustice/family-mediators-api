@@ -4,6 +4,7 @@ module Admin
   class App < Sinatra::Base
 
     configure do
+      set :file_validator, Admin::Validators::FileValidator
       set :data_validator, Admin::Validators::MediatorValidations
     end
 
@@ -40,9 +41,9 @@ module Admin
         redirect to "/upload-success"
       else
         slim :errors, locals: {
+          file_errors: [],
           item_errors: data_validations.item_errors,
-          collection_errors: data_validations.collection_errors,
-          dump: sheet.dump64
+          collection_errors: data_validations.collection_errors
         }
       end
     end
@@ -60,8 +61,8 @@ module Admin
         raise 'No file specified' unless params[:spreadsheet_file]
         sheet = Processing::Spreadsheet.new
         sheet.read(file.path)
-        # file_validations = settings.file_validator.new(sheet.to_a)
-        if 1 == 1 # file_validations.valid?
+        file_validations = settings.file_validator.new(sheet.to_a)
+        if file_validations.valid?
           slim :overview, locals: {
             file_name: file_name,
             file_size: file.size,
@@ -69,8 +70,10 @@ module Admin
             sheet: sheet
           }
         else
-          slim :file_errors, locals: {
-            errors: [ 'all is woe', 'shoot - it is bad' ]
+          slim :errors, locals: {
+            file_errors: file_validations.errors,
+            collection_errors: [],
+            item_errors: []
           }
         end
 

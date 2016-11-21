@@ -18,7 +18,7 @@ module Admin
 
       def valid?
         validations.all? { |result| result.success? } &&
-          @referential_validations.empty?
+          @referential_validations.success?
       end
 
       def collection_errors
