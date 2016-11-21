@@ -4,8 +4,7 @@ module Admin
   class App < Sinatra::Base
 
     configure do
-      set :parser, Admin::Parsers::Mediators.new
-      set :validator, Admin::Validators::MediatorValidations
+      set :data_validator, Admin::Validators::MediatorValidations
     end
 
     set :views, File.dirname(__FILE__) + '/../../views'
@@ -31,8 +30,25 @@ module Admin
       handle_upload
     end
 
+    post '/process' do
+      sheet = Processing::Spreadsheet.new
+      sheet.load64(params[:dump])
+      data_validations = settings.data_validator.new(sheet.to_a)
+
+      if data_validations.valid?
+        sheet.save
+        redirect to "/upload-success"
+      else
+        slim :errors, locals: {
+          item_errors: data_validations.item_errors,
+          collection_errors: data_validations.collection_errors,
+          dump: sheet.dump64
+        }
+      end
+    end
+
     get '/upload-success' do
-      slim :upload_success, locals: { size: params[:filesize] }
+      slim :upload_success
     end
 
     get '/upload-fail' do
@@ -42,20 +58,19 @@ module Admin
     def handle_upload
       begin
         raise 'No file specified' unless params[:spreadsheet_file]
-        sheet = spreadsheet(file.path)
-        sheet_as_array = sheet.to_a
-
-
-
-        validations = settings.validator.new(sheet_as_array)
-
-        if validations.valid?
-          sheet.save(sheet_as_array)
-          redirect to "/upload-success?filesize=#{file.size}"
+        sheet = Processing::Spreadsheet.new
+        sheet.read(file.path)
+        # file_validations = settings.file_validator.new(sheet.to_a)
+        if 1 == 1 # file_validations.valid?
+          slim :overview, locals: {
+            file_name: file_name,
+            file_size: file.size,
+            existing_count: API::Models::Mediator.count,
+            sheet: sheet
+          }
         else
-          slim :errors, locals: {
-            item_errors: validations.item_errors,
-            collection_errors: validations.collection_errors
+          slim :file_errors, locals: {
+            errors: [ 'all is woe', 'shoot - it is bad' ]
           }
         end
 
@@ -69,8 +84,8 @@ module Admin
       params[:spreadsheet_file][:tempfile]
     end
 
-    def spreadsheet(path)
-      Processing::Spreadsheet.new(RubyXL::Parser.parse(path), settings.parser)
+    def file_name
+      params[:spreadsheet_file][:filename]
     end
 
   end

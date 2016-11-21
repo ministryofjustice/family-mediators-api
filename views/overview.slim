@@ -1,0 +1,53 @@
+html
+  head
+    title Mediators Admin
+    link href='style.css' media='screen' rel='stylesheet' type='text/css'
+  body
+
+    main#content role="main"
+      h1.heading-large Check file details before processing the excel file
+
+      table.check-your-answers
+        thead
+          tr
+            th colspan='2'
+              h2.heading-medium File uploaded
+
+        tbody
+          tr
+            td = file_name
+            td
+              = "File size: #{file_size} bytes"
+              br
+              = "File mediator count: #{sheet.to_a.size}"
+              br
+              = "Existing mediator count: #{existing_count}"
+
+          tr
+            td Confidential fields
+            td
+              | FOO
+              br
+              | BAR
+              br
+              | BAZ
+
+          tr
+            td Public fields
+            td
+              | BISH
+              br
+              | BOSH
+              br
+              | BASH
+
+      h2.heading-medium Now process your spreadsheet
+
+      p
+        | By submitting this spreadsheet for processing, you acknowledge updates
+        |  to the live data will be be made immediately if the data is valid.
+
+      form.form method='post' action='/admin/process'
+        .form-group
+          input type="hidden" name="dump" value="#{sheet.dump64}"
+          input.button type="submit" value="Process data and apply updates"

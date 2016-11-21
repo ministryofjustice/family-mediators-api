@@ -1,3 +1,7 @@
+require 'base64'
+require 'zlib'
+require 'yaml'
+
 require_relative 'parsers/mediators'
 require_relative 'parsers/practice'
 require_relative 'validators/mediator_validations'

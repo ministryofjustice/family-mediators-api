@@ -1,6 +1,7 @@
-Feature: A spreadsheet upload is validated against a set of rules. If there are validation errors, they
-  are presented on-screen. These errors must be corrected in the spreadsheet to successfully upload new data to the
-  database backing the API.
+Feature: A spreadsheet upload is validated against a set of rules. If there are
+  validation errors, they are presented on-screen. These errors must be corrected
+  in the spreadsheet to successfully upload new data to the database backing the
+  API.
 
   Scenario: Mediator data errors
     Given I upload a spreadsheet like this:
