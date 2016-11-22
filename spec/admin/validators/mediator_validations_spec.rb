@@ -9,7 +9,8 @@ module Admin
             'md_first_name' => 'John',
             'md_last_name' => 'Smith',
             'md_mediation_legal_aid' => 'Y',
-            'md_ppc_id' => '1456T'
+            'md_ppc_id' => '1456T',
+            'fmca_cert' => '21/11/2016'
         }
       end
 
@@ -20,7 +21,8 @@ module Admin
             'md_first_name' => 'Jane',
             'md_last_name' => 'Doe',
             'md_mediation_legal_aid' => 'Y',
-            'md_ppc_id' => '1234A'
+            'md_ppc_id' => '1234A',
+            'fmca_cert' => '21/11/2016'
         }
       end
 
@@ -65,17 +67,8 @@ module Admin
           it 'returns ValidationErrorMessage class' do
             expect(item_errors[0]).to be_kind_of(Admin::Validators::ErrorMessage)
           end
-
-          # it 'sets heading to equal row number' do
-          #   expect(item_errors[0].heading).to eq(3)
-          # end
-
         end
-
       end
-
-
-
     end
   end
 end

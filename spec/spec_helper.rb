@@ -5,13 +5,10 @@ $LOAD_PATH.unshift("#{__dir__}/..")
 require 'lib/env'
 require 'lib/mediators'
 
-require 'factories/mediator'
-require 'support/factories/spreadsheet'
-
-
-def fixture_path file
-  File.expand_path("../support/fixtures/#{file}", __FILE__)
-end
+# require 'factories/mediator'
+# require 'support/factories/spreadsheet'
+Dir["#{__dir__}/../support/factories/*.rb"].each { |f| require f }
+Dir["#{__dir__}/support/**/*.rb"].each { |f| require f }
 
 RSpec.configure do |config|
 

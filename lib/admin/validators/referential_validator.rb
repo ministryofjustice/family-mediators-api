@@ -1,6 +1,5 @@
 module Admin
   module Validators
-
     class ValidationResult
 
       attr_reader :messages
