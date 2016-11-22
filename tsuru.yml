@@ -7,4 +7,4 @@ healthcheck:
   use_in_router: false
 hooks:
   build:
-    - chmod a+x scripts/generate_docs.sh && ./scripts/generate_docs.sh
+#    - chmod a+x scripts/generate_docs.sh && ./scripts/generate_docs.sh
