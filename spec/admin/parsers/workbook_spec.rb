@@ -1,6 +1,6 @@
 module Admin
-  module Processing
-    describe Spreadsheet do
+  module Parsers
+    describe Workbook do
 
       let(:workbook) do
         headings = ['First Name', 'Last Name']
@@ -15,31 +15,14 @@ module Admin
         ]
       end
 
-      let(:fake_xl_parser) do
-        double("FakeXLParser", parse: workbook)
-      end
-
-      before do
-        allow(API::Models::Mediator).to receive(:create)
-        subject.read('fake/path')
-      end
-
       subject do
-        Admin::Processing::Spreadsheet.new(
-          xl_parser: fake_xl_parser,
-          data_parser: nil
-        )
+        Workbook.new(workbook)
       end
 
       context '#transform_worksheet' do
         it 'Transforms data' do
           expect(subject.send(:transform_worksheet)).to eq(expected_data)
         end
-      end
-
-      xit 'should insert into DB' do
-        expect(API::Models::Mediator).to receive(:create).at_least(:once)
-        subject.save
       end
 
       context 'empty workbook' do
