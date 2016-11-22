@@ -9,8 +9,8 @@ module Admin
         @data_parser = data_parser
       end
 
-      def save
-        saved_data = to_a.map { |item| {'data' => item} }
+      def save(array) # TODO
+        saved_data = array.map { |item| {'data' => item} }
 
         ActiveRecord::Base.transaction do
           API::Models::Mediator.delete_all
@@ -20,14 +20,6 @@ module Admin
 
       def read(path)
         @workbook = @xl_parser.parse(path)
-      end
-
-      def dump64
-        @dump ||= Base64.encode64(Zlib::Deflate.deflate(to_a.to_json))
-      end
-
-      def load64(dump)
-        @as_array = JSON.parse(Zlib::Inflate.inflate(Base64.decode64(dump)))
       end
 
       def to_a

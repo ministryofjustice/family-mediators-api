@@ -19,7 +19,7 @@ html
             td
               = "File size: #{file_size} bytes"
               br
-              = "File mediator count: #{sheet.to_a.size}"
+              = "File mediator count: #{sheet_size}"
               br
               = "Existing mediator count: #{existing_count}"
 
@@ -47,7 +47,7 @@ html
         | By submitting this spreadsheet for processing, you acknowledge updates
         |  to the live data will be be made immediately if the data is valid.
 
-      form.form method='post' action='/admin/process'
+      form.form method='post' action='/admin/upload-process'
         .form-group
-          input type="hidden" name="dump" value="#{sheet.dump64}"
+          input type="hidden" name="dump" value="#{dump}"
           input.button type="submit" value="Process data and apply updates"

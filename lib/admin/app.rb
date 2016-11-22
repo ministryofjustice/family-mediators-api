@@ -6,6 +6,7 @@ module Admin
     configure do
       set :file_validator, Admin::Validators::FileValidator
       set :data_validator, Admin::Validators::MediatorValidations
+      set :marshaler, Admin::Processing::Marshaler
     end
 
     set :views, File.dirname(__FILE__) + '/../../views'
@@ -31,13 +32,13 @@ module Admin
       handle_upload
     end
 
-    post '/process' do
-      sheet = Processing::Spreadsheet.new
-      sheet.load64(params[:dump])
-      data_validations = settings.data_validator.new(sheet.to_a)
+    post '/upload-process' do
+      sheet = Processing::Spreadsheet.new()
+      sheet_as_array = settings.marshaler.to_array(params[:dump])
+      data_validations = settings.data_validator.new(sheet_as_array)
 
       if data_validations.valid?
-        sheet.save
+        sheet.save(sheet_as_array) # TODO
         redirect to "/upload-success"
       else
         slim :errors, locals: {
@@ -67,7 +68,8 @@ module Admin
             file_name: file_name,
             file_size: file.size,
             existing_count: API::Models::Mediator.count,
-            sheet: sheet
+            sheet_size: sheet.to_a.size,
+            dump: settings.marshaler.to_string(sheet.to_a)
           }
         else
           slim :errors, locals: {
