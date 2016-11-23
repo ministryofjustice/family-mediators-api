@@ -9,7 +9,7 @@ module Admin
           mediator
         end
       end
-      
+
       def self.parse_practices(data)
         if data[PRACTICES_HEADING]
           data[PRACTICES_HEADING] = Practice.parse(data[PRACTICES_HEADING])
