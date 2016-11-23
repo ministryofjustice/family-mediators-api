@@ -32,6 +32,13 @@ module Admin
         MediatorValidator.new(data).validate
       end
 
+      describe('md_practices') do
+        context 'when 0 practices' do
+          let(:md_practices) { [] }
+          it { should_not be_valid }
+        end
+      end
+
       describe 'registration_no' do
 
         context 'when blank' do
@@ -206,7 +213,7 @@ module Admin
 
         keys.each do |val|
           context "when #{val} missing" do
-            let(:missing_data) { data.tap { |k| k.delete(val) } }
+            let(:missing_data) { data.tap { |key| key.delete(val) } }
             it { should_not be_valid }
           end
         end
