@@ -9,6 +9,11 @@ module Admin
       let(:md_mediation_legal_aid) { 'Y' }
       let(:md_ppc_id) { '8297A' }
       let(:fmca_cert) { '21/11/2016' }
+      let(:md_practices) do
+        [{
+            'tel' => '020 8123 3456'
+        }]
+      end
 
       let(:data) do
         {
@@ -18,7 +23,8 @@ module Admin
             'md_last_name'           => md_last_name,
             'md_mediation_legal_aid' => md_mediation_legal_aid,
             'md_ppc_id'              => md_ppc_id,
-            'fmca_cert'              => fmca_cert
+            'fmca_cert'              => fmca_cert,
+            'md_practices'           => md_practices
         }
       end
 

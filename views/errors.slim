@@ -48,4 +48,9 @@ html
                 tr
                   td = error.heading + 2
                   td = field_name
-                  td = message.join(' AND ')
+                  - if message.is_a?(Hash)
+                    td = message
+                      /- message.each do |i,v|
+                      /  | Practice #{i} #{v[0]}
+                  - else
+                    td = message.join(' AND ')

@@ -13,6 +13,10 @@ class SpreadsheetData
     invalid_item_count.times { @data << invalid_mediator.values }
   end
 
+  def practice_data
+    "01234567890"
+  end
+
   def valid_mediator
     {
         'registration_no' => generate_valid_registration_no,
@@ -21,7 +25,8 @@ class SpreadsheetData
         'md_last_name' => 'Smith',
         'md_mediation_legal_aid' => 'Y',
         'md_ppc_id' => 'not known',
-        'fmca_cert' => 'unknown'
+        'fmca_cert' => 'unknown',
+        'md_practices' => practice_data
     }
   end
 
