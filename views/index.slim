@@ -1,26 +1,19 @@
-html
-  head
-    title Mediators Admin
-    link href='style.css' media='screen' rel='stylesheet' type='text/css'
-  body
+.breadcrumbs
+  ol
+    li
+      a href="/admin/"  Home
+    li
+      a href="/admin/actions"  Actions
+h1.heading-xlarge
+  | Family Mediator API: Data update service
+form.form method='post' action='/admin/upload' enctype='multipart/form-data'
+  h1.form-title.heading-large
+    | Family Mediators data upload
 
-    main#content role="main"
-      .breadcrumbs
-        ol
-          li
-            a href="/admin"  Home
-          li
-            a href="/admin/actions"  Actions
-      h1.heading-xlarge
-        | Family Mediator API: Data update service
-      form.form method='post' action='/admin/upload' enctype='multipart/form-data'
-        h1.form-title.heading-large
-          | Family Mediators data upload
+  .form-group
+    label.form-label-bold for="file-name"  Excel file
+    p.form-hint Navigate to the .xslx file on your file system
+    input#file-name.form-control type="file" name='spreadsheet_file' /
 
-        .form-group
-          label.form-label-bold for="file-name"  Excel file
-          p.form-hint Navigate to the .xslx file on your file system
-          input#file-name.form-control type="file" name='spreadsheet_file' /
-
-        .form-group
-          input.button type="submit" value="Continue" /
+  .form-group
+    input.button type="submit" value="Continue" /

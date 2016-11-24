@@ -3,11 +3,6 @@ require 'sinatra/json'
 module Admin
   class App < Sinatra::Base
 
-    configure do
-      set :parser, Admin::Parsers::Mediators.new
-      set :validator, Admin::Validators::MediatorValidations
-    end
-
     set :views, File.dirname(__FILE__) + '/../../views'
     set :public_folder, 'public'
 
@@ -29,33 +24,38 @@ module Admin
 
     post '/upload' do
       begin
-        raise 'No file specified' unless params[:spreadsheet_file]
-        file = params[:spreadsheet_file][:tempfile]
+        success, details = Services::ProcessFile.new(
+          params[:spreadsheet_file]
+        ).call
 
-        spreadsheet = Processing::Spreadsheet.new(RubyXL::Parser.parse(file.path), settings.parser)
-        processed_data = spreadsheet.process
-        validations = settings.validator.new(processed_data)
-
-        if validations.valid?
-          spreadsheet.save(processed_data)
-          redirect to "/upload-success?filesize=#{file.size}"
+        if success
+          slim :overview, locals: details
         else
-          slim :errors, locals: { item_errors: validations.item_errors, collection_errors: validations.collection_errors }
+          slim :file_errors, locals: details
         end
 
       rescue => error
         LOGGER.fatal "Failed /upload: #{error.message}"
-        redirect to '/upload-fail'
+        redirect to('/upload-fail')
+      end
+    end
+
+    post '/upload-process' do
+      success, details = Services::ProcessData.new(params[:dump]).call
+
+      if success
+        redirect to('/upload-success')
+      else
+        slim :data_errors, locals: details
       end
     end
 
     get '/upload-success' do
-      slim :upload_success, locals: { size: params[:filesize] }
+      slim :upload_success
     end
 
     get '/upload-fail' do
       slim :upload_fail
     end
-
   end
 end

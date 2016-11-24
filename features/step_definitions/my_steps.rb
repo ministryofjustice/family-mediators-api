@@ -13,12 +13,17 @@ When(/^I visit '(.*)'$/) do |endpoint|
   visit url
 end
 
+When(/I click '(.*)'$/) do |text|
+  find_button(text).click
+end
+
 Given(/^there's (\d+) records in the database$/) do |num|
   create_list(:mediator, num.to_i)
 end
 
 Given(/^I upload a spreadsheet like this:$/) do |table|
   table_data = table.raw
+  table_data = insert_practice(table_data)
   headings = table_data[0]
   data = table_data[1..-1]
   upload_spreadsheet(headings, data)

@@ -9,6 +9,11 @@ module Admin
       let(:md_mediation_legal_aid) { 'Y' }
       let(:md_ppc_id) { '8297A' }
       let(:fmca_cert) { '21/11/2016' }
+      let(:md_practices) do
+        [{
+            'tel' => '020 8123 3456'
+        }]
+      end
 
       let(:data) do
         {
@@ -18,12 +23,20 @@ module Admin
             'md_last_name'           => md_last_name,
             'md_mediation_legal_aid' => md_mediation_legal_aid,
             'md_ppc_id'              => md_ppc_id,
-            'fmca_cert'              => fmca_cert
+            'fmca_cert'              => fmca_cert,
+            'md_practices'           => md_practices
         }
       end
 
       subject(:result) do
         MediatorValidator.new(data).validate
+      end
+
+      describe('md_practices') do
+        context 'when 0 practices' do
+          let(:md_practices) { [] }
+          it { should_not be_valid }
+        end
       end
 
       describe 'registration_no' do
@@ -200,7 +213,7 @@ module Admin
 
         keys.each do |val|
           context "when #{val} missing" do
-            let(:missing_data) { data.tap { |k| k.delete(val) } }
+            let(:missing_data) { data.tap { |key| key.delete(val) } }
             it { should_not be_valid }
           end
         end

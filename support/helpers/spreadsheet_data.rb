@@ -21,7 +21,8 @@ class SpreadsheetData
         'md_last_name' => 'Smith',
         'md_mediation_legal_aid' => 'Y',
         'md_ppc_id' => 'not known',
-        'fmca_cert' => 'unknown'
+        'fmca_cert' => 'unknown',
+        'md_practices' => "01234567890"
     }
   end
 
