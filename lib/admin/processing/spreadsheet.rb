@@ -29,6 +29,16 @@ module Admin
       private
 
       def to_hash
+				#TODO We will need to read the metafield here, to exclude private fields; consider what happens with delta/fingerprint if metafields change
+				#algo:
+				# read fields to exclude from spreadsheet.
+				# read all {ID, fingerprint} from DB
+				# For each row
+				#   remove fields to exclude
+				#   compute fingerprint.
+				#		if fingerprint == DB_fingerprint, next
+				#   add row to hash, attach fingerprint
+				# --- at save time: save fingerprint
         return [] if first_worksheet[0].nil?
 
         processed_headings = Headings.process(first_worksheet[0].cells.map { |cell| cell.value })
