@@ -2,9 +2,12 @@ module Util
 	class Digest
 		include ::Digest
 
+		# returns a unique fingerprint for a data structure as an MD5 hash, useful for quickly checking for changes.
+		# Order of hash keys and arrays is assumed to be unimportant for our purposes, and they are treated as sets - i.e., fingerprint([1,2,3]) == fingerprint([3,2,1])
 		def self.fingerprint(struct)
 			::Digest::MD5.hexdigest( _build_fingerprint struct )
 		end
+
 
 		def self._build_fingerprint(struct)
 			if struct.class == Hash
