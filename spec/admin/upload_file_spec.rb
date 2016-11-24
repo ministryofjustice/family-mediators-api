@@ -13,7 +13,7 @@ describe Admin::App do
 
   context 'unsuccessfully uploads file' do
     it 'redirects to /upload-fail' do
-      post '/upload', { spreadsheet_file: nil }
+      post '/upload', {xlsx_file: nil }
       follow_redirect!
       expect(last_request.path).to eq '/upload-fail'
     end

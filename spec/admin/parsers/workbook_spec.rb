@@ -2,7 +2,7 @@ module Admin
   module Parsers
     describe Workbook do
 
-      let(:workbook) do
+      let(:rubyxl_workbook) do
         headings = ['First Name', 'Last Name']
         data = [%w{ John Smith }, %w{ Donna Jones }]
         Support::Factories::Spreadsheet.build(headings, data)
@@ -16,7 +16,7 @@ module Admin
       end
 
       subject do
-        Workbook.new(workbook)
+        Workbook.new(rubyxl_workbook)
       end
 
       context '#transform_worksheet' do
@@ -26,7 +26,7 @@ module Admin
       end
 
       context 'empty workbook' do
-        let(:workbook) do
+        let(:rubyxl_workbook) do
           headings = []
           data = []
           Support::Factories::Spreadsheet.build(headings, data)

@@ -1,49 +1,63 @@
 module Admin
   module Services
+
+    # Orchestrates reading, parsing, file validation, and marshaling of data if
+    # necessary, of an XLSX file.
     class ProcessFile
 
-      def initialize(spreadsheet_file,
+      def initialize(xlsx_file,
                      file_validator: Validators::FileValidator,
                      marshaler: Processing::Marshaler,
                      xl_parser: RubyXL::Parser)
-        @spreadsheet_file = spreadsheet_file
+        @xlsx_file = xlsx_file
         @file_validator = file_validator
         @marshaler = marshaler
         @xl_parser = xl_parser
       end
 
       def call
-        raise 'No file specified' unless @spreadsheet_file
-        workbook = @xl_parser.parse(file.path)
-        data_as_array = Parsers::Workbook.new(workbook).call
-        with_expanded_practices = Parsers::MediatorPractices.parse(data_as_array)
-        file_validations = @file_validator.new(with_expanded_practices)
+        raise 'No file specified' unless @xlsx_file
+        rubyxl_workbook = @xl_parser.parse(file.path)
+        as_hashes = Parsers::Workbook.new(rubyxl_workbook).call
+        file_validations = @file_validator.new(as_hashes)
 
         if file_validations.valid?
-          [true, {
-            file_name: file_name,
-            file_size: file.size,
-            existing_count: API::Models::Mediator.count,
-            sheet_size: data_as_array.size,
-            dump: @marshaler.to_string(data_as_array)
-          }]
+          [ true, valid_locals(as_hashes) ]
         else
-          [false, {
-            file_errors: file_validations.errors,
-            collection_errors: [],
-            item_errors: []
-          }]
+          [ false, invalid_locals(file_validations.errors) ]
         end
       end
 
       private
 
       def file
-        @spreadsheet_file[:tempfile]
+        @xlsx_file[:tempfile]
       end
 
       def file_name
-        @spreadsheet_file[:filename]
+        @xlsx_file[:filename]
+      end
+
+      def file_size
+        file.size
+      end
+
+      def valid_locals(as_hashes)
+        {
+          file_name: file_name,
+          file_size: file_size,
+          existing_count: API::Models::Mediator.count,
+          sheet_size: as_hashes.size,
+          dump: @marshaler.to_string(as_hashes)
+        }
+      end
+
+      def invalid_locals(errors)
+        {
+          file_errors: errors,
+          collection_errors: [],
+          item_errors: []
+        }
       end
     end
   end

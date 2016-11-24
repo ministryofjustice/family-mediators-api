@@ -1,5 +1,8 @@
 module Admin
   module Services
+
+    # Orchestrates un-marshaling, expanding practices, validation and
+    # saving if successful, of mediator hashes.
     class ProcessData
 
       def initialize(dump,
@@ -13,12 +16,13 @@ module Admin
       end
 
       def call
-        sheet_as_array = @marshaler.to_array(@dump)
-        data_validations = @data_validator.new(sheet_as_array)
+        as_hashes = @marshaler.to_array(@dump)
+        with_expanded_practices = Parsers::MediatorPractices.parse(as_hashes)
+        data_validations = @data_validator.new(with_expanded_practices)
 
         if data_validations.valid?
-          @data_store.save(sheet_as_array)
-          [true, {}]
+          @data_store.save(with_expanded_practices)
+          [ true, {} ]
         else
           [false, {
             file_errors: [],
