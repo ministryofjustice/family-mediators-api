@@ -1,0 +1,13 @@
+h1.heading-xlarge Mediators spreadsheet errors
+
+- if file_errors.any?
+  h2.heading-large File errors
+
+  table#file-errors
+    thead
+      tr
+        th Error
+    tbody
+      - file_errors.each do |error|
+        tr
+          td = error

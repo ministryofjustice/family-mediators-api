@@ -10,7 +10,8 @@ module Admin
             'md_last_name' => 'Smith',
             'md_mediation_legal_aid' => 'Y',
             'md_ppc_id' => '1456T',
-            'fmca_cert' => '21/11/2016'
+            'fmca_cert' => '21/11/2016',
+            'md_practices' => [{ 'tel' => '01234567890'}]
         }
       end
 
@@ -22,7 +23,8 @@ module Admin
             'md_last_name' => 'Doe',
             'md_mediation_legal_aid' => 'Y',
             'md_ppc_id' => '1234A',
-            'fmca_cert' => '21/11/2016'
+            'fmca_cert' => '21/11/2016',
+            'md_practices' => [{ 'tel' => '01234567890'}]
         }
       end
 
