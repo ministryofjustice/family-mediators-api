@@ -2,7 +2,9 @@ Feature: Uploading a valid spreadsheet will change the data in the database back
 
   Scenario: Upload file successfully
     Given I upload a spreadsheet with 2 valid mediators
-    And I see 'Spreadsheet upload complete'
+    Then I see 'Check file details before processing the excel file'
+    When I click 'Process data and apply updates'
+    Then I see 'Spreadsheet upload complete'
     When I visit '/api/v1/mediators'
     Then the response data should have 2 items
 
@@ -11,5 +13,7 @@ Feature: Uploading a valid spreadsheet will change the data in the database back
     And I visit '/api/v1/mediators'
     And the response data should have 10 items
     When I upload a spreadsheet with 2 valid mediators
+    Then I see 'Check file details before processing the excel file'
+    When I click 'Process data and apply updates'
     And I visit '/api/v1/mediators'
     Then the response data should have 2 items

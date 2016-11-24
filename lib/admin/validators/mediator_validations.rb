@@ -17,7 +17,8 @@ module Admin
       end
 
       def valid?
-        validations.all? {|result| result.success? } && @referential_validations.messages.count == 0
+        validations.all? { |result| result.success? } &&
+          @referential_validations.success?
       end
 
       def collection_errors
@@ -26,6 +27,7 @@ module Admin
 
       def item_errors
         error_messages = []
+
         validations.each_with_index do |result, index|
           result_messages = result.messages
           unless result_messages.empty?

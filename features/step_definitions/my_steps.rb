@@ -13,6 +13,10 @@ When(/^I visit '(.*)'$/) do |endpoint|
   visit url
 end
 
+When(/I click '(.*)'$/) do |text|
+  find_button(text).click
+end
+
 Given(/^there's (\d+) records in the database$/) do |num|
   create_list(:mediator, num.to_i)
 end
@@ -22,4 +26,8 @@ Given(/^I upload a spreadsheet like this:$/) do |table|
   headings = table_data[0]
   data = table_data[1..-1]
   upload_spreadsheet(headings, data)
+end
+
+And(/^I click to proceed from the overview page$/) do
+  find_button('Process data and apply updates').click
 end

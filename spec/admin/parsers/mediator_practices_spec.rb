@@ -1,6 +1,6 @@
 module Admin
   module Parsers
-    describe Mediators do
+    describe MediatorPractices do
 
       let(:mediators) do
         [
@@ -26,7 +26,7 @@ module Admin
 
       context '#parse' do
         it 'Parses practices' do
-          expect(subject.parse(mediators)).to eq expected
+          expect(MediatorPractices.parse(mediators)).to eq expected
         end
       end
 
