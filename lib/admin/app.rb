@@ -31,7 +31,7 @@ module Admin
         if success
           slim :overview, locals: details
         else
-          slim :data_errors, locals: details
+          slim :file_errors, locals: details
         end
 
       rescue => error
