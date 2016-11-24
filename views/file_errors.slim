@@ -1,20 +1,13 @@
-html
-  head
-    title Mediators Admin
-    link href='style.css' media='screen' rel='stylesheet' type='text/css'
-  body
+h1.heading-xlarge Mediators spreadsheet errors
 
-    main#content role="main"
-      h1.heading-xlarge Mediators spreadsheet errors
+- if file_errors.any?
+  h2.heading-large File errors
 
-      - if file_errors.any?
-        h2.heading-large File errors
-
-        table#file-errors
-          thead
-            tr
-              th Error
-          tbody
-            - file_errors.each do |error|
-              tr
-                td = error
+  table#file-errors
+    thead
+      tr
+        th Error
+    tbody
+      - file_errors.each do |error|
+        tr
+          td = error

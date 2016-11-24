@@ -1,24 +1,18 @@
-html
-  head
-    title Mediators Admin
-    link href='style.css' media='screen' rel='stylesheet' type='text/css'
-  body
-    main#content role="main"
-      .grid-row
-        .column-two-thirds
-          .govuk-box-highlight
-            h1.bold-large Spreadsheet upload complete
-            p
-              | Thank you
+.grid-row
+  .column-two-thirds
+    .govuk-box-highlight
+      h1.bold-large Spreadsheet upload complete
+      p
+        | Thank you
 
-          p We have processed the spreadsheet data and updated the data served by the Family Mediators API.
-          p
-            a href="/api/v1/mediators" View all records in Family Mediators API
+    p We have processed the spreadsheet data and updated the data served by the Family Mediators API.
+    p
+      a href="/api/v1/mediators" View all records in Family Mediators API
 
-          h2.heading-medium What happens next
-          p Any service using the Family Mediators API will be accessing the latest data uploaded by you.
+    h2.heading-medium What happens next
+    p Any service using the Family Mediators API will be accessing the latest data uploaded by you.
 
-          p
-            | When you need to make another update, please start the
-            a<> href="/admin/upload" update process
-            | again.
+    p
+      | When you need to make another update, please start the
+      a<> href="/admin/upload" update process
+      | again.

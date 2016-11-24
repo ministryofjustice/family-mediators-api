@@ -1,54 +1,47 @@
-html
-  head
-    title Mediators Admin
-    link href='style.css' media='screen' rel='stylesheet' type='text/css'
-  body
+h1.heading-xlarge Mediators spreadsheet errors
 
-    main#content role="main"
-      h1.heading-xlarge Mediators spreadsheet errors
+- if file_errors.any?
+  h2.heading-large File errors
 
-      - if file_errors.any?
-        h2.heading-large File errors
+  table#file-errors
+    thead
+      tr
+        th Error
+    tbody
+      - file_errors.each do |error|
+        tr
+          td = error
 
-        table#file-errors
-          thead
-            tr
-              th Error
-          tbody
-            - file_errors.each do |error|
-              tr
-                td = error
+- if collection_errors.any?
+  h2.heading-large Reference errors
 
-      - if collection_errors.any?
-        h2.heading-large Reference errors
+  table#collection-errors
+    thead
+      tr
+        th Error
+        th Value(s)
+    tbody
+      - collection_errors.each do |error|
+          tr
+            td = error.heading
+            td = error.values.join(' | ')
 
-        table#collection-errors
-          thead
-            tr
-              th Error
-              th Value(s)
-          tbody
-            - collection_errors.each do |error|
-                tr
-                  td = error.heading
-                  td = error.values.join(' | ')
+- if item_errors.any?
+  h2.heading-large Data errors
 
-      - if item_errors.any?
-        h2.heading-large Data errors
-
-        table#item-errors
-          thead
-            tr
-              th Row
-              th Field
-              th Message
-          tbody
-            - item_errors.each do |error|
-              - error.values.each do |field_name, message|
-                tr
-                  td = error.heading + 2
-                  td = field_name
-                  - if message.is_a?(Hash)
-                    td = message
-                  - else
-                    td = message.join(' AND ')
+  table#item-errors
+    thead
+      tr
+        th Row
+        th Field
+        th Message
+    tbody
+      - item_errors.each do |error|
+        - error.values.each do |field_name, message|
+          tr
+            td = error.heading + 2
+            td = field_name
+            - if message.is_a?(Hash)
+              td = message
+            - else
+              td = message.join(' AND ')
