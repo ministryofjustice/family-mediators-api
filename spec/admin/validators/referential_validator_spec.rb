@@ -4,34 +4,34 @@ module Admin
 
       let(:valid_input_1) do
         {
-            'registration_no' => '1234A',
-            'md_offers_dcc' => 'Y',
-            'md_first_name' => 'John',
-            'md_last_name' => 'Smith',
-            'md_mediation_legal_aid' => 'Y',
-            'md_ppc_id' => '3452A'
+            :registration_no => '1234A',
+            :md_offers_dcc => 'Y',
+            :md_first_name => 'John',
+            :md_last_name => 'Smith',
+            :md_mediation_legal_aid => 'Y',
+            :md_ppc_id => '3452A'
         }
       end
 
       let(:valid_input_2) do
         {
-            'registration_no' => '4567A',
-            'md_offers_dcc' => 'Y',
-            'md_first_name' => 'John',
-            'md_last_name' => 'Smith',
-            'md_mediation_legal_aid' => 'Y',
-            'md_ppc_id' => '3452A'
+            :registration_no => '4567A',
+            :md_offers_dcc => 'Y',
+            :md_first_name => 'John',
+            :md_last_name => 'Smith',
+            :md_mediation_legal_aid => 'Y',
+            :md_ppc_id => '3452A'
         }
       end
 
       let(:valid_input_3) do
         {
-            'registration_no' => '3452A',
-            'md_offers_dcc' => 'Y',
-            'md_first_name' => 'John',
-            'md_last_name' => 'Smith',
-            'md_mediation_legal_aid' => 'Y',
-            'md_ppc_id' => '4567A'
+            :registration_no => '3452A',
+            :md_offers_dcc => 'Y',
+            :md_first_name => 'John',
+            :md_last_name => 'Smith',
+            :md_mediation_legal_aid => 'Y',
+            :md_ppc_id => '4567A'
         }
       end
 
@@ -54,8 +54,8 @@ module Admin
         context 'when not unique' do
           let(:result) do
             data = [
-                valid_input_1.merge('registration_no' => '4567A'),
-                valid_input_2.merge('registration_no' => '4567A'),
+                valid_input_1.merge(:registration_no => '4567A'),
+                valid_input_2.merge(:registration_no => '4567A'),
                 valid_input_3
             ]
             ReferentialValidator.new(data).validate
@@ -85,8 +85,8 @@ module Admin
             let(:result) do
               invalid_ppc_id = '4756T'
               data_with_unrecognised_md_ppc_id = [
-                  valid_input_1.merge('registration_no' => '4567A'),
-                  valid_input_2.merge('registration_no' => '4567A').merge('md_ppc_id' => invalid_ppc_id),
+                  valid_input_1.merge(:registration_no => '4567A'),
+                  valid_input_2.merge(:registration_no => '4567A').merge(:md_ppc_id => invalid_ppc_id),
                   valid_input_3
               ]
               ReferentialValidator.new(data_with_unrecognised_md_ppc_id).validate
@@ -137,7 +137,7 @@ module Admin
           let(:result) do
             data = [
                 valid_input_1,
-                valid_input_2.merge('md_ppc_id' => 'not known'),
+                valid_input_2.merge(:md_ppc_id => 'not known'),
                 valid_input_3
             ]
             ReferentialValidator.new(data).validate
@@ -154,7 +154,7 @@ module Admin
             invalid_ppc_id = '4756T'
             data = [
                 valid_input_1,
-                valid_input_2.merge('md_ppc_id' => invalid_ppc_id),
+                valid_input_2.merge(:md_ppc_id => invalid_ppc_id),
                 valid_input_3
             ]
             ReferentialValidator.new(data).validate

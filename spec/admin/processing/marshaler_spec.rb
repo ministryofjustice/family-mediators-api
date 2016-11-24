@@ -4,7 +4,7 @@ module Admin
       subject { Marshaler }
 
       let(:array) do
-        [ 42, 'foo', { 'bish' => 5, 'bosh' => 'hello' } ]
+        [ 42, 'foo', {:bish => 5, :bosh => 'hello' } ]
       end
 
       let(:marshaled) do

@@ -39,18 +39,18 @@ module Admin
         context 'practice with address, tel, email and url parts' do
           subject { Practice.parse(practice).first }
 
-          it { should include('address' => '1 Null Way, Wessex CM2 9AF')}
-          it { should include('tel' => '01245 605040')}
-          it { should include('email' => 'foo@bar.com')}
-          it { should include('url' => 'http://www.foobar.com/baz/')}
+          it { should include(:address => '1 Null Way, Wessex CM2 9AF')}
+          it { should include(:tel => '01245 605040')}
+          it { should include(:email => 'foo@bar.com')}
+          it { should include(:url => 'http://www.foobar.com/baz/')}
         end
 
         context 'practice with address only' do
           subject { Practice.parse(address_only_practice).first }
 
-          it { should include('address' => '1 Null Way, Wessex CM2 9AF')}
-          it { should include('tel' => nil)}
-          it { should include('email' => nil)}
+          it { should include(:address => '1 Null Way, Wessex CM2 9AF')}
+          it { should include(:tel => nil)}
+          it { should include(:email => nil)}
         end
 
         context 'multiple practices' do
@@ -64,9 +64,9 @@ module Admin
         context 'trims and compresses multiple spaces to one space for all fields' do
           subject { Practice.parse(practice_with_undesirable_spaces).first }
 
-          it { should include('address' => '1 Null Way, Wessex CM2 9AF')}
-          it { should include('tel' => '01245 605040')}
-          it { should include('email' => 'foo@bar.com')}
+          it { should include(:address => '1 Null Way, Wessex CM2 9AF')}
+          it { should include(:tel => '01245 605040')}
+          it { should include(:email => 'foo@bar.com')}
         end
 
         context 'missing trailing colons' do
@@ -83,9 +83,9 @@ module Admin
         context 'handles practice parts in any order' do
           subject { Practice.parse(reordered_practice_parts).first }
 
-          it { should include('address' => '1 Null Way, Wessex CM2 9AF')}
-          it { should include('tel' => '01245 605040')}
-          it { should include('email' => 'foo@bar.com')}
+          it { should include(:address => '1 Null Way, Wessex CM2 9AF')}
+          it { should include(:tel => '01245 605040')}
+          it { should include(:email => 'foo@bar.com')}
         end
       end
     end

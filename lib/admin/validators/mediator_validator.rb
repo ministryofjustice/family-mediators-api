@@ -5,6 +5,8 @@ module Admin
     class MediatorValidator
       include Hanami::Validations
 
+      messages_path 'config/messages.yml'
+
       predicate :date_string?, message: 'must be dd/mm/yyyy' do |current|
         begin
           no_of_parts = current.split('/').length
@@ -18,14 +20,14 @@ module Admin
       end
 
       validations do
-        required('registration_no').filled(:str?, format?: /^\d{4}[TAP]$/)
-        required('md_offers_dcc') { included_in?(%w(Y N)) }
-        required('md_first_name').filled(:str?)
-        required('md_last_name').filled(:str?)
-        required('md_mediation_legal_aid') { included_in?(%w(Y N)) }
-        required('md_ppc_id').filled(:str?, format?: /^(\d{4}[TAP]|not known)$/)
-        required('fmca_cert') { filled? & (included_in?(['unknown','working towards']) | date_string?) }
-        required('md_practices') { array? { min_size?(1) & each { schema PracticeValidator } } }
+        required(:registration_no).filled(:str?, format?: /^\d{4}[TAP]$/)
+        required(:md_offers_dcc) { included_in?(%w(Y N)) }
+        required(:md_first_name).filled(:str?)
+        required(:md_last_name).filled(:str?)
+        required(:md_mediation_legal_aid) { included_in?(%w(Y N)) }
+        required(:md_ppc_id).filled(:str?, format?: /^(\d{4}[TAP]|not known)$/)
+        required(:fmca_cert) { filled? & (included_in?(['unknown', 'working towards']) | date_string?) }
+        required(:md_practices) { array? { min_size?(1) & each { schema PracticeValidator } } }
       end
     end
   end

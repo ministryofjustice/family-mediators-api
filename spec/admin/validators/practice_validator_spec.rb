@@ -6,7 +6,7 @@ module Admin
 
       let(:md_practice) do
         {
-            'tel' => tel
+            :tel => tel
         }
       end
 
