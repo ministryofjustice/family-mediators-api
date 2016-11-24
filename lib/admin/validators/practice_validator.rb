@@ -6,6 +6,6 @@ class PracticeValidator
   end
 
   validations do
-    required('tel') { eql?('') | phone_number? }
+    required('tel') { none? | phone_number? }
   end
 end

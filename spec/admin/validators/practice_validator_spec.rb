@@ -18,9 +18,14 @@ module Admin
 
         describe 'telephone number' do
 
+          context 'when nil' do
+            let(:tel) { nil }
+            it { should be_valid }
+          end
+
           context 'when blank' do
             let(:tel) { '' }
-            it { should be_valid }
+            it { should_not be_valid }
           end
 
           [
