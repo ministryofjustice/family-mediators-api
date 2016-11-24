@@ -28,7 +28,3 @@ Given(/^I upload a spreadsheet like this:$/) do |table|
   data = table_data[1..-1]
   upload_spreadsheet(headings, data)
 end
-
-And(/^I click to proceed from the overview page$/) do
-  find_button('Process data and apply updates').click
-end
