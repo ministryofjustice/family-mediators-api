@@ -1,4 +1,6 @@
 - if message.is_a?(Hash)
-  td = build_messages(message)
+  td
+    - build_messages(message).each do |msg|
+      | #{msg}<br>
 - else
   td = message.join(' AND ')

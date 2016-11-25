@@ -7,7 +7,7 @@ module Admin
         title = "Practice #{index + 1}: "
         html << "#{title} #{errors.values.join(' AND ')}"
       end
-      html.join('<br>')
+      html
     end
 
   end
