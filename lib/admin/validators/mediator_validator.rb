@@ -18,14 +18,25 @@ module Admin
       end
 
       validations do
-        required('registration_no').filled(:str?, format?: /^\d{4}[TAP]$/)
-        required('md_offers_dcc') { included_in?(%w(Y N)) }
-        required('md_first_name').filled(:str?)
-        required('md_last_name').filled(:str?)
-        required('md_mediation_legal_aid') { included_in?(%w(Y N)) }
-        required('md_ppc_id').filled(:str?, format?: /^(\d{4}[TAP]|not known)$/)
-        required('fmca_cert') { filled? & (included_in?(['unknown','working towards']) | date_string?) }
-        required('md_practices') { array? { min_size?(1) & each { schema PracticeValidator } } }
+        configure do
+          def self.messages
+            super.merge(
+                en: {
+                    errors: {
+                        tel: 'Phone number must be valid UK number'
+                    }
+                }
+            )
+          end
+        end
+        required(:registration_no).filled(:str?, format?: /^\d{4}[TAP]$/)
+        required(:md_offers_dcc) { included_in?(%w(Y N)) }
+        required(:md_first_name).filled(:str?)
+        required(:md_last_name).filled(:str?)
+        required(:md_mediation_legal_aid) { included_in?(%w(Y N)) }
+        required(:md_ppc_id).filled(:str?, format?: /^(\d{4}[TAP]|not known)$/)
+        required(:fmca_cert) { filled? & (included_in?(['unknown', 'working towards']) | date_string?) }
+        required(:md_practices) { array? { min_size?(1) & each { schema PracticeValidator } } }
       end
     end
   end

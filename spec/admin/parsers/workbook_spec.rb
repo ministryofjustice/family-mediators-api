@@ -10,8 +10,8 @@ module Admin
 
       let(:expected_data) do
         [
-          {'first_name' => 'John', 'last_name' => 'Smith'},
-          {'first_name' => 'Donna', 'last_name' => 'Jones'}
+          {:first_name => 'John', :last_name => 'Smith'},
+          {:first_name => 'Donna', :last_name => 'Jones'}
         ]
       end
 

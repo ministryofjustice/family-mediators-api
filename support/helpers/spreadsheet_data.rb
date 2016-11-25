@@ -15,7 +15,7 @@ class SpreadsheetData
 
   def valid_mediator
     {
-        'registration_no' => generate_valid_registration_no,
+        'Registration No' => generate_valid_registration_no,
         'md_offers_dcc' => 'Y',
         'md_first_name' => 'John',
         'md_last_name' => 'Smith',
@@ -27,7 +27,7 @@ class SpreadsheetData
   end
 
   def invalid_mediator
-    valid_mediator.merge('registration_no' => generate_invalid_registration_no)
+    valid_mediator.merge('Registration No' => generate_invalid_registration_no)
   end
 
   def generate_valid_registration_no

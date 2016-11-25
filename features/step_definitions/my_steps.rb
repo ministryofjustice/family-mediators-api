@@ -28,3 +28,19 @@ Given(/^I upload a spreadsheet like this:$/) do |table|
   data = table_data[1..-1]
   upload_spreadsheet(headings, data)
 end
+
+Given(/^I upload a valid mediator with the following practice data:$/) do |practice_data|
+  valid_mediator = {
+      'Registration No' => '1234A',
+      'md_offers_dcc' => 'Y',
+      'md_first_name' => 'John',
+      'md_last_name' => 'Smith',
+      'md_mediation_legal_aid' => 'Y',
+      'md_ppc_id' => 'not known',
+      'fmca_cert' => 'unknown'
+  }
+  valid_mediator.merge!('md_practices' => practice_data)
+  headings = valid_mediator.keys
+  data = [valid_mediator.values]
+  upload_spreadsheet(headings, data)
+end

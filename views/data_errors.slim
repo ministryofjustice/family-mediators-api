@@ -35,7 +35,5 @@ h1.heading-xlarge Family Mediator API: Data update service
           tr
             td = error.heading + 2
             td = field_name
-            - if message.is_a?(Hash)
-              td = message
-            - else
-              td = message.join(' AND ')
+            == slim :error_message, locals: { message: message }
+
