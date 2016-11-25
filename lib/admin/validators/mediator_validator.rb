@@ -23,7 +23,8 @@ module Admin
             super.merge(
                 en: {
                     errors: {
-                        tel: 'Phone number must be valid UK number'
+                        tel: 'Phone number must be valid UK number',
+                        url: 'Invalid URL'
                     }
                 }
             )
