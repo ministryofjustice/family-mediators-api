@@ -5,8 +5,6 @@ module Admin
     class MediatorValidator
       include Hanami::Validations
 
-      messages_path 'config/messages.yml'
-
       predicate :date_string?, message: 'must be dd/mm/yyyy' do |current|
         begin
           no_of_parts = current.split('/').length
@@ -20,6 +18,17 @@ module Admin
       end
 
       validations do
+        configure do
+          def self.messages
+            super.merge(
+                en: {
+                    errors: {
+                        tel: 'Phone number must be valid UK number'
+                    }
+                }
+            )
+          end
+        end
         required(:registration_no).filled(:str?, format?: /^\d{4}[TAP]$/)
         required(:md_offers_dcc) { included_in?(%w(Y N)) }
         required(:md_first_name).filled(:str?)

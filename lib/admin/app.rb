@@ -3,6 +3,8 @@ require 'sinatra/json'
 module Admin
   class App < Sinatra::Base
 
+    include Helpers
+
     set :views, File.dirname(__FILE__) + '/../../views'
     set :public_folder, 'public'
 

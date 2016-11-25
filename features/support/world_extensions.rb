@@ -20,6 +20,11 @@ module UploadHelpers
     !data.empty? ? data : [[]]
   end
 
+  def get_column_data(selector,position)
+    data = page.all(selector + " tr td[#{position}]").collect { |cell| cell.text }
+    !data.empty? ? [data] : [[]]
+  end
+
   def insert_practice(table_data)
     table_data[0] << 'md_practices'
     table_data[1..-1].each do |row|
