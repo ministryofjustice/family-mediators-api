@@ -11,7 +11,8 @@ module Admin
       let(:fmca_cert) { '21/11/2016' }
       let(:md_practices) do
         [{
-             :tel => '020 8123 3456'
+             :tel => '020 8123 3456',
+             :url => 'https://www.gov.uk/'
         }]
       end
 
