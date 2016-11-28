@@ -22,7 +22,7 @@ module UploadHelpers
 
   def get_column_data(selector,position)
     data = page.all(selector + " tr td[#{position}]").collect { |cell| cell.text }
-    !data.empty? ? [data] : [[]]
+    !data.empty? ? data : []
   end
 
   def insert_practice(table_data)

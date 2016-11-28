@@ -14,8 +14,8 @@ And(/^I should see the following (.*):$/) do |selector, expected_results|
   expected_results.diff!(results)
 end
 
-And(/^I should see these error messages:$/) do |expected_results|
+Then(/^the validation error message should be (.*)$/) do |validation_error|
   selector = '#item-errors tbody'
-  results = get_column_data(selector, 3)
-  expected_results.diff!(results)
+  results = get_column_data(selector, 3)[0]
+  expect(validation_error).to eq(results)
 end
