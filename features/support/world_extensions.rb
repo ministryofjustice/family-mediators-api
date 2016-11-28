@@ -28,7 +28,7 @@ module UploadHelpers
   def insert_practice(table_data)
     table_data[0] << 'md_practices'
     table_data[1..-1].each do |row|
-      row << '01234567890'
+      row << '15 Smith Street, London WC1R 4RL|01234567890'
     end
     table_data
   end

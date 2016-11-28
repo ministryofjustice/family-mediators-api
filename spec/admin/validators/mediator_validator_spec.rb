@@ -12,7 +12,8 @@ module Admin
       let(:md_practices) do
         [{
              :tel => '020 8123 3456',
-             :url => 'https://www.gov.uk/'
+             :url => 'https://www.gov.uk/',
+             :address => '15 Smith Street, London WC1R 4RL'
         }]
       end
 

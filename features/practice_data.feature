@@ -13,7 +13,7 @@ Feature: The spreadsheet administrator enters practice data for a mediator under
   Scenario: Not UK telephone number
     Given I upload a valid mediator with the following practice data:
       """
-      0712335|15 Smith Street, London SE19 2SM|john@smith.com|http://www.smith.com
+      0712335|15 Smith Street, London WC1R 4RL|john@smith.com|http://www.smith.com
       """
     And I click 'Process data and apply updates'
     Then I should see these error messages:
@@ -22,7 +22,7 @@ Feature: The spreadsheet administrator enters practice data for a mediator under
   Scenario: URL not valid
     Given I upload a valid mediator with the following practice data:
       """
-      020 8123 4567|15 Smith Street, London SE19 2SM|john@smith.com|www.smith.com
+      020 8123 4567|15 Smith Street, London WC1R 4RL|john@smith.com|www.smith.com
       """
     And I click 'Process data and apply updates'
     Then I should see these error messages:

@@ -4,11 +4,13 @@ module Admin
 
       let(:tel) { '020 8123 3456' }
       let(:url) { 'http://www.gov.uk/' }
+      let(:address) { '15 Smith Street, London WC1R 4RL'}
 
       let(:md_practice) do
         {
             :tel => tel,
-            :url => url
+            :url => url,
+            :address => address
         }
       end
 
@@ -82,6 +84,19 @@ module Admin
           context 'when scheme is file' do
             let(:tel) { 'file://www.gov.uk' }
             it { should_not be_valid }
+          end
+
+        end
+
+        describe 'address' do
+          context 'when nil' do
+            let(:address) { nil }
+            it { should_not be_valid}
+          end
+
+          context 'when is filled with a string' do
+            let(:address) { '15 Smith Street, London SE19 2SM' }
+            it { should be_valid}
           end
 
         end

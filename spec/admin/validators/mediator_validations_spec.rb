@@ -11,7 +11,7 @@ module Admin
             :md_mediation_legal_aid => 'Y',
             :md_ppc_id => '1456T',
             :fmca_cert => '21/11/2016',
-            :md_practices => [{:tel => '01234567890', :url => 'https://www.gov.uk/'}]
+            :md_practices => [{:tel => '01234567890', :url => 'https://www.gov.uk/', :address => '15 Smith Street, London WC1R 4RL' }]
         }
       end
 
@@ -24,7 +24,7 @@ module Admin
             :md_mediation_legal_aid => 'Y',
             :md_ppc_id => '1234A',
             :fmca_cert => '21/11/2016',
-            :md_practices => [{:tel => '01234567890', :url => 'https://www.gov.uk/'}]
+            :md_practices => [{:tel => '01234567890', :url => 'https://www.gov.uk/', :address => '15 Smith Street, London WC1R 4RL' }]
         }
       end
 

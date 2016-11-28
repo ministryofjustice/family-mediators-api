@@ -22,7 +22,7 @@ class SpreadsheetData
         'md_mediation_legal_aid' => 'Y',
         'md_ppc_id' => 'not known',
         'fmca_cert' => 'unknown',
-        'md_practices' => "01234567890"
+        'md_practices' => "15 Smith Street, London WC1R 4RL|01234567890"
     }
   end
 

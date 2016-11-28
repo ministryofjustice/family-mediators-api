@@ -17,6 +17,7 @@ module Admin
       validations do
         required(:tel) { telephone_number? }
         required(:url) { url? }
+        required(:address).filled(:str?)
       end
     end
 
