@@ -42,7 +42,7 @@ The coverage report is available under `/coverage/index.html`
 ## Play around in IRB
 
     RACK_ENV=development irb
-    irb> require_relative 'lib/mediators'
+    irb> require_relative 'lib/env'
     irb> Mediators::Models::Mediator.all.to_a
     irb> ...etc
 

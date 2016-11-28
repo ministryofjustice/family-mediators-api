@@ -22,7 +22,7 @@ module Admin
         end
 
         it 'Transforms data' do
-          expect(subject.send(:transform_worksheet)).to eq(expected_data)
+          expect(subject.send(:transform_mediators)).to eq(expected_data)
         end
 
         context 'with null values for blank cells' do
@@ -55,7 +55,7 @@ module Admin
 
         context '#extract_data' do
           it 'Transforms data' do
-            expect(subject.send(:transform_worksheet)).to eq([])
+            expect(subject.send(:transform_mediators)).to eq([])
           end
         end
       end

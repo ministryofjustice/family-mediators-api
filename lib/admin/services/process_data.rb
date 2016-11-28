@@ -24,12 +24,18 @@ module Admin
           @data_store.save(with_expanded_practices)
           [ true, {} ]
         else
-          [false, {
-            file_errors: [],
-            item_errors: data_validations.item_errors,
-            collection_errors: data_validations.collection_errors
-          }]
+          [ false, invalid_locals(data_validations) ]
         end
+      end
+
+      private
+
+      def invalid_locals(data_validations)
+        {
+          file_errors: [],
+          item_errors: data_validations.item_errors,
+          collection_errors: data_validations.collection_errors
+        }
       end
     end
   end
