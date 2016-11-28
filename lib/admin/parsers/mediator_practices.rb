@@ -1,7 +1,7 @@
 module Admin
   module Parsers
     class MediatorPractices
-      PRACTICES_HEADING = 'md_practices'
+      PRACTICES_HEADING = :md_practices
 
       def self.parse(mediators)
         mediators.map do |mediator|

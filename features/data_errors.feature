@@ -35,7 +35,6 @@ Feature: A spreadsheet upload is validated against a set of rules. If there are
       | 1234T           | Y             | Wayne        | Bruce         | Y                      | not known | unknown   |
     And I click 'Process data and apply updates'
     Then I should see the following collection errors:
-
       | Error                          | Value(s) |
       | Duplicate registration numbers | 1234T    |
 

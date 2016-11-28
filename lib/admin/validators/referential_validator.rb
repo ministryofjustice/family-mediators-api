@@ -46,11 +46,11 @@ module Admin
       end
 
       def ppc_ids
-        @ppc_ids ||= @data.map{ |mediator| mediator['md_ppc_id'] }
+        @ppc_ids ||= @data.map{ |mediator| mediator[:md_ppc_id] }
       end
 
       def registration_nos
-        @registration_nos ||= @data.map{ |mediator| mediator['registration_no'] }
+        @registration_nos ||= @data.map{ |mediator| mediator[:registration_no] }
       end
 
     end

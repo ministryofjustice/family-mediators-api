@@ -19,10 +19,10 @@ module Admin
         parts = practice.split(PART_SEPARATOR).map { |part| sanitise(part) }
 
         {
-          "address" => find(parts, POSTCODE_REGEX),
-          "tel" => find(parts, TEL_REGEX),
-          "email" => find(parts, EMAIL_REGEX),
-          "url" => find(parts, URL_REGEX)
+            :address => find(parts, POSTCODE_REGEX),
+            :tel => find(parts, TEL_REGEX),
+            :email => find(parts, EMAIL_REGEX),
+            :url => find(parts, URL_REGEX)
         }
       end
 

@@ -11,20 +11,22 @@ module Admin
       let(:fmca_cert) { '21/11/2016' }
       let(:md_practices) do
         [{
-            'tel' => '020 8123 3456'
+             :tel => '020 8123 3456',
+             :url => 'https://www.gov.uk/',
+             :address => '15 Smith Street, London WC1R 4RL'
         }]
       end
 
       let(:data) do
         {
-            'registration_no'        => registration_no,
-            'md_offers_dcc'          => md_offers_dcc,
-            'md_first_name'          => md_first_name,
-            'md_last_name'           => md_last_name,
-            'md_mediation_legal_aid' => md_mediation_legal_aid,
-            'md_ppc_id'              => md_ppc_id,
-            'fmca_cert'              => fmca_cert,
-            'md_practices'           => md_practices
+            :registration_no => registration_no,
+            :md_offers_dcc => md_offers_dcc,
+            :md_first_name => md_first_name,
+            :md_last_name => md_last_name,
+            :md_mediation_legal_aid => md_mediation_legal_aid,
+            :md_ppc_id => md_ppc_id,
+            :fmca_cert => fmca_cert,
+            :md_practices => md_practices
         }
       end
 
@@ -209,7 +211,7 @@ module Admin
           MediatorValidator.new(missing_data).validate
         end
 
-        keys = %w(registration_no md_offers_dcc md_first_name md_last_name md_mediation_legal_aid md_ppc_id fmca_cert)
+        keys = [:registration_no, :md_offers_dcc, :md_first_name, :md_last_name, :md_mediation_legal_aid, :md_ppc_id, :fmca_cert]
 
         keys.each do |val|
           context "when #{val} missing" do
