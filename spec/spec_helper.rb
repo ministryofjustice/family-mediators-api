@@ -5,8 +5,6 @@ $LOAD_PATH.unshift("#{__dir__}/..")
 require 'lib/env'
 require 'lib/mediators'
 
-# require 'factories/mediator'
-# require 'support/factories/spreadsheet'
 Dir["#{__dir__}/../support/factories/*.rb"].each { |f| require f }
 Dir["#{__dir__}/support/**/*.rb"].each { |f| require f }
 
