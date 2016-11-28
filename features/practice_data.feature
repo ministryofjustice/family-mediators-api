@@ -27,3 +27,12 @@ Feature: The spreadsheet administrator enters practice data for a mediator under
     And I click 'Process data and apply updates'
     Then I should see these error messages:
       | Practice 1: Invalid URL |
+
+  Scenario: Address with postcode missing
+    Given I upload a valid mediator with the following practice data:
+      """
+      020 8123 4567|15 Smith Street, London|
+      """
+    And I click 'Process data and apply updates'
+    Then I should see these error messages:
+      | Practice 1: Must have address with valid postcode |
