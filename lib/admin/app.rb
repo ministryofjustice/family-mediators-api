@@ -80,5 +80,6 @@ module Admin
       authenticate!
       slim :upload_fail
     end
+
   end
 end

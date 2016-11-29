@@ -17,9 +17,10 @@ module Support
 
       def self.add_blacklist(blacklist, workbook)
         worksheet = workbook.add_worksheet
+        worksheet.add_cell(0, 0, 'Confidential')
 
         blacklist.each_with_index do |heading, index|
-          worksheet.add_cell(index, 0, heading)
+          worksheet.add_cell(index+1, 0, heading)
         end
       end
 

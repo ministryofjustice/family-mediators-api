@@ -16,7 +16,7 @@ module Admin
       end
 
       def call
-        parse_mediators
+        [ parse_mediators, parse_blacklist ]
       end
 
       private
@@ -27,10 +27,14 @@ module Admin
         as_hashes
       end
 
+      def parse_blacklist
+        blacklist_worksheet[1..-1].map { |row| row.cells.first.value }
+      end
+
       def transform_mediators
         return [] if mediators_worksheet[0].nil?
 
-        worksheet[1..-1].map.with_index do |row|
+        mediators_worksheet[1..-1].map.with_index do |row|
           processed_headings.size.times.inject({}) do |hash, index|
             cell = row.cells[index]
             value = cell && cell.value
@@ -52,6 +56,7 @@ module Admin
       def blacklist_worksheet
         @rubyxl_workbook[BLACKLIST_WORKSHEET] if @rubyxl_workbook
       end
+
     end
   end
 end

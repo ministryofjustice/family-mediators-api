@@ -18,11 +18,11 @@ module Admin
       def call
         raise 'No file specified' unless @xlsx_file
         rubyxl_workbook = @xl_parser.parse(file.path)
-        as_hashes = Parsers::Workbook.new(rubyxl_workbook).call
-        file_validations = @file_validator.new(as_hashes)
+        mediators_as_hashes, blacklist = Parsers::Workbook.new(rubyxl_workbook).call
+        file_validations = @file_validator.new(mediators_as_hashes)
 
         if file_validations.valid?
-          [ true, valid_locals(as_hashes) ]
+          [ true, valid_locals(mediators_as_hashes) ]
         else
           [ false, invalid_locals(file_validations.errors) ]
         end
@@ -42,13 +42,13 @@ module Admin
         file.size
       end
 
-      def valid_locals(as_hashes)
+      def valid_locals(mediators_as_hashes)
         {
           file_name: file_name,
           file_size: file_size,
           existing_count: API::Models::Mediator.count,
-          sheet_size: as_hashes.size,
-          dump: @marshaler.to_string(as_hashes)
+          sheet_size: mediators_as_hashes.size,
+          dump: @marshaler.to_string(mediators_as_hashes)
         }
       end
 
@@ -59,6 +59,7 @@ module Admin
           item_errors: []
         }
       end
+
     end
   end
 end
