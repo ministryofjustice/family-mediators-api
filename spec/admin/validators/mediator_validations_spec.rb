@@ -6,6 +6,7 @@ module Admin
         {
             :registration_no => '1234A',
             :md_offers_dcc => 'Y',
+            :title => 'Mr',
             :md_first_name => 'John',
             :md_last_name => 'Smith',
             :md_mediation_legal_aid => 'Y',
@@ -19,6 +20,7 @@ module Admin
         {
             :registration_no => '1456T',
             :md_offers_dcc => 'Y',
+            :title => 'Miss',
             :md_first_name => 'Jane',
             :md_last_name => 'Doe',
             :md_mediation_legal_aid => 'Y',

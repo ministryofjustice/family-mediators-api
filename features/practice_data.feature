@@ -11,7 +11,7 @@ Feature: The spreadsheet administrator enters practice data for a mediator under
   a new line \n.
 
   Scenario Outline: Practice data validation
-    Given I upload a valid mediator with <PracticeCell> data
+    Given I upload a mediator with practice data <PracticeCell>
     And I click 'Process data and apply updates'
     Then the validation error message should be <Message>
 

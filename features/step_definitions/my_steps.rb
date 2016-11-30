@@ -12,41 +12,13 @@ Given(/^there's (\d+) records in the database$/) do |num|
 end
 
 Given(/^I upload a spreadsheet like this:$/) do |table|
-  table_data = table.raw
-  table_data = insert_practice(table_data)
-  headings = table_data[0]
-  data = table_data[1..-1]
-  upload_spreadsheet(headings, data)
+  mediators_data_table = DataHelpers::MediatorsDataTable.new(table.raw)
+  with_practice_data =DataHelpers:: PracticeData.new(mediators_data_table)
+  upload_spreadsheet(with_practice_data.headings, with_practice_data.data)
 end
 
-# Given(/^I upload a valid mediator with the following practice data:$/) do |practice_data|
-#   valid_mediator = {
-#       'Registration No' => '1234A',
-#       'md_offers_dcc' => 'Y',
-#       'md_first_name' => 'John',
-#       'md_last_name' => 'Smith',
-#       'md_mediation_legal_aid' => 'Y',
-#       'md_ppc_id' => 'not known',
-#       'fmca_cert' => 'unknown'
-#   }
-#   valid_mediator.merge!('md_practices' => practice_data)
-#   headings = valid_mediator.keys
-#   data = [valid_mediator.values]
-#   upload_spreadsheet(headings, data)
-# end
-
-Given(/^I upload a valid mediator with (.*) data$/) do |practice_data|
-  valid_mediator = {
-      'Registration No' => '1234A',
-      'md_offers_dcc' => 'Y',
-      'md_first_name' => 'John',
-      'md_last_name' => 'Smith',
-      'md_mediation_legal_aid' => 'Y',
-      'md_ppc_id' => 'not known',
-      'fmca_cert' => 'unknown'
-  }
-  valid_mediator.merge!('md_practices' => practice_data)
-  headings = valid_mediator.keys
-  data = [valid_mediator.values]
-  upload_spreadsheet(headings, data)
+Given(/^I upload a mediator with practice data (.*)/) do |practice_data|
+  mediators_data_table = DataHelpers::MediatorsDataTable.create_mediator()
+  with_practice_data = DataHelpers::PracticeData.new(mediators_data_table, practice_data: practice_data)
+  upload_spreadsheet(with_practice_data.headings, with_practice_data.data)
 end
