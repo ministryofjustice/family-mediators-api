@@ -6,6 +6,7 @@ module Admin
     # hashes, and the second worksheet (column blacklist) into an array
     # of strings.
     class Workbook
+
       MEDIATORS_WORKSHEET = 0
       BLACKLIST_WORKSHEET = 1
 
@@ -16,7 +17,7 @@ module Admin
       end
 
       def call
-        [ parse_mediators, parse_blacklist ]
+        [ parse_mediators, processed_blacklist ]
       end
 
       private
@@ -29,6 +30,10 @@ module Admin
 
       def parse_blacklist
         blacklist_worksheet[1..-1].map { |row| row.cells.first.value }
+      end
+
+      def processed_blacklist
+        @headings_processor.process(parse_blacklist)
       end
 
       def transform_mediators

@@ -5,4 +5,4 @@ Feature: When a spreadsheet is empty the file is not processed.
       ||
     Then I should see the following file errors:
       | Error |
-      | The file contains no data |
+      | The file contains no mediator data |

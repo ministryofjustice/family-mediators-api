@@ -7,8 +7,8 @@ Feature: A spreadsheet upload is validated against a set of rules. If there are
     Given I upload a spreadsheet like this:
       |  |
     Then I should see the following file errors:
-      | Error                     |
-      | The file contains no data |
+      | Error |
+      | The file contains no mediator data |
 
   Scenario: Mediator data errors
     Given I upload a spreadsheet like this:

@@ -37,3 +37,18 @@ end
 When(/^I authenticate with valid credentials$/) do
   login
 end
+
+Given(/^I have a spreadsheet like this:$/) do |table|
+  table_data = table.raw
+  table_data = insert_practice(table_data)
+  @headings = table_data[0]
+  @data = table_data[1..-1]
+end
+
+Given(/^a blacklist of:$/) do |table|
+  @blacklist = table.raw.flatten
+end
+
+When(/^I upload the spreadsheet$/) do
+  upload_spreadsheet(@headings, @data, @blacklist)
+end

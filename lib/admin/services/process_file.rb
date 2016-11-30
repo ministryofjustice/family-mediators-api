@@ -8,18 +8,20 @@ module Admin
       def initialize(xlsx_file,
                      file_validator: Validators::FileValidator,
                      marshaler: Processing::Marshaler,
-                     xl_parser: RubyXL::Parser)
+                     xl_parser: RubyXL::Parser,
+                     workbook_parser: Parsers::Workbook)
         @xlsx_file = xlsx_file
         @file_validator = file_validator
         @marshaler = marshaler
         @xl_parser = xl_parser
+        @workbook_parser = workbook_parser
       end
 
       def call
         raise 'No file specified' unless @xlsx_file
         rubyxl_workbook = @xl_parser.parse(file.path)
-        mediators_as_hashes, blacklist = Parsers::Workbook.new(rubyxl_workbook).call
-        file_validations = @file_validator.new(mediators_as_hashes)
+        mediators_as_hashes, blacklist = @workbook_parser.new(rubyxl_workbook).call
+        file_validations = @file_validator.new(mediators_as_hashes, blacklist)
 
         if file_validations.valid?
           [ true, valid_locals(mediators_as_hashes) ]

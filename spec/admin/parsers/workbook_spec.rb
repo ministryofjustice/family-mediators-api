@@ -12,10 +12,13 @@ module Admin
         Support::Factories::Spreadsheet.build(headings, data, blacklist)
       end
 
+      let(:blacklist) { [ 'Bish bosh', 'bash' ] }
+      let(:expected_blacklist) { [ :bish_bosh, :bash ] }
+
       let(:expected_data) do
         [
-          {:first_name => 'John', :last_name => 'Smith'},
-          {:first_name => 'Donna', :last_name => 'Jones'}
+          { first_name: 'John', last_name: 'Smith' },
+          { first_name: 'Donna', last_name: 'Jones' }
         ]
       end
 
@@ -59,7 +62,7 @@ module Admin
       end
 
       it 'Second array is array of blacklisted cols' do
-        expect(subject.call.last).to eq(blacklist)
+        expect(subject.call.last).to eq(expected_blacklist)
       end
 
       context 'Empty workbook' do
