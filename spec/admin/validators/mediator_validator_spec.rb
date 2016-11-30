@@ -4,6 +4,7 @@ module Admin
 
       let(:registration_no) { '1234A' }
       let(:md_offers_dcc) { 'Y' }
+      let(:title) { 'Mr' }
       let(:md_first_name) { 'John' }
       let(:md_last_name) { 'Smith' }
       let(:md_mediation_legal_aid) { 'Y' }
@@ -21,6 +22,7 @@ module Admin
         {
             :registration_no => registration_no,
             :md_offers_dcc => md_offers_dcc,
+            :title => title,
             :md_first_name => md_first_name,
             :md_last_name => md_last_name,
             :md_mediation_legal_aid => md_mediation_legal_aid,
@@ -84,6 +86,20 @@ module Admin
         context 'when is not YN' do
           let(:md_offers_dcc) { 'YN' }
           it { should_not be_valid }
+        end
+
+      end
+
+      describe 'Title' do
+
+        context 'when blank' do
+          let(:title) { '' }
+          it { should_not be_valid }
+        end
+
+        context 'when filled' do
+          let(:title) { 'Miss' }
+          it { should be_valid }
         end
 
       end
