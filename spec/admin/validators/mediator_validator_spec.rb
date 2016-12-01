@@ -19,38 +19,23 @@ module Admin
       end
 
       let(:data) do
-        {
-            :registration_no => registration_no,
-            :md_offers_dcc => md_offers_dcc,
-            :title => title,
-            :md_first_name => md_first_name,
-            :md_last_name => md_last_name,
-            :md_mediation_legal_aid => md_mediation_legal_aid,
-            :md_ppc_id => md_ppc_id,
-            :fmca_cert => fmca_cert,
-            :md_practices => md_practices
-        }
+        create(:mediator_hash)
+        # {
+        #     :registration_no => registration_no,
+        #     :md_offers_dcc => md_offers_dcc,
+        #     :title => title,
+        #     :md_first_name => md_first_name,
+        #     :md_last_name => md_last_name,
+        #     :md_mediation_legal_aid => md_mediation_legal_aid,
+        #     :md_ppc_id => md_ppc_id,
+        #     :fmca_cert => fmca_cert,
+        #     :md_practices => md_practices
+        # }
       end
 
       subject(:result) do
         MediatorValidator.new(data).validate
       end
-
-
-      # describe('missing properties') do
-      #   subject(:result) do
-      #     MediatorValidator.new(missing_data).validate
-      #   end
-      #
-      #   keys = [:registration_no, :md_offers_dcc, :md_first_name, :md_last_name, :md_mediation_legal_aid, :md_ppc_id, :fmca_cert]
-      #
-      #   keys.each do |val|
-      #     context "when #{val} missing" do
-      #       let(:missing_data) { data.tap { |key| key.delete(val) } }
-      #       it { should_not be_valid }
-      #     end
-      #   end
-      # end
 
       describe('md_practices') do
         context 'when 0 practices' do
@@ -62,19 +47,28 @@ module Admin
       describe 'registration_no' do
 
         context 'when blank' do
-          let(:registration_no) { '' }
+          let(:data) { create(:mediator_hash, registration_no: '')}
           it { should_not be_valid }
         end
 
-        %w{8297T 3592A 9371P}.each do |val|
-          context "when matches pattern #{val}" do
-            let(:registration_no) { val }
-            it { should be_valid }
-          end
+
+        context "when matches pattern ####T" do
+          let(:data) { create(:mediator_hash, registration_no: '9371T') }
+          it { should be_valid }
+        end
+
+        context "when matches pattern ####A" do
+          let(:data) { create(:mediator_hash, registration_no: '9371A') }
+          it { should be_valid }
+        end
+
+        context "when matches pattern ####P" do
+          let(:data) { create(:mediator_hash, registration_no: '9371P') }
+          it { should be_valid }
         end
 
         context 'when does not match registration format' do
-          let(:registration_no) { '16789P' }
+          let(:data) { create(:mediator_hash, registration_no: '16789P') }
           it { should_not be_valid }
         end
 
@@ -83,24 +77,27 @@ module Admin
       describe 'md_offers_dcc' do
 
         context 'when blank' do
-          let(:md_offers_dcc) { '' }
+          let(:data) { create(:mediator_hash, md_offers_dcc: '') }
           it { should_not be_valid }
         end
 
-        %w{Y N}.each do |val|
-          context "when is '#{val}'" do
-            let(:md_offers_dcc) { val }
-            it { should be_valid }
-          end
+        context "when is 'Y'" do
+          let(:data) { create(:mediator_hash, md_offers_dcc: 'Y') }
+          it { should be_valid }
+        end
+
+        context "when is 'N'" do
+          let(:data) { create(:mediator_hash, md_offers_dcc: 'N') }
+          it { should be_valid }
         end
 
         context 'when is not Y or N' do
-          let(:md_offers_dcc) { 'a' }
+          let(:data) { create(:mediator_hash, md_offers_dcc: 'a') }
           it { should_not be_valid }
         end
 
         context 'when is not YN' do
-          let(:md_offers_dcc) { 'YN' }
+          let(:data) { create(:mediator_hash, md_offers_dcc: 'YN') }
           it { should_not be_valid }
         end
 
@@ -109,12 +106,12 @@ module Admin
       describe 'Title' do
 
         context 'when blank' do
-          let(:title) { '' }
+          let(:data) { create(:mediator_hash, title: '') }
           it { should_not be_valid }
         end
 
         context 'when filled' do
-          let(:title) { 'Miss' }
+          let(:data) { create(:mediator_hash, title: 'Miss') }
           it { should be_valid }
         end
 
@@ -123,17 +120,17 @@ module Admin
       describe 'md_first_name' do
 
         context 'when blank' do
-          let(:md_first_name) { '' }
+          let(:data) { create(:mediator_hash, md_first_name: '') }
           it { should_not be_valid }
         end
 
         context 'when is non-blank string' do
-          let(:md_first_name) { 'John' }
+          let(:data) { create(:mediator_hash, md_first_name: 'John') }
           it { should be_valid }
         end
 
         context 'when is number' do
-          let(:md_first_name) { 123 }
+          let(:data) { create(:mediator_hash, md_first_name: 123 ) }
           it { should_not be_valid }
         end
 
@@ -142,17 +139,17 @@ module Admin
       describe 'md_last_name' do
 
         context 'when blank' do
-          let(:md_last_name) { '' }
+          let(:data) { create(:mediator_hash, md_last_name: '') }
           it { should_not be_valid }
         end
 
         context 'when is non-blank string' do
-          let(:md_last_name) { 'John' }
+          let(:data) { create(:mediator_hash, md_last_name: 'John') }
           it { should be_valid }
         end
 
         context 'when is number' do
-          let(:md_last_name) { 123 }
+          let(:data) { create(:mediator_hash, md_last_name: 123) }
           it { should_not be_valid }
         end
 
@@ -161,24 +158,22 @@ module Admin
       describe 'md_mediation_legal_aid' do
 
         context 'when blank' do
-          let(:md_mediation_legal_aid) { '' }
+          let(:data) { create(:mediator_hash, md_mediation_legal_aid: '') }
           it { should_not be_valid }
         end
 
-        %w{Y N}.each do |val|
-          context "when is '#{val}'" do
-            let(:md_mediation_legal_aid) { val }
-            it { should be_valid }
-          end
+        context "when is 'Y'" do
+          let(:data) { create(:mediator_hash, md_mediation_legal_aid: 'Y') }
+          it { should be_valid }
         end
 
-        context 'when is not Y or N' do
-          let(:md_mediation_legal_aid) { 'a' }
-          it { should_not be_valid }
+        context "when is 'N'" do
+          let(:data) { create(:mediator_hash, md_mediation_legal_aid: 'N') }
+          it { should be_valid }
         end
 
         context 'when is not YN' do
-          let(:md_mediation_legal_aid) { 'YN' }
+          let(:data) { create(:mediator_hash, md_mediation_legal_aid: 'YN') }
           it { should_not be_valid }
         end
 
@@ -187,24 +182,32 @@ module Admin
       describe 'md_ppc_id' do
 
         context 'when blank' do
-          let(:md_ppc_id) { '' }
+          let(:data) { create(:mediator_hash, md_ppc_id: '') }
           it { should_not be_valid }
         end
 
-        %w{8297T 3592A 9371P}.each do |val|
-          context "when matches pattern #{val}" do
-            let(:md_ppc_id) { val }
-            it { should be_valid }
-          end
+        context 'when matches pattern ####T' do
+          let(:data) { create(:mediator_hash, md_ppc_id: '8297T') }
+          it { should be_valid }
+        end
+
+        context 'when matches pattern ####A' do
+          let(:data) { create(:mediator_hash, md_ppc_id: '8297A') }
+          it { should be_valid }
+        end
+
+        context 'when matches pattern ####P' do
+          let(:data) { create(:mediator_hash, md_ppc_id: '8297P') }
+          it { should be_valid }
         end
 
         context 'when "not known"' do
-          let(:md_ppc_id) { 'not known' }
+          let(:data) { create(:mediator_hash, md_ppc_id: 'not known') }
           it { should be_valid }
         end
 
         context 'when does not match registration format' do
-          let(:md_ppc_id) { '16789P' }
+          let(:data) { create(:mediator_hash, md_ppc_id: '16789P') }
           it { should_not be_valid }
         end
 
@@ -213,26 +216,26 @@ module Admin
       describe 'fmca_cert' do
 
         context 'when blank' do
-          let(:fmca_cert) { '' }
+          let(:data) { create(:mediator_hash, fmca_cert: '') }
           it { should_not be_valid }
         end
 
         ['unknown', 'working towards','2016', '05/2016', '24/07/2016'].each do |val|
-          context "when '#{val}'" do
-            let(:fmca_cert) { val }
+          context "when #{val}" do
+            let(:data) { create(:mediator_hash, fmca_cert: val) }
             it { should be_valid }
           end
         end
 
         %w(13/2016 32/04/2016).each do |val|
           context "when '#{val}'" do
-            let(:fmca_cert) { val }
+            let(:data) { create(:mediator_hash, fmca_cert: val) }
             it { should_not be_valid }
           end
         end
 
         context 'when any other content' do
-          let(:fmca_cert) { 'blah' }
+          let(:data) { create(:mediator_hash, fmca_cert: 'blah') }
           it { should_not be_valid }
         end
 
@@ -243,7 +246,7 @@ module Admin
           MediatorValidator.new(missing_data).validate
         end
 
-        keys = [:registration_no, :md_offers_dcc, :md_first_name, :md_last_name, :md_mediation_legal_aid, :md_ppc_id, :fmca_cert]
+        keys = FactoryGirl.create(:mediator_hash).keys
 
         keys.each do |val|
           context "when #{val} missing" do
