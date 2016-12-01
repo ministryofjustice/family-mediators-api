@@ -8,31 +8,24 @@ FactoryGirl.define do
   factory :mediator_hash, class:Hash do
     skip_create
 
-    transient do
-      sequence(:registration_no, 1000) { |n| "#{n}T" }
-      md_offers_dcc 'Y'
-      title 'Mr'
-      md_first_name 'John'
-      md_last_name 'Smith'
-      md_mediation_legal_aid 'Y'
-      md_ppc_id { '1001T' }
-      fmca_cert '21/11/2016'
-    end
+    sequence(:registration_no, 1000) { |n| "#{n}T" }
+    md_offers_dcc 'Y'
+    title 'Mr'
+    md_first_name 'John'
+    md_last_name 'Smith'
+    md_mediation_legal_aid 'Y'
+    md_ppc_id { '1001T' }
+    fmca_cert '21/11/2016'
 
     trait :invalid do
       registration_no '1234X'
     end
 
-    initialize_with{{
-        registration_no: registration_no,
-        md_offers_dcc: md_offers_dcc,
-        title: title,
-        md_first_name: md_first_name,
-        md_last_name: md_last_name,
-        md_mediation_legal_aid: md_mediation_legal_aid,
-        md_ppc_id: md_ppc_id,
-        fmca_cert: fmca_cert
-    }}
+    trait :include_practice do
+      md_practices { [{address: '1 Smith Street, SW1H 9AJ', tel: nil, url: nil}] }
+    end
+
+    initialize_with { attributes }
   end
 
   factory :mediator_list, class:Array do

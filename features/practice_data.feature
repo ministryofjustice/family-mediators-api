@@ -26,8 +26,3 @@ Feature: The spreadsheet administrator enters practice data for a mediator under
     Examples: Invalid address
       | PracticeCell                                       | Message                                           |
       | 15 Smith Street, London \| Practice 1: Invalid URL | Practice 1: Must have address with valid postcode |
-
-  Scenario: Empty practice cell
-    Given I upload a mediator with practice data ''
-    And I click 'Process data and apply updates'
-    Then I see 'Spreadsheet upload complete'
