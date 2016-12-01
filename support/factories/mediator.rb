@@ -22,7 +22,7 @@ FactoryGirl.define do
     end
 
     trait :include_practice do
-      md_practices { [{address: '1 Smith Street, SW1H 9AJ', tel: nil, url: nil}] }
+      md_practices { [create(:practice_hash)] }
     end
 
     initialize_with { attributes }
