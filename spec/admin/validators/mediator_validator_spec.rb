@@ -36,10 +36,26 @@ module Admin
         MediatorValidator.new(data).validate
       end
 
+
+      # describe('missing properties') do
+      #   subject(:result) do
+      #     MediatorValidator.new(missing_data).validate
+      #   end
+      #
+      #   keys = [:registration_no, :md_offers_dcc, :md_first_name, :md_last_name, :md_mediation_legal_aid, :md_ppc_id, :fmca_cert]
+      #
+      #   keys.each do |val|
+      #     context "when #{val} missing" do
+      #       let(:missing_data) { data.tap { |key| key.delete(val) } }
+      #       it { should_not be_valid }
+      #     end
+      #   end
+      # end
+
       describe('md_practices') do
         context 'when 0 practices' do
           let(:md_practices) { [] }
-          it { should_not be_valid }
+          it { should be_valid }
         end
       end
 
