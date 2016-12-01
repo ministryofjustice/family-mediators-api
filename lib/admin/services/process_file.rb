@@ -9,12 +9,14 @@ module Admin
                      file_validator: Validators::FileValidator,
                      marshaler: Processing::Marshaler,
                      xl_parser: RubyXL::Parser,
-                     workbook_parser: Parsers::Workbook)
+                     workbook_parser: Parsers::Workbook,
+                     field_remover: Processing::ConfidentialFieldRemover)
         @xlsx_file = xlsx_file
         @file_validator = file_validator
         @marshaler = marshaler
         @xl_parser = xl_parser
         @workbook_parser = workbook_parser
+        @field_remover = field_remover
       end
 
       def call
@@ -24,7 +26,8 @@ module Admin
         file_validations = @file_validator.new(mediators_as_hashes, blacklist)
 
         if file_validations.valid?
-          [ true, valid_locals(mediators_as_hashes) ]
+          mediators_less_private_keys = @field_remover.call(mediators_as_hashes, blacklist)
+          [ true, valid_locals(mediators_less_private_keys) ]
         else
           [ false, invalid_locals(file_validations.errors) ]
         end
@@ -44,13 +47,13 @@ module Admin
         file.size
       end
 
-      def valid_locals(mediators_as_hashes)
+      def valid_locals(mediators)
         {
           file_name: file_name,
           file_size: file_size,
           existing_count: API::Models::Mediator.count,
-          sheet_size: mediators_as_hashes.size,
-          dump: @marshaler.to_string(mediators_as_hashes)
+          sheet_size: mediators.size,
+          dump: @marshaler.to_string(mediators)
         }
       end
 

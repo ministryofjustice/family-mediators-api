@@ -39,16 +39,14 @@ When(/^I authenticate with valid credentials$/) do
 end
 
 Given(/^I have a spreadsheet like this:$/) do |table|
-  table_data = table.raw
-  table_data = insert_practice(table_data)
-  @headings = table_data[0]
-  @data = table_data[1..-1]
+  mediators_data_table = DataHelpers::MediatorsDataTable.new(table.raw)
+  @with_practice_data = DataHelpers::PracticeData.new(mediators_data_table)
+end
+
+When(/^I upload the spreadsheet$/) do
+  upload_spreadsheet(@with_practice_data.headings, @with_practice_data.data, @blacklist)
 end
 
 Given(/^a blacklist of:$/) do |table|
   @blacklist = table.raw.flatten
-end
-
-When(/^I upload the spreadsheet$/) do
-  upload_spreadsheet(@headings, @data, @blacklist)
 end
