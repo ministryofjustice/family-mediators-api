@@ -2,44 +2,10 @@ module Admin
   module Validators
     describe ReferentialValidator do
 
-      let(:valid_input_1) do
-        {
-            :registration_no => '1234A',
-            :md_offers_dcc => 'Y',
-            :md_first_name => 'John',
-            :md_last_name => 'Smith',
-            :md_mediation_legal_aid => 'Y',
-            :md_ppc_id => '3452A'
-        }
-      end
-
-      let(:valid_input_2) do
-        {
-            :registration_no => '4567A',
-            :md_offers_dcc => 'Y',
-            :md_first_name => 'John',
-            :md_last_name => 'Smith',
-            :md_mediation_legal_aid => 'Y',
-            :md_ppc_id => '3452A'
-        }
-      end
-
-      let(:valid_input_3) do
-        {
-            :registration_no => '3452A',
-            :md_offers_dcc => 'Y',
-            :md_first_name => 'John',
-            :md_last_name => 'Smith',
-            :md_mediation_legal_aid => 'Y',
-            :md_ppc_id => '4567A'
-        }
-      end
-
       describe 'registration numbers' do
         context 'when unique' do
           let(:result) do
-            data = [valid_input_1, valid_input_2, valid_input_3]
-            ReferentialValidator.new(data).validate
+            ReferentialValidator.new(create(:mediator_list)).validate
           end
 
           it 'is valid' do
@@ -54,9 +20,9 @@ module Admin
         context 'when not unique' do
           let(:result) do
             data = [
-                valid_input_1.merge(:registration_no => '4567A'),
-                valid_input_2.merge(:registration_no => '4567A'),
-                valid_input_3
+                create(:mediator_hash, registration_no: '4567A', md_ppc_id: '1000T'),
+                create(:mediator_hash, registration_no: '4567A', md_ppc_id: '1000T'),
+                create(:mediator_hash, registration_no: '1000T', md_ppc_id: '4567A')
             ]
             ReferentialValidator.new(data).validate
           end
@@ -85,9 +51,9 @@ module Admin
             let(:result) do
               invalid_ppc_id = '4756T'
               data_with_unrecognised_md_ppc_id = [
-                  valid_input_1.merge(:registration_no => '4567A'),
-                  valid_input_2.merge(:registration_no => '4567A').merge(:md_ppc_id => invalid_ppc_id),
-                  valid_input_3
+                  create(:mediator_hash, registration_no: '4567A', md_ppc_id: '1000T'),
+                  create(:mediator_hash, registration_no: '4567A', md_ppc_id: invalid_ppc_id),
+                  create(:mediator_hash, registration_no: '1000T', md_ppc_id: '4567A')
               ]
               ReferentialValidator.new(data_with_unrecognised_md_ppc_id).validate
             end
@@ -120,7 +86,7 @@ module Admin
       describe 'md_ppc_id' do
         context 'when exists as registration number' do
           let(:result) do
-            data = [valid_input_1, valid_input_2, valid_input_3]
+            data = create(:mediator_list)
             ReferentialValidator.new(data).validate
           end
 
@@ -136,9 +102,9 @@ module Admin
         context "when is set to 'not known'" do
           let(:result) do
             data = [
-                valid_input_1,
-                valid_input_2.merge(:md_ppc_id => 'not known'),
-                valid_input_3
+                create(:mediator_hash, registration_no: '1234A', md_ppc_id: '1000T'),
+                create(:mediator_hash, registration_no: '4567A', md_ppc_id: 'not known'),
+                create(:mediator_hash, registration_no: '1000T', md_ppc_id: '4567A')
             ]
             ReferentialValidator.new(data).validate
           end
@@ -153,9 +119,9 @@ module Admin
           let(:result) do
             invalid_ppc_id = '4756T'
             data = [
-                valid_input_1,
-                valid_input_2.merge(:md_ppc_id => invalid_ppc_id),
-                valid_input_3
+                create(:mediator_hash, registration_no: '1234A', md_ppc_id: '1000T'),
+                create(:mediator_hash, registration_no: '4567A', md_ppc_id: invalid_ppc_id),
+                create(:mediator_hash, registration_no: '1000T', md_ppc_id: '4567A')
             ]
             ReferentialValidator.new(data).validate
           end

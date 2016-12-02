@@ -13,7 +13,7 @@ end
 
 Given(/^I upload a spreadsheet like this:$/) do |table|
   mediators_data_table = DataHelpers::MediatorsDataTable.new(table.raw)
-  with_practice_data =DataHelpers:: PracticeData.new(mediators_data_table)
+  with_practice_data = DataHelpers::PracticeData.new(mediators_data_table)
   upload_spreadsheet(with_practice_data.headings, with_practice_data.data)
 end
 
