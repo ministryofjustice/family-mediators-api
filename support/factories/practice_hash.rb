@@ -6,14 +6,6 @@ FactoryGirl.define do
     tel nil
     url nil
 
-    # trait :tel do
-    #   tel '020 8123 3456'
-    # end
-    #
-    # trait :url do
-    #   url 'http://www.gov.uk/'
-    # end
-
     initialize_with { attributes }
   end
 end
