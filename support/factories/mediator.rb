@@ -8,21 +8,21 @@ FactoryGirl.define do
   factory :mediator_hash, class:Hash do
     skip_create
 
-    sequence(:registration_no, 1000) { |n| "#{n}T" }
-    md_offers_dcc 'Y'
+    sequence(:urn, 1000) { |n| "#{n}T" }
+    dcc 'Y'
     title 'Mr'
-    md_first_name 'John'
-    md_last_name 'Smith'
-    md_mediation_legal_aid 'Y'
-    md_ppc_id { '1001T' }
-    fmca_cert '21/11/2016'
+    first_name 'John'
+    last_name 'Smith'
+    legal_aid_qualified 'Y'
+    ppc_urn { '1001T' }
+    fmca_date '21/11/2016'
 
     trait :invalid do
-      registration_no '1234X'
+      urn '1234X'
     end
 
     trait :include_practice do
-      md_practices { [create(:practice_hash)] }
+      practices { [create(:practice_hash)] }
     end
 
     initialize_with { attributes }
@@ -37,18 +37,12 @@ FactoryGirl.define do
 
     initialize_with do
       mediators = []
-      mediators << create(:mediator_hash, registration_no: '1000T', md_ppc_id: '1001T')
+      mediators << create(:mediator_hash, urn: '1000T', ppc_urn: '1001T')
       (mediator_count - 1).times do |i|
-        mediators << create(:mediator_hash, registration_no: "#{1001 + i}T", md_ppc_id: '1000T')
+        mediators << create(:mediator_hash, urn: "#{1001 + i}T", ppc_urn: '1000T')
       end
       mediators
     end
-
-    factory :mediator_list_with_invalid_item do
-
-    end
-
   end
-
 end
 

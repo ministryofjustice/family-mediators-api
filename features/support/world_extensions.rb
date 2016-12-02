@@ -38,7 +38,7 @@ module DataHelpers
     end
 
     def headings
-      @mediators[0] << 'md_practices'
+      @mediators[0] << 'Practices'
     end
 
     def data
@@ -67,14 +67,14 @@ module DataHelpers
     class << self
       def create_mediator
         mediator = {
-            'Registration No' => '1234A',
-            'md_offers_dcc' => 'Y',
+            'URN' => '1234A',
+            'DCC' => 'Y',
             'Title' => 'Mr',
-            'md_first_name' => 'John',
-            'md_last_name' => 'Smith',
-            'md_mediation_legal_aid' => 'Y',
-            'md_ppc_id' => 'not known',
-            'fmca_cert' => 'unknown'
+            'First Name' => 'John',
+            'Last Name' => 'Smith',
+            'Legal Aid Qualified' => 'Y',
+            'PPC URN' => 'not known',
+            'FMCA Date' => 'unknown'
         }
         new([mediator.keys, mediator.values])
       end

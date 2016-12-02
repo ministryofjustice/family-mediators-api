@@ -20,9 +20,9 @@ module Admin
         context 'when not unique' do
           let(:result) do
             data = [
-                create(:mediator_hash, registration_no: '4567A', md_ppc_id: '1000T'),
-                create(:mediator_hash, registration_no: '4567A', md_ppc_id: '1000T'),
-                create(:mediator_hash, registration_no: '1000T', md_ppc_id: '4567A')
+                create(:mediator_hash, urn: '4567A', ppc_urn: '1000T'),
+                create(:mediator_hash, urn: '4567A', ppc_urn: '1000T'),
+                create(:mediator_hash, urn: '1000T', ppc_urn: '4567A')
             ]
             ReferentialValidator.new(data).validate
           end
@@ -39,7 +39,7 @@ module Admin
             let(:error_message) { result.messages[0] }
 
             it "has heading 'Duplicate registration numbers'"  do
-              expect(error_message.heading).to eq('Duplicate registration numbers')
+              expect(error_message.heading).to eq('Duplicate URN')
             end
 
             it "has values '[4567A']"  do
@@ -47,15 +47,15 @@ module Admin
             end
           end
 
-          context 'and when md_ppc_id not recognised' do
+          context 'and when ppc_urn not recognised' do
             let(:result) do
-              invalid_ppc_id = '4756T'
-              data_with_unrecognised_md_ppc_id = [
-                  create(:mediator_hash, registration_no: '4567A', md_ppc_id: '1000T'),
-                  create(:mediator_hash, registration_no: '4567A', md_ppc_id: invalid_ppc_id),
-                  create(:mediator_hash, registration_no: '1000T', md_ppc_id: '4567A')
+              invalid_ppc_urn = '4756T'
+              data_with_unrecognised_ppc_urn = [
+                  create(:mediator_hash, urn: '4567A', ppc_urn: '1000T'),
+                  create(:mediator_hash, urn: '4567A', ppc_urn: invalid_ppc_urn),
+                  create(:mediator_hash, urn: '1000T', ppc_urn: '4567A')
               ]
-              ReferentialValidator.new(data_with_unrecognised_md_ppc_id).validate
+              ReferentialValidator.new(data_with_unrecognised_ppc_urn).validate
             end
 
             it 'is invalid' do
@@ -70,8 +70,8 @@ module Admin
               let(:error_messages) { result.messages }
 
               it "has heading 'Duplicate registration numbers'"  do
-                expect(error_messages[0].heading).to eq('MD_PPC_ID not recognised')
-                expect(error_messages[1].heading).to eq('Duplicate registration numbers')
+                expect(error_messages[0].heading).to eq('PPC URN not recognised')
+                expect(error_messages[1].heading).to eq('Duplicate URN')
               end
 
               it "has values '[4567A']"  do
@@ -83,7 +83,7 @@ module Admin
         end
       end
 
-      describe 'md_ppc_id' do
+      describe 'ppc_urn' do
         context 'when exists as registration number' do
           let(:result) do
             data = create(:mediator_list)
@@ -102,9 +102,9 @@ module Admin
         context "when is set to 'not known'" do
           let(:result) do
             data = [
-                create(:mediator_hash, registration_no: '1234A', md_ppc_id: '1000T'),
-                create(:mediator_hash, registration_no: '4567A', md_ppc_id: 'not known'),
-                create(:mediator_hash, registration_no: '1000T', md_ppc_id: '4567A')
+                create(:mediator_hash, urn: '1234A', ppc_urn: '1000T'),
+                create(:mediator_hash, urn: '4567A', ppc_urn: 'not known'),
+                create(:mediator_hash, urn: '1000T', ppc_urn: '4567A')
             ]
             ReferentialValidator.new(data).validate
           end
@@ -117,11 +117,11 @@ module Admin
 
         context 'when does not exist as registration number' do
           let(:result) do
-            invalid_ppc_id = '4756T'
+            invalid_ppc_urn = '4756T'
             data = [
-                create(:mediator_hash, registration_no: '1234A', md_ppc_id: '1000T'),
-                create(:mediator_hash, registration_no: '4567A', md_ppc_id: invalid_ppc_id),
-                create(:mediator_hash, registration_no: '1000T', md_ppc_id: '4567A')
+                create(:mediator_hash, urn: '1234A', ppc_urn: '1000T'),
+                create(:mediator_hash, urn: '4567A', ppc_urn: invalid_ppc_urn),
+                create(:mediator_hash, urn: '1000T', ppc_urn: '4567A')
             ]
             ReferentialValidator.new(data).validate
           end
@@ -138,7 +138,7 @@ module Admin
             let(:error_message) { result.messages[0] }
 
             it "has heading 'PPC_ID does not exist'"  do
-              expect(error_message.heading).to eq('MD_PPC_ID not recognised')
+              expect(error_message.heading).to eq('PPC URN not recognised')
             end
 
             it "has values ['4756T']"  do
