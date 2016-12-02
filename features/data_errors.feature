@@ -12,40 +12,40 @@ Feature: A spreadsheet upload is validated against a set of rules. If there are
 
   Scenario: Mediator data errors
     Given I upload a spreadsheet like this:
-      | Registration No | MD_Offers_DCC | Title | MD_Last_name | MD_First_name | MD_Mediation_legal_aid | MD_PPC_ID | FMCA_Cert       |
-      | 1234T           |               | Mr    | Irons        | John          | Y                      | not known | working towards |
-      | 3459A           | Y             | Mr    | Wayne        | Bruce         |                        | not known | unknown         |
-      | 5436P           | Y             | Mr    | Romanova     | Natalia       | Y                      | not known | 18/2015         |
-      | 1948A           |               | Mr    | Kovacs       |               | Y                      | not known | 1992            |
-      | 1948A           | Y             |       |              | Loki          | Y                      | not known | 05/2001         |
+      | URN   | DCC | Title | Last Name | First Name | Legal Aid Qualified | PPC URN   | FMCA Date       |
+      | 1234T |     | Mr    | Irons     | John       | Y                   | not known | working towards |
+      | 3459A | Y   | Mr    | Wayne     | Bruce      |                     | not known | unknown         |
+      | 5436P | Y   | Mr    | Romanova  | Natalia    | Y                   | not known | 18/2015         |
+      | 1948A |     | Mr    | Kovacs    |            | Y                   | not known | 1992            |
+      | 1948A | Y   |       |           | Loki       | Y                   | not known | 05/2001         |
     And I click 'Process data and apply updates'
     Then I should see the following item errors:
-      | Row | Field                  | Message                                                        |
-      | 2   | md_offers_dcc          | must be one of: Y, N                                           |
-      | 3   | md_mediation_legal_aid | must be one of: Y, N                                           |
-      | 4   | fmca_cert              | must be one of: unknown, working towards or must be dd/mm/yyyy |
-      | 5   | md_offers_dcc          | must be one of: Y, N                                           |
-      | 5   | md_first_name          | must be filled                                                 |
-      | 6   | md_last_name           | must be filled                                                 |
-      | 6   | title                  | must be filled                                                 |
+      | Row | Field               | Message                                                        |
+      | 2   | dcc                 | must be one of: Y, N                                           |
+      | 3   | legal_aid_qualified | must be one of: Y, N                                           |
+      | 4   | fmca_date           | must be one of: unknown, working towards or must be dd/mm/yyyy |
+      | 5   | dcc                 | must be one of: Y, N                                           |
+      | 5   | first_name          | must be filled                                                 |
+      | 6   | last_name           | must be filled                                                 |
+      | 6   | title               | must be filled                                                 |
 
   Scenario: Duplicate registration number
     Given I upload a spreadsheet like this:
-      | Registration No | MD_Offers_DCC | Title | MD_Last_name | MD_First_name | MD_Mediation_legal_aid | MD_PPC_ID | FMCA_Cert |
-      | 1234T           | Y             | Mrs   | Irons        | John          | Y                      | not known | unknown   |
-      | 1234T           | Y             | Mrs   | Wayne        | Bruce         | Y                      | not known | unknown   |
+      | URN   | DCC | Title | Last Name | First Name | Legal Aid Qualified | PPC URN   | FMCA Date |
+      | 1234T | Y   | Mrs   | Irons     | John       | Y                   | not known | unknown   |
+      | 1234T | Y   | Mrs   | Wayne     | Bruce      | Y                   | not known | unknown   |
     And I click 'Process data and apply updates'
     Then I should see the following collection errors:
-      | Error                          | Value(s) |
-      | Duplicate registration numbers | 1234T    |
+      | Error         | Value(s) |
+      | Duplicate URN | 1234T    |
 
-  Scenario: MD_PPC_ID not recognised
+  Scenario: PPC URN not recognised
     Given I upload a spreadsheet like this:
-      | Registration No | MD_Offers_DCC | Title | MD_Last_name | MD_First_name | MD_Mediation_legal_aid | MD_PPC_ID | FMCA_Cert |
-      | 1234T           | Y             | Mr    | Irons        | John          | Y                      | 4567E     | unknown   |
-      | 4567E           | Y             | Mr    | Wayne        | Bruce         | Y                      | 5647T     | unknown   |
+      | URN   | DCC | Title | Last Name | First Name | Legal Aid Qualified | PPC URN | FMCA Date |
+      | 1234T | Y   | Mr    | Irons     | John       | Y                   | 4567E   | unknown   |
+      | 4567E | Y   | Mr    | Wayne     | Bruce      | Y                   | 5647T   | unknown   |
     And I click 'Process data and apply updates'
     Then I should see the following collection errors:
-      | Error                    | Value(s) |
-      | MD_PPC_ID not recognised | 5647T    |
+      | Error                  | Value(s) |
+      | PPC URN not recognised | 5647T    |
 

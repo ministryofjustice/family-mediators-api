@@ -26,31 +26,31 @@ module Admin
 
       def validate
         supervisor_presence
-        duplicate_registration_nos
+        duplicate_urns
         @validation_result
       end
 
-      def duplicate_registration_nos
-        duplicates = registration_nos.select { |registration_number| registration_nos.count(registration_number) > 1 }
+      def duplicate_urns
+        duplicates = urns.select { |registration_number| urns.count(registration_number) > 1 }
         result = duplicates.uniq
         if result.length > 0
-          @validation_result.add(ErrorMessage.new(heading: 'Duplicate registration numbers', values: result))
+          @validation_result.add(ErrorMessage.new(heading: 'Duplicate URN', values: result))
         end
       end
 
       def supervisor_presence
-        result = ppc_ids - registration_nos - ['not known']
+        result = ppc_urns - urns - ['not known']
         if result.length > 0
-          @validation_result.add(ErrorMessage.new(heading: 'MD_PPC_ID not recognised', values: result))
+          @validation_result.add(ErrorMessage.new(heading: 'PPC URN not recognised', values: result))
         end
       end
 
-      def ppc_ids
-        @ppc_ids ||= @data.map{ |mediator| mediator[:md_ppc_id] }
+      def ppc_urns
+        @ppc_urns ||= @data.map{ |mediator| mediator[:ppc_urn] }
       end
 
-      def registration_nos
-        @registration_nos ||= @data.map{ |mediator| mediator[:registration_no] }
+      def urns
+        @urns ||= @data.map{ |mediator| mediator[:urn] }
       end
 
     end
