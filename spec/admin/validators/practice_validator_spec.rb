@@ -71,6 +71,23 @@ module Admin
           end
         end
 
+        describe 'email' do
+          context 'when nil' do
+            let(:practice_hash) { create(:practice_hash, email: nil) }
+            it { should be_valid }
+          end
+
+          context 'when string that is not email address' do
+            let(:practice_hash) { create(:practice_hash, :invalid_email) }
+            it { should_not be_valid }
+          end
+
+          context 'when string is email address' do
+            let(:practice_hash) { create(:practice_hash, :valid_email)}
+            it { should be_valid }
+          end
+        end
+
         describe 'address' do
           context 'when nil' do
             let(:practice_hash) { create(:practice_hash, address: nil ) }

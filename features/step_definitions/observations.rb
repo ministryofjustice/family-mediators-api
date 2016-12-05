@@ -17,5 +17,5 @@ end
 Then(/^the validation error message should be (.*)$/) do |validation_error|
   selector = '#item-errors tbody'
   results = get_column_data(selector, 3)[0]
-  expect(validation_error).to eq(results)
+  expect(results).to eq(validation_error)
 end

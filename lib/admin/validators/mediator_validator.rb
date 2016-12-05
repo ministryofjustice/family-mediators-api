@@ -25,7 +25,8 @@ module Admin
                     errors: {
                         tel: 'Phone number must be valid UK number',
                         url: 'Invalid URL',
-                        address: 'Must have address with valid postcode'
+                        address: 'Must have address with valid postcode',
+                        email: 'Must be valid email address'
                     }
                 }
             )
