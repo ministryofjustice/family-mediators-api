@@ -25,6 +25,10 @@ FactoryGirl.define do
       practices { [create(:practice_hash)] }
     end
 
+    trait :include_unparsed_practice do
+      practices '1 Null Way, Wessex CM2 9AF| 01245 605040 |foo@bar.com|http://www.foobar.com/baz/|'
+    end
+
     initialize_with { attributes }
   end
 

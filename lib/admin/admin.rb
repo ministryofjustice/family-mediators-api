@@ -1,7 +1,7 @@
 require 'base64'
 require 'zlib'
 
-require_relative 'parsers/mediator_practices'
+require_relative 'parsers/mediator_parser'
 require_relative 'parsers/practice'
 require_relative 'parsers/workbook'
 require_relative 'validators/mediator_validations'

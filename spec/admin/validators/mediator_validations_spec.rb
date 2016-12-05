@@ -21,7 +21,6 @@ module Admin
       end
 
       describe '#item_errors' do
-
         context 'when all mediators are valid' do
           it 'is returns no item messages' do
             validations = MediatorValidations.new(create(:mediator_list))
