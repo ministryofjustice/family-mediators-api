@@ -12,7 +12,7 @@ FactoryGirl.define do
     end
 
     trait :invalid_email do
-      email 'invalidemail.com'
+      email 'invalid@@email.com'
     end
 
     initialize_with { attributes }
