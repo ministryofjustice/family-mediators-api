@@ -4,23 +4,23 @@ module Admin
 
       let(:mediators) do
         [
-          {:name => 'Bob', :md_practices => '0 Nil Way BN2 0GB|01233-909090'},
-          {:name => 'Mary'}
+            {:name => 'Bob', :practices => '0 Nil Way BN2 0GB|01233-909090'},
+            {:name => 'Mary'}
         ]
       end
 
       let(:expected) do
         [
-          {:name => 'Bob', :md_practices => [
-              {
-                  :address => '0 Nil Way BN2 0GB',
-                  :tel => '01233-909090',
-                  :email => nil,
-                  :url => nil
-              }
+            {:name => 'Bob', :practices => [
+                {
+                    :address => '0 Nil Way BN2 0GB',
+                    :tel => '01233-909090',
+                    :email => nil,
+                    :url => nil
+                }
             ]
-          },
-          {:name => 'Mary'}
+            },
+            {:name => 'Mary'}
         ]
       end
 

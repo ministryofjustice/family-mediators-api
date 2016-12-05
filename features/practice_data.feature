@@ -11,7 +11,7 @@ Feature: The spreadsheet administrator enters practice data for a mediator under
   a new line \n.
 
   Scenario Outline: Practice data validation
-    Given I upload a valid mediator with <PracticeCell> data
+    Given I upload a mediator with practice data <PracticeCell>
     And I click 'Process data and apply updates'
     Then the validation error message should be <Message>
 
@@ -24,5 +24,9 @@ Feature: The spreadsheet administrator enters practice data for a mediator under
       | 15 Smith Street, London WC1R 4RL \| www.smith.com | Practice 1: Invalid URL |
 
     Examples: Invalid address
+      | PracticeCell            | Message                                           |
+      | 15 Smith Street, London | Practice 1: Must have address with valid postcode |
+
+    Examples: Invalid email
       | PracticeCell                                       | Message                                           |
-      | 15 Smith Street, London \| Practice 1: Invalid URL | Practice 1: Must have address with valid postcode |
+      | 15 Smith Street, London WC1R 4RL \| invalid@@email | Practice 1: Must be valid email address |

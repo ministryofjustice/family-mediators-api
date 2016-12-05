@@ -9,6 +9,9 @@ module UploadHelpers
     find('input[type="submit"]').click
   end
 
+end
+
+module ObservationHelpers
   def get_table_data(selector)
     data = page.all(selector + ' tr').collect do |row|
       row.all(:xpath, './/th|td').collect do |cell|
@@ -22,15 +25,63 @@ module UploadHelpers
     data = page.all(selector + " tr td[#{position}]").collect { |cell| cell.text }
     !data.empty? ? data : []
   end
+end
 
-  def insert_practice(table_data)
-    table_data[0] << 'md_practices'
-    table_data[1..-1].each do |row|
-      row << '15 Smith Street, London WC1R 4RL|01234567890'
+module DataHelpers
+  class PracticeData
+    extend Forwardable
+    delegate [:each] => :@mediators
+
+    def initialize(data_table, practice_data: '15 Smith Street, London WC1R 4RL|01234567890')
+      @mediators = data_table
+      @practice_data = practice_data
     end
-    table_data
+
+    def headings
+      @mediators[0] << 'Practices'
+    end
+
+    def data
+      @mediators[1..-1].map do |row|
+        row << @practice_data
+      end
+    end
   end
 
+  class MediatorsDataTable
+    extend Forwardable
+    delegate [:each, :[]] => :@mediators
+
+    def initialize(data_table)
+      @mediators = data_table
+    end
+
+    def headings
+      @mediators[0]
+    end
+
+    def data
+      @mediators[1..-1]
+    end
+
+    class << self
+      def create_mediator
+        mediator = {
+            'URN' => '1234A',
+            'DCC' => 'Y',
+            'Title' => 'Mr',
+            'First Name' => 'John',
+            'Last Name' => 'Smith',
+            'Legal Aid Qualified' => 'Y',
+            'PPC URN' => 'not known',
+            'FMCA Date' => 'unknown'
+        }
+        new([mediator.keys, mediator.values])
+      end
+    end
+  end
 end
 
 World(UploadHelpers)
+World(ObservationHelpers)
+World(DataHelpers)

@@ -2,36 +2,10 @@ module Admin
   module Validators
     describe MediatorValidations do
 
-      let(:valid_input_1) do
-        {
-            :registration_no => '1234A',
-            :md_offers_dcc => 'Y',
-            :md_first_name => 'John',
-            :md_last_name => 'Smith',
-            :md_mediation_legal_aid => 'Y',
-            :md_ppc_id => '1456T',
-            :fmca_cert => '21/11/2016',
-            :md_practices => [{:tel => '01234567890', :url => 'https://www.gov.uk/', :address => '15 Smith Street, London WC1R 4RL' }]
-        }
-      end
-
-      let(:valid_input_2) do
-        {
-            :registration_no => '1456T',
-            :md_offers_dcc => 'Y',
-            :md_first_name => 'Jane',
-            :md_last_name => 'Doe',
-            :md_mediation_legal_aid => 'Y',
-            :md_ppc_id => '1234A',
-            :fmca_cert => '21/11/2016',
-            :md_practices => [{:tel => '01234567890', :url => 'https://www.gov.uk/', :address => '15 Smith Street, London WC1R 4RL' }]
-        }
-      end
-
       describe '#valid?' do
-        context 'when all mediators are valid' do
+        context 'when mediators are valid' do
           it 'returns true' do
-            data = [valid_input_1, valid_input_2]
+            data = create(:mediator_list)
             validations = MediatorValidations.new(data)
             expect(validations.valid?).to eq(true)
           end
@@ -39,26 +13,25 @@ module Admin
 
         context 'when one mediator is invalid' do
           it 'returns false' do
-            data = [valid_input_1, valid_input_2.merge(:registration_no => 'invalid_reg_no')]
+            data = [create(:mediator_hash), create(:mediator_hash, :invalid)]
             validations = MediatorValidations.new(data)
             expect(validations.valid?).to eq(false)
           end
         end
       end
 
-      describe '#error_messages' do
+      describe '#item_errors' do
 
         context 'when all mediators are valid' do
-          it 'returns an empty array' do
-            data = [valid_input_1, valid_input_2]
-            validations = MediatorValidations.new(data)
+          it 'is returns no item messages' do
+            validations = MediatorValidations.new(create(:mediator_list))
             expect(validations.item_errors).to eq([])
           end
         end
 
         context 'when one mediator is invalid' do
           let(:item_errors) do
-            data = [valid_input_1, valid_input_2.merge(:registration_no => 'invalid_reg_no')]
+            data = [create(:mediator_hash), create(:mediator_hash, :invalid)]
             MediatorValidations.new(data).item_errors
           end
 
@@ -71,6 +44,16 @@ module Admin
           end
         end
       end
+
+      describe '#item_errors' do
+        context 'when all mediators are valid' do
+          it 'is returns no collection messages' do
+            validations = MediatorValidations.new(create(:mediator_list))
+            expect(validations.collection_errors).to eq([])
+          end
+        end
+      end
+
     end
   end
 end

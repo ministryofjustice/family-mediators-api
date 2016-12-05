@@ -25,20 +25,22 @@ module Admin
                     errors: {
                         tel: 'Phone number must be valid UK number',
                         url: 'Invalid URL',
-                        address: 'Must have address with valid postcode'
+                        address: 'Must have address with valid postcode',
+                        email: 'Must be valid email address'
                     }
                 }
             )
           end
         end
-        required(:registration_no).filled(:str?, format?: /^\d{4}[TAP]$/)
-        required(:md_offers_dcc) { included_in?(%w(Y N)) }
-        required(:md_first_name).filled(:str?)
-        required(:md_last_name).filled(:str?)
-        required(:md_mediation_legal_aid) { included_in?(%w(Y N)) }
-        required(:md_ppc_id).filled(:str?, format?: /^(\d{4}[TAP]|not known)$/)
-        required(:fmca_cert) { filled? & (included_in?(['unknown', 'working towards']) | date_string?) }
-        required(:md_practices) { array? { min_size?(1) & each { schema PracticeValidator } } }
+        required(:urn).filled(:str?, format?: /^\d{4}[TAP]$/)
+        required(:dcc) { included_in?(%w(Y N)) }
+        required(:first_name).filled(:str?)
+        required(:last_name).filled(:str?)
+        required(:title).filled(:str?)
+        required(:legal_aid_qualified) { included_in?(%w(Y N)) }
+        required(:ppc_urn).filled(:str?, format?: /^(\d{4}[TAP]|not known)$/)
+        required(:fmca_date) { filled? & (included_in?(['unknown', 'working towards']) | date_string?) }
+        optional(:practices) { array? { each { schema PracticeValidator } } }
       end
     end
   end
