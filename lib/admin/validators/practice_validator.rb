@@ -8,22 +8,22 @@ module Admin
       EMAIL_FORMAT = URI::MailTo::EMAIL_REGEXP
 
       predicate(:telephone_number?) do |current|
-        current.nil? || current.match(UK_PHONE_FORMAT)
+        current.match(UK_PHONE_FORMAT)
       end
 
       predicate(:url?, message: 'must be URL') do |current|
-        current.nil? || current.match(HTTP_FORMAT)
+        current.match(HTTP_FORMAT)
       end
 
       predicate(:email?, message: 'must be email address') do |current|
-        current.nil? || current.match(EMAIL_FORMAT)
+        current.match(EMAIL_FORMAT)
       end
 
       validations do
-        required(:tel) { telephone_number? }
-        required(:url) { url? }
         required(:address).filled(:str?)
-        required(:email) { email? }
+        optional(:tel) { telephone_number? }
+        optional(:url) { url? }
+        optional(:email) { email? }
       end
     end
   end

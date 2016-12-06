@@ -26,7 +26,7 @@ FactoryGirl.define do
     end
 
     trait :include_unparsed_practice do
-      practices { create(:unparsed_practice, :email, :url, :tel) }
+      practices { create(:unparsed_practice_all_parts) }
     end
 
     initialize_with { attributes }

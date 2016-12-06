@@ -8,11 +8,6 @@ module Admin
 
       describe 'practices' do
         describe 'telephone number' do
-          context 'when nil' do
-            let(:practice_hash) { create(:parsed_practice) }
-            it { should be_valid }
-          end
-
           [
               '07345 123 345',
               '07345123345',
@@ -38,11 +33,6 @@ module Admin
         end
 
         describe 'url' do
-          context 'when nil' do
-            let(:practice_hash) { create(:parsed_practice) }
-            it { should be_valid }
-          end
-
           %w(http://www.gov.uk
              http://www.gov.uk/mediators
              http://www.gov.uk/mediators/
@@ -67,18 +57,13 @@ module Admin
         end
 
         describe 'email' do
-          context 'when nil' do
-            let(:practice_hash) { create(:parsed_practice) }
-            it { should be_valid }
-          end
-
           context 'when string that is not email address' do
-            let(:practice_hash) { create(:parsed_practice, :invalid_email) }
+            let(:practice_hash) { create(:parsed_practice_all_parts, email: 'valid@@email.com') }
             it { should_not be_valid }
           end
 
           context 'when string is email address' do
-            let(:practice_hash) { create(:parsed_practice, :email) }
+            let(:practice_hash) { create(:parsed_practice_all_parts) }
             it { should be_valid }
           end
         end

@@ -3,54 +3,35 @@ FactoryGirl.define do
     skip_create
 
     address '15 Smith Street, London WC1R 4RL'
-    tel nil
-    url nil
-    email nil
-    # shuffle false
-
-    trait :email do
-      email 'valid@email.com'
-    end
-
-    trait :invalid_email do
-      email 'invalid@@email.com'
-    end
-
-    trait :tel do
-      tel '01245 605040'
-    end
-
-    trait :url do
-      url 'http://www.foobar.com/baz/'
-    end
 
     trait :missing_postcode do
       address '15 Smith Street, London'
     end
 
-    trait :all_parts do
-      url
-      tel
-      email
-    end
-
-    # trait :shuffle_parts do
-    #   shuffle true
-    # end
-
-    initialize_with { new("#{[address, tel, url, email].compact.join('|')}") }
+    initialize_with { new("#{address}") }
 
     factory :parsed_practice do
       initialize_with { attributes }
     end
 
-    factory :shuffled_unparsed_practice do
-      initialize_with { new("#{[address, tel, url, email].shuffle.compact.join('|')}") }
-    end
+    factory :unparsed_practice_all_parts do
+      tel '01245 605040'
+      url 'http://www.foobar.com/baz/'
+      email 'valid@email.com'
 
-    factory :whitespaced_unparsed_practice do
-      initialize_with { new("#{[address, tel, url, email].compact.join('  |  ')}") }
-    end
+      initialize_with { new("#{[address, tel, url, email].compact.join('|')}") }
 
+      factory :shuffled_unparsed_practice do
+        initialize_with { new("#{[address, tel, url, email].shuffle.compact.join('|')}") }
+      end
+
+      factory :whitespaced_unparsed_practice do
+        initialize_with { new("#{[address, tel, url, email].compact.join('  |  ')}") }
+      end
+
+      factory :parsed_practice_all_parts do
+        initialize_with { attributes }
+      end
+    end
   end
 end

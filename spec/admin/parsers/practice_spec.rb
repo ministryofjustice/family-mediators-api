@@ -31,42 +31,42 @@ module Admin
 
         context 'when postcode is missing' do
           let(:unparsed_practice) { create(:unparsed_practice, :missing_postcode) }
-          it { should include(address: nil)}
+          it { should_not include(:address)}
         end
 
         context 'when phonenumber-like string is present' do
-          let(:unparsed_practice) { create(:unparsed_practice, :tel) }
-          it { should include(tel: create(:parsed_practice, :tel)[:tel])}
+          let(:unparsed_practice) { create(:unparsed_practice_all_parts) }
+          it { should include(tel: create(:parsed_practice_all_parts)[:tel])}
         end
 
         context 'when phonenumber-like string is not present' do
           let(:unparsed_practice) { create(:unparsed_practice) }
-          it { should include(tel: nil)}
+          it { should_not include(:tel)}
         end
 
         context 'when email-like string is present' do
-          let(:unparsed_practice) { create(:unparsed_practice, :email) }
-          it { should include(email: create(:parsed_practice, :email)[:email])}
+          let(:unparsed_practice) { create(:unparsed_practice_all_parts) }
+          it { should include(email: create(:parsed_practice_all_parts)[:email])}
         end
 
         context 'when email-like string is not present' do
           let(:unparsed_practice) { create(:unparsed_practice) }
-          it { should include(email: nil)}
+          it { should_not include(:email)}
         end
 
         context 'when url-like string is present' do
-          let(:unparsed_practice) { create(:unparsed_practice, :url) }
-          it { should include(url: create(:parsed_practice, :url)[:url])}
+          let(:unparsed_practice) { create(:unparsed_practice_all_parts) }
+          it { should include(url: create(:parsed_practice_all_parts)[:url])}
         end
 
         context 'when url-like string is not present' do
           let(:unparsed_practice) { create(:unparsed_practice) }
-          it { should include(url: nil)}
+          it { should_not include(:url)}
         end
 
         context 'when all parts present' do
-          let(:unparsed_practice) { create(:unparsed_practice, :all_parts)}
-          let(:parsed_practice) { create(:parsed_practice, :all_parts) }
+          let(:unparsed_practice) { create(:unparsed_practice_all_parts)}
+          let(:parsed_practice) { create(:parsed_practice_all_parts) }
           it { should include(address: parsed_practice[:address])}
           it { should include(tel: parsed_practice[:tel])}
           it { should include(email: parsed_practice[:email])}
@@ -74,8 +74,8 @@ module Admin
         end
 
         context 'when parts are in different order' do
-          let(:unparsed_practice) { create(:shuffled_unparsed_practice, :all_parts)}
-          let(:parsed_practice) { create(:parsed_practice, :all_parts) }
+          let(:unparsed_practice) { create(:shuffled_unparsed_practice)}
+          let(:parsed_practice) { create(:parsed_practice_all_parts) }
           it { should include(address: parsed_practice[:address])}
           it { should include(tel: parsed_practice[:tel])}
           it { should include(email: parsed_practice[:email])}
@@ -83,8 +83,8 @@ module Admin
         end
 
         context 'when parts have whitespace' do
-          let(:unparsed_practice) { create(:whitespaced_unparsed_practice, :all_parts)}
-          let(:parsed_practice) { create(:parsed_practice, :all_parts) }
+          let(:unparsed_practice) { create(:whitespaced_unparsed_practice)}
+          let(:parsed_practice) { create(:parsed_practice_all_parts) }
           it 'should remove excess whitespace for address' do
             expect(subject).to include(address: parsed_practice[:address])
           end
