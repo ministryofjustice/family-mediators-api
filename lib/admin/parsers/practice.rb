@@ -1,5 +1,6 @@
 module Admin
   module Parsers
+
     class Practice
       RECORD_SEPARATOR = "\n"
       PART_SEPARATOR = '|'
@@ -22,6 +23,10 @@ module Admin
         def identify_parts(practice_line)
           parts = split_into_parts(practice_line)
           parts = parts.map { |part| sanitise(part) }
+          build_practice_hash(parts)
+        end
+
+        def build_practice_hash(parts)
           parts.inject({}) do |result, part|
             result[:email] = part if part.match(EMAIL_REGEX)
             result[:address] = part if part.match(POSTCODE_REGEX)

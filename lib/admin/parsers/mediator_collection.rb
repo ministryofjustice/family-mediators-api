@@ -7,14 +7,12 @@ module Admin
       end
 
       def valid?(_hashes)
-        @hashes.all?{ |x| x.is_a? Hash }
+        @hashes.all?{ |hash| hash.is_a? Hash }
       end
 
       def parsed_data
         parsed_data = @hashes.map do |hash|
-          if hash[:practices]
-            hash[:practices] = Practice.parse(hash[:practices])
-          end
+          hash[:practices] = Practice.parse(hash[:practices]) if hash[:practices]
           hash
         end
         parsed_data
