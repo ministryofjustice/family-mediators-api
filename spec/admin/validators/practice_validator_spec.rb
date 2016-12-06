@@ -9,13 +9,8 @@ module Admin
       describe 'practices' do
         describe 'telephone number' do
           context 'when nil' do
-            let(:practice_hash) { create(:practice_hash, tel: nil) }
+            let(:practice_hash) { create(:parsed_practice) }
             it { should be_valid }
-          end
-
-          context 'when blank' do
-            let(:practice_hash) { create(:practice_hash, tel: '') }
-            it { should_not be_valid }
           end
 
           [
@@ -26,25 +21,25 @@ module Admin
               '020 8123 5678 ext234'
           ].each do |phone_number|
             context "when #{phone_number}" do
-              let(:practice_hash) { create(:practice_hash, tel: phone_number) }
+              let(:practice_hash) { create(:parsed_practice, tel: phone_number) }
               it { should be_valid }
             end
           end
 
           context 'when too short' do
-            let(:practice_hash) { create(:practice_hash, tel: '01234') }
+            let(:practice_hash) { create(:parsed_practice, tel: '01234') }
             it { should_not be_valid }
           end
 
           context 'when alpha' do
-            let(:practice_hash) { create(:practice_hash, tel: 'abcdef') }
+            let(:practice_hash) { create(:parsed_practice, tel: 'abcdef') }
             it { should_not be_valid }
           end
         end
 
         describe 'url' do
           context 'when nil' do
-            let(:practice_hash) { create(:practice_hash, url: nil) }
+            let(:practice_hash) { create(:parsed_practice) }
             it { should be_valid }
           end
 
@@ -55,47 +50,47 @@ module Admin
              http://www.gov.uk/mediators/?type=family
              https://www.gov.uk/mediators/?type=family).each do |url|
             context "when #{url}" do
-              let(:practice_hash) { create(:practice_hash, url: url) }
+              let(:practice_hash) { create(:parsed_practice, url: url) }
               it { should be_valid }
             end
           end
 
           context 'when scheme is missing' do
-            let(:practice_hash) { create(:practice_hash, url: 'www.gov.uk' ) }
+            let(:practice_hash) { create(:parsed_practice, url: 'www.gov.uk') }
             it { should_not be_valid }
           end
 
           context 'when scheme is file' do
-            let(:practice_hash) { create(:practice_hash, url: 'file://www.gov.uk' ) }
+            let(:practice_hash) { create(:parsed_practice, url: 'file://www.gov.uk' ) }
             it { should_not be_valid }
           end
         end
 
         describe 'email' do
           context 'when nil' do
-            let(:practice_hash) { create(:practice_hash, email: nil) }
+            let(:practice_hash) { create(:parsed_practice) }
             it { should be_valid }
           end
 
           context 'when string that is not email address' do
-            let(:practice_hash) { create(:practice_hash, :invalid_email) }
+            let(:practice_hash) { create(:parsed_practice, :invalid_email) }
             it { should_not be_valid }
           end
 
           context 'when string is email address' do
-            let(:practice_hash) { create(:practice_hash, :valid_email)}
+            let(:practice_hash) { create(:parsed_practice, :email) }
             it { should be_valid }
           end
         end
 
         describe 'address' do
           context 'when nil' do
-            let(:practice_hash) { create(:practice_hash, address: nil ) }
+            let(:practice_hash) { create(:parsed_practice, address: nil) }
             it { should_not be_valid}
           end
 
           context 'when is filled with a string' do
-            let(:practice_hash) { create(:practice_hash, address: '15 Smith Street, London SE19 2SM' ) }
+            let(:practice_hash) { create(:parsed_practice) }
             it { should be_valid}
           end
         end

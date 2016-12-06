@@ -22,11 +22,11 @@ FactoryGirl.define do
     end
 
     trait :include_practice do
-      practices { [create(:practice_hash)] }
+      practices { [create(:parsed_practice)] }
     end
 
     trait :include_unparsed_practice do
-      practices '1 Null Way, Wessex CM2 9AF| 01245 605040 |foo@bar.com|http://www.foobar.com/baz/|'
+      practices { create(:unparsed_practice, :email, :url, :tel) }
     end
 
     initialize_with { attributes }
