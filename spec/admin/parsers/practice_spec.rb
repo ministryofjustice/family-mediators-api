@@ -1,19 +1,6 @@
 module Admin
   module Parsers
     describe Practice do
-      # let(:practice) { '1 Null Way, Wessex CM2 9AF| 01245 605040 |foo@bar.com|http://www.foobar.com/baz/|'}
-      # let(:address_only_practice) { '1 Null Way, Wessex CM2 9AF' }
-      # let(:multiple_practices) do
-      #   "#{practice}
-      #    #{practice}
-      #    #{practice}
-      #    #{practice}"
-      # end
-      # let(:practice_with_undesirable_spaces) do
-      #   '  1 Null Way, Wessex        CM2 9AF| 01245   605040 |  foo@bar.com  | http://www.foobar.com/baz/  '
-      # end
-      # let(:reordered_practice_parts) { '01245 605040|http://www.foobar.com/baz/|1 Null Way, Wessex CM2 9AF|foo@bar.com|'}
-
       context 'URL_REGEX' do
         %w{ http://foo.com https://foo.com foo.com http://www.bar.co.uk foo.com/a/path/ http://foo.com/a/path/}.each do |url|
           it "matches URL of the form: #{url}" do
@@ -114,8 +101,6 @@ module Admin
             expect(subject).to include(url: parsed_practice[:url])
           end
         end
-
-
       end
 
       context 'multiple practices' do
