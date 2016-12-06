@@ -23,6 +23,10 @@ FactoryGirl.define do
       url 'http://www.foobar.com/baz/'
     end
 
+    trait :missing_postcode do
+      address '15 Smith Street, London'
+    end
+
     initialize_with { new("#{[address, tel, url, email].compact.join('|')}") }
 
     factory :parsed_practice do
