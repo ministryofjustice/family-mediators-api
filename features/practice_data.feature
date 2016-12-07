@@ -24,9 +24,9 @@ Feature: The spreadsheet administrator enters practice data for a mediator under
       | 15 Smith Street, London WC1R 4RL \| www.smith.com | Practice 1: Invalid URL |
 
     Examples: Invalid address
-      | PracticeCell            | Message                                           |
-      | 15 Smith Street, London | Practice 1: Must have address with valid postcode |
+      | PracticeCell            | Message                                      |
+      | 15 Smith Street, London | Practice 1: Must have a single valid address |
 
     Examples: Invalid email
-      | PracticeCell                                       | Message                                           |
+      | PracticeCell                                       | Message                                 |
       | 15 Smith Street, London WC1R 4RL \| invalid@@email | Practice 1: Must be valid email address |
