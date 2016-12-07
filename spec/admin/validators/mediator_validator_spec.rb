@@ -12,6 +12,11 @@ module Admin
             create(:mediator_hash, :include_practice)
           end
           it { should be_valid }
+
+          it 'should include practices' do
+            expect(data).to include(:practices)
+          end
+
         end
       end
 

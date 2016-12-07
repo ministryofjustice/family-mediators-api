@@ -17,7 +17,7 @@ module Admin
 
       def call
         as_hashes = @marshaler.to_array(@dump)
-        with_expanded_practices = Parsers::MediatorPractices.parse(as_hashes)
+        with_expanded_practices = Parsers::MediatorsCollection.new(as_hashes).parsed_data
         data_validations = @data_validator.new(with_expanded_practices)
 
         if data_validations.valid?
