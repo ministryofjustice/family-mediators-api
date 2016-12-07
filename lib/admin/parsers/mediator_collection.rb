@@ -11,11 +11,10 @@ module Admin
       end
 
       def parsed_data
-        parsed_data = @hashes.map do |hash|
-          hash[:practices] = Practice.parse(hash[:practices]) if hash[:practices]
+        @hashes.map do |hash|
+          hash[:practices] = Practice.parse(hash[:practices]) if hash.key?(:practices)
           hash
         end
-        parsed_data
       end
     end
   end
