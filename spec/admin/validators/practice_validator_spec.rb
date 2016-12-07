@@ -78,7 +78,18 @@ module Admin
             let(:practice_hash) { create(:parsed_practice) }
             it { should be_valid}
           end
+
+          context 'when is empty array' do
+            let(:practice_hash) { create(:parsed_practice, address: [])}
+            it { should_not be_valid }
+          end
         end
+      end
+
+      context 'when is more than one address' do
+        let(:address) { '15 Smith Street, London WC1R 4RL' }
+        let(:practice_hash) { create(:parsed_practice, address: [address, address]) }
+        it { should_not be_valid }
       end
     end
   end

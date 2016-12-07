@@ -2,15 +2,15 @@ FactoryGirl.define do
   factory :unparsed_practice, class: String do
     skip_create
 
-    address '15 Smith Street, London WC1R 4RL'
+    address ['15 Smith Street, London WC1R 4RL']
 
     trait :missing_postcode do
-      address '15 Smith Street, London'
+      address ['15 Smith Street, London']
     end
 
-    initialize_with { new("#{address}") }
+    initialize_with { new("#{address[0]}") }
 
-    factory :parsed_practice do
+    factory :parsed_practice, class: Hash do
       initialize_with { attributes }
     end
 

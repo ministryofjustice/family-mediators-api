@@ -31,7 +31,7 @@ module Admin
 
         context 'when postcode is missing' do
           let(:unparsed_practice) { create(:unparsed_practice, :missing_postcode) }
-          it { should_not include(:address)}
+          it { should include(address: [])}
         end
 
         context 'when phonenumber-like string is present' do
@@ -114,6 +114,19 @@ module Admin
         it 'returns an array of parsed practice hashes' do
           expect(subject.size).to eq(3)
         end
+      end
+
+      context 'when more than one address in practice line' do
+        subject { Practice.parse(unparsed_practice_with_multiple_addresses) }
+        let(:unparsed_practice_with_multiple_addresses) do
+          "#{create(:unparsed_practice)}|#{create(:unparsed_practice)}"
+        end
+        let(:expected) do
+          [create(:parsed_practice)[:address][0],create(:parsed_practice)[:address][0]]
+        end
+
+        it { should include(address: expected) }
+
       end
     end
   end

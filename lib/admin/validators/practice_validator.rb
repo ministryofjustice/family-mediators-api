@@ -20,7 +20,7 @@ module Admin
       end
 
       validations do
-        required(:address).filled(:str?)
+        required(:address) { array? { size?(1) & each { str? } } }
         optional(:tel) { telephone_number? }
         optional(:url) { url? }
         optional(:email) { email? }
