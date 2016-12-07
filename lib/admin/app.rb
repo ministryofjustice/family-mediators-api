@@ -3,6 +3,10 @@ require 'sinatra/json'
 module Admin
   class App < Sinatra::Base
 
+    use Rack::Auth::Basic do |username, password|
+      username == 'admin' and password == 'admin'
+    end
+
     include Helpers
 
     set :views, File.dirname(__FILE__) + '/../../views'
