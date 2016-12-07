@@ -1,14 +1,25 @@
 require 'spec_helper'
 
-require_relative '../../support/helpers/temporary_workbook'
-
 describe Admin::App do
   include Rack::Test::Methods
 
-  let(:parser) { nil }
-
   def app
-    Admin::App.set :parser, parser
+    Admin::App
+  end
+
+  context '/healthcheck' do
+
+    before do
+      get '/healthcheck'
+    end
+
+    it 'has status 200' do
+      expect(last_response.status).to eq(200)
+    end
+
+    it "has body {status: 'OKAY'}" do
+      expect(last_response.body).to eq({ status: 'OKAY'}.to_json)
+    end
   end
 
   context 'unsuccessfully uploads file' do
