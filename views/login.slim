@@ -1,0 +1,17 @@
+form.form action="/admin/login" method="post"
+  h1.form-title.heading-large
+    | Login
+
+  - if params['incorrect']
+    p You could not be logged in. Did you enter the correct username and password?
+
+  .form-group
+    label.form-label-bold for="username" Username
+    input#username.form-control type="text" name="username" /
+
+  .form-group
+    label.form-label-bold for="password" Password
+    input#password.form-control type="password" name="password" /
+
+  .form-group
+    input.button type="submit" value="Continue" /
