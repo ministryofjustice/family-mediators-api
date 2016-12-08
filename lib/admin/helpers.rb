@@ -17,7 +17,6 @@ module Admin
     end
 
     def redirect_to_original_request
-      user = session[:user]
       original_request = session[:original_request] || '/actions'
       session[:original_request] = nil
       redirect url(original_request)

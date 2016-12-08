@@ -3,12 +3,8 @@ require 'sinatra/json'
 module Admin
   class App < Sinatra::Base
 
-    # use Rack::Auth::Basic do |username, password|
-    #   username == 'admin' and password == 'admin'
-    # end
-
     TEN_MINUTES   = 60 * 10
-    use Rack::Session::Pool, expire_after: TEN_MINUTES # Expire sessions after ten minutes of inactivity
+    use Rack::Session::Pool, expire_after: TEN_MINUTES
     helpers Helpers
 
     set :views, File.dirname(__FILE__) + '/../../views'
@@ -19,7 +15,7 @@ module Admin
     end
 
     post '/login' do
-      if user = User.authenticate(params)
+      if user = Admin::User.authenticate(params)
         session[:user] = user
         redirect_to_original_request
       else
@@ -31,6 +27,10 @@ module Admin
       slim :start
     end
 
+    get '/healthcheck' do
+      json :status => 'OKAY'
+    end
+
     get '/actions' do
       authenticate!
       slim :actions
@@ -39,11 +39,6 @@ module Admin
     get '/upload' do
       authenticate!
       slim :index
-    end
-
-    get '/healthcheck' do
-      authenticate!
-      json :status => 'OKAY'
     end
 
     post '/upload' do
