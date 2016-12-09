@@ -73,6 +73,7 @@ module DataHelpers
             'First Name' => 'John',
             'Last Name' => 'Smith',
             'Legal Aid Qualified' => 'Y',
+            'Legal Aid Franchise' => 'N',
             'PPC URN' => 'not known',
             'FMCA Date' => 'unknown'
         }

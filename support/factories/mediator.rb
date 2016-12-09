@@ -14,6 +14,7 @@ FactoryGirl.define do
     first_name 'John'
     last_name 'Smith'
     legal_aid_qualified 'Y'
+    legal_aid_franchise 'Y'
     ppc_urn { '1001T' }
     fmca_date '21/11/2016'
 
