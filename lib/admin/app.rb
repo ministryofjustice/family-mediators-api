@@ -15,7 +15,7 @@ module Admin
     end
 
     post '/login' do
-      if user = Admin::User.authenticate(params)
+      if (user = Admin::User.authenticate(params))
         session[:user] = user
         redirect_to_original_request
       else
