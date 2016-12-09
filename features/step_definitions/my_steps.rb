@@ -12,13 +12,28 @@ Given(/^there's (\d+) records in the database$/) do |num|
 end
 
 Given(/^I upload a spreadsheet like this:$/) do |table|
+  login
   mediators_data_table = DataHelpers::MediatorsDataTable.new(table.raw)
   with_practice_data = DataHelpers::PracticeData.new(mediators_data_table)
   upload_spreadsheet(with_practice_data.headings, with_practice_data.data)
 end
 
 Given(/^I upload a mediator with practice data (.*)/) do |practice_data|
+  login
   mediators_data_table = DataHelpers::MediatorsDataTable.create_mediator()
   with_practice_data = DataHelpers::PracticeData.new(mediators_data_table, practice_data: practice_data)
   upload_spreadsheet(with_practice_data.headings, with_practice_data.data)
+end
+
+Given(/^I am an unauthenticated user$/) do
+  browser = Capybara.current_session.driver.browser
+  browser.clear_cookies
+end
+
+When(/^I attempt to view some unrestricted content$/) do
+  visit 'http://localhost:9292/admin/upload'
+end
+
+When(/^I authenticate with valid credentials$/) do
+  login
 end

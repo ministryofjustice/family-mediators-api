@@ -82,6 +82,16 @@ module DataHelpers
   end
 end
 
+module AuthenticationHelpers
+  def login
+    visit 'http://localhost:9292/admin/login'
+    fill_in 'username', :with => 'username'
+    fill_in 'password', :with => 'password'
+    click_button 'Login'
+  end
+end
+
 World(UploadHelpers)
 World(ObservationHelpers)
 World(DataHelpers)
+World(AuthenticationHelpers)

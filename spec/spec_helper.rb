@@ -2,6 +2,9 @@ ENV['RACK_ENV'] = 'test'
 require 'simplecov'
 $LOAD_PATH.unshift("#{__dir__}/..")
 
+require 'dotenv'
+Dotenv.load
+
 require 'lib/env'
 require 'lib/mediators'
 

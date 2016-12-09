@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Admin::App do
   include Rack::Test::Methods
 
