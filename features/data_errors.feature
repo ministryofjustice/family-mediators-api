@@ -12,20 +12,21 @@ Feature: A spreadsheet upload is validated against a set of rules. If there are
 
   Scenario: Mediator data errors
     Given I upload a spreadsheet like this:
-      | URN   | DCC | Title | Last Name | First Name | Legal Aid Qualified | PPC URN   | FMCA Date       |
-      | 1234T |     | Mr    | Irons     | John       | Y                   | not known | working towards |
-      | 3459A | Y   | Mr    | Wayne     | Bruce      |                     | not known | unknown         |
-      | 5436P | Y   | Mr    | Romanova  | Natalia    | Y                   | not known | 18/2015         |
-      | 1948A |     | Mr    | Kovacs    |            | Y                   | not known | 1992            |
-      | 1948A | Y   |       |           | Loki       | Y                   | not known | 05/2001         |
+      | URN   | DCC | Title | Last Name | First Name | Legal Aid Qualified | Legal Aid Franchise | PPC URN   | FMCA Date       |
+      | 1234T |     | Mr    | Irons     | John       | Y                   | Y                   | not known | working towards |
+      | 3459A | Y   | Mr    | Wayne     | Bruce      |                     | Y                   | not known | unknown         |
+      | 5436P | Y   | Mr    | Romanova  | Natalia    | Y                   |                     | not known | 18/2015         |
+      | 1948A |     | Mr    | Kovacs    |            | Y                   | Y                   | not known | 1992            |
+      | 1948A | Y   |       |           | Loki       | Y                   | Y                   | not known | 05/2001         |
     And I click 'Process data and apply updates'
     Then I should see the following item errors:
       | Row | Field               | Message                                                        |
       | 2   | dcc                 | must be one of: Y, N                                           |
       | 3   | legal_aid_qualified | must be one of: Y, N                                           |
+      | 4   | legal_aid_franchise | must be one of: Y, N                                           |
       | 4   | fmca_date           | must be one of: unknown, working towards or must be dd/mm/yyyy |
-      | 5   | dcc                 | must be one of: Y, N                                           |
       | 5   | first_name          | must be filled                                                 |
+      | 5   | dcc                 | must be one of: Y, N                                           |
       | 6   | last_name           | must be filled                                                 |
       | 6   | title               | must be filled                                                 |
 

@@ -21,158 +21,27 @@ module Admin
       end
 
       describe 'urn' do
-        context 'when blank' do
-          let(:data) { create(:mediator_hash, urn: '')}
-          it { should_not be_valid }
-        end
-
-        context "when matches pattern ####T" do
-          let(:data) { create(:mediator_hash, urn: '9371T') }
-          it { should be_valid }
-        end
-
-        context "when matches pattern ####A" do
-          let(:data) { create(:mediator_hash, urn: '9371A') }
-          it { should be_valid }
-        end
-
-        context "when matches pattern ####P" do
-          let(:data) { create(:mediator_hash, urn: '9371P') }
-          it { should be_valid }
-        end
-
-        context 'when does not match registration format' do
-          let(:data) { create(:mediator_hash, urn: '16789P') }
-          it { should_not be_valid }
-        end
-      end
-
-      describe 'dcc' do
-
-        context 'when blank' do
-          let(:data) { create(:mediator_hash, dcc: '') }
-          it { should_not be_valid }
-        end
-
-        context "when is 'Y'" do
-          let(:data) { create(:mediator_hash, dcc: 'Y') }
-          it { should be_valid }
-        end
-
-        context "when is 'N'" do
-          let(:data) { create(:mediator_hash, dcc: 'N') }
-          it { should be_valid }
-        end
-
-        context 'when is not Y or N' do
-          let(:data) { create(:mediator_hash, dcc: 'a') }
-          it { should_not be_valid }
-        end
-
-        context 'when is not YN' do
-          let(:data) { create(:mediator_hash, dcc: 'YN') }
-          it { should_not be_valid }
-        end
-
-      end
-
-      describe 'title' do
-        context 'when blank' do
-          let(:data) { create(:mediator_hash, title: '') }
-          it { should_not be_valid }
-        end
-
-        context 'when filled' do
-          let(:data) { create(:mediator_hash, title: 'Miss') }
-          it { should be_valid }
-        end
-      end
-
-      describe 'first_name' do
-        context 'when blank' do
-          let(:data) { create(:mediator_hash, first_name: '') }
-          it { should_not be_valid }
-        end
-
-        context 'when is non-blank string' do
-          let(:data) { create(:mediator_hash, first_name: 'John') }
-          it { should be_valid }
-        end
-
-        context 'when is number' do
-          let(:data) { create(:mediator_hash, first_name: 123 ) }
-          it { should_not be_valid }
-        end
-      end
-
-      describe 'last_name' do
-        context 'when blank' do
-          let(:data) { create(:mediator_hash, last_name: '') }
-          it { should_not be_valid }
-        end
-
-        context 'when is non-blank string' do
-          let(:data) { create(:mediator_hash, last_name: 'John') }
-          it { should be_valid }
-        end
-
-        context 'when is number' do
-          let(:data) { create(:mediator_hash, last_name: 123) }
-          it { should_not be_valid }
-        end
-      end
-
-      describe 'legal_aid_qualified' do
-        context 'when blank' do
-          let(:data) { create(:mediator_hash, legal_aid_qualified: '') }
-          it { should_not be_valid }
-        end
-
-        context "when is 'Y'" do
-          let(:data) { create(:mediator_hash, legal_aid_qualified: 'Y') }
-          it { should be_valid }
-        end
-
-        context "when is 'N'" do
-          let(:data) { create(:mediator_hash, legal_aid_qualified: 'N') }
-          it { should be_valid }
-        end
-
-        context 'when is not YN' do
-          let(:data) { create(:mediator_hash, legal_aid_qualified: 'YN') }
-          it { should_not be_valid }
-        end
+        it_should_behave_like 'a URN', 'urn'
       end
 
       describe 'ppc_urn' do
-        context 'when blank' do
-          let(:data) { create(:mediator_hash, ppc_urn: '') }
-          it { should_not be_valid }
-        end
-
-        context 'when matches pattern ####T' do
-          let(:data) { create(:mediator_hash, ppc_urn: '8297T') }
-          it { should be_valid }
-        end
-
-        context 'when matches pattern ####A' do
-          let(:data) { create(:mediator_hash, ppc_urn: '8297A') }
-          it { should be_valid }
-        end
-
-        context 'when matches pattern ####P' do
-          let(:data) { create(:mediator_hash, ppc_urn: '8297P') }
-          it { should be_valid }
-        end
+        it_should_behave_like 'a URN', 'ppc_urn'
 
         context 'when "not known"' do
           let(:data) { create(:mediator_hash, ppc_urn: 'not known') }
           it { should be_valid }
         end
+      end
 
-        context 'when does not match registration format' do
-          let(:data) { create(:mediator_hash, ppc_urn: '16789P') }
-          it { should_not be_valid }
+      %w(dcc legal_aid_qualified legal_aid_franchise).each do |field_name|
+        describe field_name do
+          it_should_behave_like 'a required boolean', field_name
+        end
+      end
+
+      %w(title first_name last_name).each do |field_name|
+        describe field_name do
+          it_should_behave_like 'a required string', field_name
         end
       end
 
@@ -207,12 +76,10 @@ module Admin
           MediatorValidator.new(missing_data).validate
         end
 
-        # let(:data) { create(:mediator_hash) }
         keys = FactoryGirl.create(:mediator_hash).keys
 
         keys.each do |val|
           context "when #{val} missing" do
-            # data = create(:mediator_hash)
             let(:missing_data) { create(:mediator_hash).tap { |key| key.delete(val) } }
             it { should_not be_valid }
           end
