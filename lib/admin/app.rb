@@ -3,28 +3,46 @@ require 'sinatra/json'
 module Admin
   class App < Sinatra::Base
 
-    include Helpers
+    TEN_MINUTES   = 60 * 10
+    use Rack::Session::Pool, expire_after: TEN_MINUTES
+    helpers Helpers
 
     set :views, File.dirname(__FILE__) + '/../../views'
     set :public_folder, 'public'
 
+    get '/login' do
+      slim :login
+    end
+
+    post '/login' do
+      if (user = Admin::User.authenticate(params))
+        session[:user] = user
+        redirect_to_original_request
+      else
+        redirect url('/login?incorrect=true')
+      end
+    end
+
     get '/' do
       slim :start
-    end
-
-    get '/actions' do
-      slim :actions
-    end
-
-    get '/upload' do
-      slim :index
     end
 
     get '/healthcheck' do
       json :status => 'OKAY'
     end
 
+    get '/actions' do
+      authenticate!
+      slim :actions
+    end
+
+    get '/upload' do
+      authenticate!
+      slim :index
+    end
+
     post '/upload' do
+      authenticate!
       begin
         success, details = Services::ProcessFile.new(
           params[:spreadsheet_file]
@@ -43,6 +61,7 @@ module Admin
     end
 
     post '/upload-process' do
+      authenticate!
       success, details = Services::ProcessData.new(params[:dump]).call
 
       if success
@@ -53,10 +72,12 @@ module Admin
     end
 
     get '/upload-success' do
+      authenticate!
       slim :upload_success
     end
 
     get '/upload-fail' do
+      authenticate!
       slim :upload_fail
     end
   end

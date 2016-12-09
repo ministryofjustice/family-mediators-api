@@ -1,6 +1,9 @@
 $LOAD_PATH.unshift File.dirname(__FILE__)
 $LOAD_PATH.unshift("#{File.dirname(__FILE__)}/lib")
 
+require 'dotenv'
+Dotenv::load
+
 require 'lib/env'
 require 'lib/mediators'
 

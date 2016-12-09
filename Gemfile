@@ -2,6 +2,8 @@
 source 'https://rubygems.org'
 
 gem 'activerecord'
+gem 'bcrypt'
+gem 'dotenv'
 gem 'hanami-validations'
 gem 'grape'
 gem 'grape-entity'
