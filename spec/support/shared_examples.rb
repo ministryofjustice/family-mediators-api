@@ -4,25 +4,21 @@ RSpec.shared_examples 'a required boolean' do |field_name|
     it { should_not be_valid }
   end
 
-  context "when is 'Y'" do
-    let(:data) { create(:mediator_hash, {field_name => 'Y'}) }
+  context "when is 'Yes'" do
+    let(:data) { create(:mediator_hash, {field_name => 'Yes'}) }
     it { should be_valid }
   end
 
-  context "when is 'N'" do
-    let(:data) { create(:mediator_hash, {field_name => 'N'}) }
+  context "when is 'No'" do
+    let(:data) { create(:mediator_hash, {field_name => 'No'}) }
     it { should be_valid }
   end
 
   context 'when is not Y or N' do
-    let(:data) { create(:mediator_hash, {field_name => 'a'}) }
+    let(:data) { create(:mediator_hash, {field_name => 'Y'}) }
     it { should_not be_valid }
   end
 
-  context 'when is not YN' do
-    let(:data) { create(:mediator_hash, {field_name => 'YN'} ) }
-    it { should_not be_valid }
-  end
 end
 
 RSpec.shared_examples 'a URN' do |field_name|

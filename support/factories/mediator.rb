@@ -9,12 +9,12 @@ FactoryGirl.define do
     skip_create
 
     sequence(:urn, 1000) { |n| "#{n}T" }
-    dcc 'Y'
+    dcc 'Yes'
     title 'Mr'
     first_name 'John'
     last_name 'Smith'
-    legal_aid_qualified 'Y'
-    legal_aid_franchise 'Y'
+    legal_aid_qualified 'Yes'
+    legal_aid_franchise 'No'
     ppc_urn { '1001T' }
     fmca_date '21/11/2016'
 

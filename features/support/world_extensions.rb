@@ -68,12 +68,12 @@ module DataHelpers
       def create_mediator
         mediator = {
             'URN' => '1234A',
-            'DCC' => 'Y',
+            'DCC' => 'Yes',
             'Title' => 'Mr',
             'First Name' => 'John',
             'Last Name' => 'Smith',
-            'Legal Aid Qualified' => 'Y',
-            'Legal Aid Franchise' => 'N',
+            'Legal Aid Qualified' => 'Yes',
+            'Legal Aid Franchise' => 'No',
             'PPC URN' => 'not known',
             'FMCA Date' => 'unknown'
         }
