@@ -16,12 +16,12 @@ Feature: The spreadsheet administrator enters practice data for a mediator under
     Then the validation error message should be <Message>
 
     Examples: Invalid telephone number
-      | PracticeCell                              | Message                                          |
-      | 0712335\|15 Smith Street, London WC1R 4RL | Practice 1: Phone number must be valid UK number |
+      | PracticeCell                              | Message                                   |
+      | 0712335\|15 Smith Street, London WC1R 4RL | Practice 1: Must be valid UK phone number |
 
     Examples: Invalid URL
-      | PracticeCell                                      | Message                 |
-      | 15 Smith Street, London WC1R 4RL \| www.smith.com | Practice 1: Invalid URL |
+      | PracticeCell                                      | Message                       |
+      | 15 Smith Street, London WC1R 4RL \| www.smith.com | Practice 1: Must be valid URL |
 
     Examples: Invalid address
       | PracticeCell            | Message                                      |

@@ -23,8 +23,8 @@ module Admin
             super.merge(
                 en: {
                     errors: {
-                        tel: 'Phone number must be valid UK number',
-                        url: 'Invalid URL',
+                        tel: 'Must be valid UK phone number',
+                        url: 'Must be valid URL',
                         address: 'Must have a single valid address',
                         email: 'Must be valid email address'
                     }
@@ -37,9 +37,9 @@ module Admin
         required(:first_name)          { filled? & str? }
         required(:last_name)           { filled? & str? }
         required(:title)               { filled? & str? }
-        required(:dcc)                 { included_in?(%w(Y N)) }
-        required(:legal_aid_qualified) { included_in?(%w(Y N)) }
-        required(:legal_aid_franchise) { included_in?(%w(Y N)) }
+        required(:dcc)                 { included_in?(%w(Yes No)) }
+        required(:legal_aid_qualified) { included_in?(%w(Yes No)) }
+        required(:legal_aid_franchise) { included_in?(%w(Yes No)) }
         required(:fmca_date)           { filled? & (included_in?(['unknown', 'working towards']) | date_string?) }
         optional(:practices)           { array? { each { schema PracticeValidator } } }
       end
