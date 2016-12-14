@@ -27,8 +27,9 @@ module Admin
           worksheet[0].cells.map { |cell| cell.value }
         )
 
-        worksheet[1..-1].map do |row|
-          row.cells.each_with_index.inject({}) do |hash, (cell, index)|
+        worksheet[1..-1].map.with_index do |row|
+          processed_headings.size.times.inject({}) do |hash, index|
+            cell = row.cells[index]
             value = cell && cell.value
             hash.merge({processed_headings[index].to_sym => value.to_s})
           end
