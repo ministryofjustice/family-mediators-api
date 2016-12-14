@@ -19,7 +19,8 @@ module Admin
         file_validations = Validators::FileValidator.new(mediators_as_hashes, blacklist)
 
         if file_validations.valid?
-          @processed_mediators = Processing::ConfidentialFieldRemover.call(mediators_as_hashes, blacklist)
+          @processed_mediators = Processing::ConfidentialFieldRemover.call(
+            mediators_as_hashes, blacklist)
           true
         else
           # [ false, invalid_locals(file_validations.errors) ]
