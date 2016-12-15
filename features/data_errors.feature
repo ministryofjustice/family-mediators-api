@@ -12,23 +12,24 @@ Feature: A spreadsheet upload is validated against a set of rules. If there are
 
   Scenario: Mediator data errors
     Given I upload a spreadsheet like this:
-      | URN   | DCC | Title | Last Name | First Name | Legal Aid Qualified | Legal Aid Franchise | PPC URN   | FMCA Date       |
-      | 1234T |     | Mr    | Irons     | John       | No                  | No                  | not known | working towards |
-      | 3459A | No  | Mr    | Wayne     | Bruce      |                     | No                  | not known | unknown         |
-      | 5436P | No  | Mr    | Romanova  | Natalia    | No                  |                     | not known | 18/2015         |
-      | 1948A |     | Mr    | Kovacs    |            | No                  | No                  | not known |                 |
-      | 1948A | No  |       |           | Loki       | No                  | No                  | not known | 05/2001         |
+      | URN   | DCC | Title | Last Name | First Name | Legal Aid Qualified | Legal Aid Franchise | PPC URN   | FMCA Date  |
+      | 1234T |     | Mr    | Irons     | John       | No                  | No                  | not known | 27/03/2001 |
+      | 3459A | No  | Mr    | Wayne     | Bruce      |                     | No                  | not known | Blah       |
+      | 5436P | No  | Mr    | Romanova  | Natalia    | No                  |                     | not known | 18/2015    |
+      | 1948A |     | Mr    | Kovacs    |            | No                  | No                  | not known |            |
+      | 1948A | No  |       |           | Loki       | No                  | No                  | not known | 05/2001    |
     And I click 'Process data and apply updates'
     Then I should see the following item errors:
-      | Row | Field               | Message                                                                             |
-      | 2   | dcc                 | must be one of: Yes, No                                                             |
-      | 3   | legal_aid_qualified | must be one of: Yes, No                                                             |
-      | 4   | legal_aid_franchise | must be one of: Yes, No                                                             |
-      | 4   | fmca_date           | cannot be defined or must be one of: unknown, working towards or must be dd/mm/yyyy |
-      | 5   | first_name          | must be filled                                                                      |
-      | 5   | dcc                 | must be one of: Yes, No                                                             |
-      | 6   | last_name           | must be filled                                                                      |
-      | 6   | title               | must be filled                                                                      |
+      | Row | Field               | Message                                 |
+      | 2   | dcc                 | must be one of: Yes, No                 |
+      | 3   | legal_aid_qualified | must be one of: Yes, No                 |
+      | 3   | fmca_date           | cannot be defined or must be dd/mm/yyyy |
+      | 4   | legal_aid_franchise | must be one of: Yes, No                 |
+      | 4   | fmca_date           | cannot be defined or must be dd/mm/yyyy |
+      | 5   | first_name          | must be filled                          |
+      | 5   | dcc                 | must be one of: Yes, No                 |
+      | 6   | last_name           | must be filled                          |
+      | 6   | title               | must be filled                          |
 
   Scenario: Duplicate registration number
     Given I upload a spreadsheet like this:

@@ -68,7 +68,7 @@ RSpec.shared_examples 'an optional date' do |field_name|
     it { should be_valid }
   end
 
-  ['unknown', 'working towards','2016', '05/2016', '24/07/2016'].each do |val|
+  %w(2016 05/2016 24/07/2016).each do |val|
     context "when #{val}" do
       let(:data) { create(:mediator_hash, {field_name => val}) }
       it { should be_valid }
@@ -76,7 +76,7 @@ RSpec.shared_examples 'an optional date' do |field_name|
   end
 
   %w(13/2016 32/04/2016).each do |val|
-    context "when '#{val}'" do
+    context "when #{val}" do
       let(:data) { create(:mediator_hash, {field_name => val}) }
       it { should_not be_valid }
     end
