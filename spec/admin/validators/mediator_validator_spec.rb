@@ -45,7 +45,7 @@ module Admin
         end
       end
 
-      %w(fmca_date).each do |field_name|
+      %w(fmca_date training_date).each do |field_name|
         describe field_name do
           it_should_behave_like 'an optional date', field_name
         end
