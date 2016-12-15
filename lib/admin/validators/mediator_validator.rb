@@ -40,7 +40,7 @@ module Admin
         required(:dcc)                 { included_in?(%w(Yes No)) }
         required(:legal_aid_qualified) { included_in?(%w(Yes No)) }
         required(:legal_aid_franchise) { included_in?(%w(Yes No)) }
-        required(:fmca_date)           { filled? & (included_in?(['unknown', 'working towards']) | date_string?) }
+        optional(:fmca_date)           { filled? & (included_in?(['unknown', 'working towards']) | date_string?) }
         optional(:practices)           { array? { each { schema PracticeValidator } } }
       end
     end

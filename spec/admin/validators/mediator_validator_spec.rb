@@ -45,29 +45,9 @@ module Admin
         end
       end
 
-      describe 'fmca_date' do
-        context 'when blank' do
-          let(:data) { create(:mediator_hash, fmca_date: '') }
-          it { should_not be_valid }
-        end
-
-        ['unknown', 'working towards','2016', '05/2016', '24/07/2016'].each do |val|
-          context "when #{val}" do
-            let(:data) { create(:mediator_hash, fmca_date: val) }
-            it { should be_valid }
-          end
-        end
-
-        %w(13/2016 32/04/2016).each do |val|
-          context "when '#{val}'" do
-            let(:data) { create(:mediator_hash, fmca_date: val) }
-            it { should_not be_valid }
-          end
-        end
-
-        context 'when any other content' do
-          let(:data) { create(:mediator_hash, fmca_date: 'blah') }
-          it { should_not be_valid }
+      %w(fmca_date).each do |field_name|
+        describe field_name do
+          it_should_behave_like 'an optional date', field_name
         end
       end
 
