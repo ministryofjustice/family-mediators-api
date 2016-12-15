@@ -51,6 +51,15 @@ module Admin
         end
       end
 
+      describe 'fmca_date or training_date' do
+
+        context 'when both blank' do
+          let(:data) { create(:mediator_hash, fmca_date: nil, training_date: nil) }
+          it { should_not be_valid}
+        end
+
+      end
+
       describe('missing properties') do
         subject(:result) do
           MediatorValidator.new(missing_data).validate

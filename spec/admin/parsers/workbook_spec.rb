@@ -34,7 +34,7 @@ module Admin
           let(:expected_data) do
             [
                 {:first_name => 'John', :last_name => 'Smith'},
-                {:first_name => '', :last_name => 'Baker'},
+                {:first_name => nil, :last_name => 'Baker'},
                 {:first_name => 'Donna', :last_name => 'Jones'}
             ]
           end

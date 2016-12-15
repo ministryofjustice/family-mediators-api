@@ -26,7 +26,8 @@ module Admin
                         tel: 'Must be valid UK phone number',
                         url: 'Must be valid URL',
                         address: 'Must have a single valid address',
-                        email: 'Must be valid email address'
+                        email: 'Must be valid email address',
+                        date_presence: 'FMCA Date or Training Date must be present'
                     }
                 }
             )
@@ -40,9 +41,12 @@ module Admin
         required(:dcc)                 { included_in?(%w(Yes No)) }
         required(:legal_aid_qualified) { included_in?(%w(Yes No)) }
         required(:legal_aid_franchise) { included_in?(%w(Yes No)) }
-        optional(:fmca_date)           { none? | date_string? }
-        optional(:training_date)       { none? | date_string? }
         optional(:practices)           { array? { each { schema PracticeValidator } } }
+        optional(:fmca_date).maybe(:date_string?)
+        optional(:training_date).maybe(:date_string?)
+        rule(date_presence: [:fmca_date, :training_date]) do |fmca_date, training_date|
+          (fmca_date.empty?).then(training_date.filled?)
+        end
       end
     end
   end

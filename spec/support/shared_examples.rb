@@ -64,7 +64,7 @@ RSpec.shared_examples 'an optional date' do |field_name|
   end
 
   context 'when blank' do
-    let(:data) { create(:mediator_hash, field_name => '') }
+    let(:data) { create(:mediator_hash, field_name => '', training_date: '01/02/2016') }
     it { should be_valid }
   end
 

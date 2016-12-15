@@ -31,7 +31,7 @@ module Admin
           processed_headings.size.times.inject({}) do |hash, index|
             cell = row.cells[index]
             value = cell && cell.value
-            hash.merge({processed_headings[index].to_sym => value.to_s})
+            hash.merge({processed_headings[index].to_sym => value})
           end
         end
       end
