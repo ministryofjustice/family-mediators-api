@@ -16,7 +16,7 @@ FactoryGirl.define do
     legal_aid_qualified 'Yes'
     legal_aid_franchise 'No'
     ppc_urn { '1001T' }
-    fmca_date '21/11/2016'
+    fmca_date '04/05/2007'
 
     trait :invalid do
       urn '1234X'

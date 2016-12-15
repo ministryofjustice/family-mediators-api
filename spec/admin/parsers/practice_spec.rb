@@ -21,6 +21,12 @@ module Admin
         end
       end
 
+      context 'null practice data' do
+        it 'should return empty array' do
+          expect(Practice.parse(nil)).to eq([])
+        end
+      end
+
       context 'single unparsed practice' do
         subject { Practice.parse(unparsed_practice)[0] }
 

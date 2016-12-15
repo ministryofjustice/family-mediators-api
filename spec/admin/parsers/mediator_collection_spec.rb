@@ -21,6 +21,15 @@ module Admin
         end
       end
 
+      context 'when practice value data is null' do
+        it 'should return empty same hash with no practice key' do
+          mediator_hash = create(:mediator_hash, practices: nil)
+          parsed_mediator = MediatorsCollection.new([mediator_hash]).parsed_data
+          expected = mediator_hash.except!(:practices)
+          expect(parsed_mediator).to eq([expected])
+        end
+      end
+
       context 'when data contains practice data' do
         it 'should contain parsed practice hash' do
           mediator_hash = create(:mediator_hash, :include_unparsed_practice)
