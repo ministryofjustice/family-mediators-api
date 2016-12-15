@@ -74,8 +74,7 @@ module DataHelpers
             'Last Name' => 'Smith',
             'Legal Aid Qualified' => 'Yes',
             'Legal Aid Franchise' => 'No',
-            'PPC URN' => 'not known',
-            'FMCA Date' => 'unknown'
+            'PPC URN' => 'not known'
         }
         new([mediator.keys, mediator.values])
       end
