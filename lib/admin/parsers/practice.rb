@@ -16,7 +16,7 @@ module Admin
         end
 
         def split_into_lines(practices_data)
-          practices_data.split(RECORD_SEPARATOR)
+          practices_data && practices_data.split(RECORD_SEPARATOR) || []
         end
 
         def identify_parts(practice_line)
