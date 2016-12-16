@@ -8,10 +8,17 @@ module Admin
         allow(RubyXL::Parser).to receive(:parse).and_return(nil)
         allow(Parsers::Workbook).to receive(:new).and_return(workbook_parser)
         allow(Validators::FileValidator).to receive(:new).and_return(file_validator)
-        allow(Processing::ConfidentialFieldRemover).to receive(:call).and_return({})
+        allow(Processing::ConfidentialFieldRemover).to receive(:call).and_return(mediator_data)
       end
 
-      let(:workbook_parser) { double('WorkbookParser', call: [nil, nil]) }
+      let(:blacklist) { [ :bish, :bosh, :bash ] }
+      let(:public_fields) { [ :foo, :bar, :baz ] }
+
+      let(:mediator_data) do
+        [ { foo: 'ding', bar: 'dong', baz: 'dang' } ]
+      end
+
+      let(:workbook_parser) { double('WorkbookParser', call: [mediator_data, blacklist]) }
       let(:file_validator)  { double('FileValidator', valid?: true, errors: []) }
 
       context 'No file given' do
@@ -34,12 +41,22 @@ module Admin
 
         it 'Derives mediator count' do
           subject.call
-          expect(subject.mediators_count).to eq(0)
+          expect(subject.mediators_count).to eq(1)
         end
 
         it 'Derives a dump of mediators' do
           subject.call
-          expect(subject.dump).to eq("eJyrrgUAAXUA+Q==\n")
+          expect(subject.dump).to eq("eJyLrlZKy89XslJKycxLV9JRSkosAnHyoZwqECcRyKmNBQAU7wzp\n")
+        end
+
+        it 'Derives list of confidential fields' do
+          subject.call
+          expect(subject.confidential_fields).to eq(blacklist)
+        end
+
+        it 'Derives list of public fields' do
+          subject.call
+          expect(subject.public_fields).to eq(public_fields)
         end
       end
 

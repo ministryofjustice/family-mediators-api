@@ -15,12 +15,12 @@ module Admin
       def call
         raise 'No file specified' unless @xlsx_path
         rubyxl_workbook = RubyXL::Parser.parse(@xlsx_path)
-        mediators_as_hashes, blacklist = Parsers::Workbook.new(rubyxl_workbook).call
-        file_validations = Validators::FileValidator.new(mediators_as_hashes, blacklist)
+        mediators_as_hashes, @blacklist = Parsers::Workbook.new(rubyxl_workbook).call
+        file_validations = Validators::FileValidator.new(mediators_as_hashes, @blacklist)
 
         if file_validations.valid?
           @processed_mediators = Processing::ConfidentialFieldRemover.call(
-            mediators_as_hashes, blacklist)
+            mediators_as_hashes, @blacklist)
           true
         else
           # [ false, invalid_locals(file_validations.errors) ]
@@ -35,6 +35,14 @@ module Admin
 
       def dump
         Processing::Marshaler.to_string(@processed_mediators)
+      end
+
+      def confidential_fields
+        @blacklist
+      end
+
+      def public_fields
+        @processed_mediators.any? ? @processed_mediators.first.keys : []
       end
 
     end

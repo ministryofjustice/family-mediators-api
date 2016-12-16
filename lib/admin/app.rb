@@ -53,6 +53,8 @@ module Admin
             file_size: file[:tempfile].size,
             existing_count: API::Models::Mediator.count,
             sheet_size: process_file.mediators_count,
+            confidential_fields: process_file.confidential_fields,
+            public_fields: process_file.public_fields,
             dump: process_file.dump
           }
         else

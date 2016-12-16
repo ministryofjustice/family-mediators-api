@@ -1,5 +1,6 @@
 ENV['RACK_ENV'] = 'test'
 require 'simplecov'
+require 'pry'
 $LOAD_PATH.unshift("#{__dir__}/..")
 
 require 'dotenv'

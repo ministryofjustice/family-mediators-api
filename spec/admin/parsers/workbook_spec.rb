@@ -22,8 +22,6 @@ module Admin
         ]
       end
 
-      let(:blacklist) { %w{ bish bosh bash } }
-
       context '#transform_mediators' do
 
         it 'Transforms data' do

@@ -44,6 +44,7 @@ Given(/^I have a spreadsheet like this:$/) do |table|
 end
 
 When(/^I upload the spreadsheet$/) do
+  login
   upload_spreadsheet(@with_practice_data.headings, @with_practice_data.data, @blacklist)
 end
 
