@@ -26,9 +26,9 @@ Feature: Uploading a valid spreadsheet will change the data in the database back
 
   Scenario: With a blacklist
     Given I have a spreadsheet like this:
-      | URN   | DCC | Title | Last Name | First Name | Legal Aid Qualified | Legal Aid Franchise | PPC URN   | FMCA Date       | Secret1 | Secret2 |
-      | 1234T | Yes | Mr    | Irons     | John       | Yes                 | Yes                 | not known | working towards | 41      | 42      |
-      | 3456T | Yes | Mr    | Irons     | John       | Yes                 | Yes                 | not known | working towards | 42      | 43      |
+      | URN   | DCC | Title | Last Name | First Name | Legal Aid Qualified | Legal Aid Franchise | PPC URN   | FMCA Date  | Secret1 | Secret2 |
+      | 1234T | Yes | Mr    | Irons     | John       | Yes                 | Yes                 | not known | 01/02/2003 | 41      | 42      |
+      | 3456T | Yes | Mr    | Irons     | John       | Yes                 | Yes                 | not known | 01/02/2003 | 42      | 43      |
     And a blacklist of:
       | Secret1 |
       | Secret2 |
