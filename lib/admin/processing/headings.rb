@@ -3,8 +3,8 @@ module Admin
     class Headings
       def self.process(headings)
         headings.map! do |heading|
-          heading.downcase.gsub(/[^a-z0-9]/, '_').squeeze('_').to_sym
-        end
+          heading ? heading.downcase.gsub(/[^a-z0-9]/, '_').squeeze('_').to_sym : nil
+        end.compact
       end
     end
   end

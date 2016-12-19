@@ -19,46 +19,16 @@ table.check-your-answers
     tr
       td Confidential fields
       td
-        | MD_mobile_number <br>
-        | MD_Private_email_address <br>
+        - confidential_fields.each do |confidential_field|
+          = confidential_field
+          br
 
     tr
       td Public fields
       td
-        | URN <br>
-        | Title <br>
-        | Last Name <br>
-        | First Name <br>
-        | Practices <br>
-        | ADRg <br>
-        | CoM <br>
-        | FMA <br>
-        | Law Soc <br>
-        | NFM <br>
-        | Resolution <br>
-        | FMCA Date <br>
-        | Training Date <br>
-        | Trained With <br>
-        | Legal Aid Qualified <br>
-        | DCC <br>
-        | PPC <br>
-        | PPC name <br>
-        | PPCs previous 12 months <br>
-        | PPC URN <br>
-        | MD_Service/firm <br>
-        | MD_Holds_FMCA_status <br>
-        | MD_Holds_FMCA_status_date <br>
-        | MD_Working_towards_FMCA <br>
-        | MD_Period_to_30/09/15_Q14 <br>
-        | MD_Period_to_30/09/15_Q15 <br>
-        | MD_Period_to_30/09/15_Q16 <br>
-        | MD_Period_to_30/09/15_Q17 <br>
-        | MD_Period_to_30/09/15_Q18 <br>
-        | MD_Period_to_30/09/15_Q19 <br>
-        | MD_Period_to_30/09/15_Q20 <br>
-        | MD_Period_to_30/09/15_Q21 <br>
-        | Status Upgrade <br>
-        | Status Comment <br>
+        - public_fields.each do |public_field|
+          = public_field
+          br
 
 h2.heading-medium Now process your spreadsheet
 

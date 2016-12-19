@@ -2,9 +2,13 @@ module Admin
   module Parsers
 
     # Takes a workbook as parsed from an XLSX file by the rubyXL gem, and
-    # converts the first worksheet into an array of hashes.
+    # converts the first worksheet (the mediator data) into an array of
+    # hashes, and the second worksheet (column blacklist) into an array
+    # of strings.
     class Workbook
-      WORKSHEET = 0
+
+      MEDIATORS_WORKSHEET = 0
+      BLACKLIST_WORKSHEET = 1
 
       def initialize(rubyxl_workbook,
                      headings_processor: Admin::Processing::Headings)
@@ -13,21 +17,29 @@ module Admin
       end
 
       def call
-        as_hashes = transform_worksheet
-        as_hashes = @data_parser.parse(as_hashes) if @data_parser
-        as_hashes
+        [ parse_mediators, processed_blacklist ]
       end
 
       private
 
-      def transform_worksheet
-        return [] if worksheet[0].nil?
+      def parse_mediators
+        as_hashes = transform_mediators
+        as_hashes = @data_parser.parse(as_hashes) if @data_parser
+        as_hashes
+      end
 
-        processed_headings = @headings_processor.process(
-          worksheet[0].cells.map { |cell| cell.value }
-        )
+      def parse_blacklist
+        blacklist_worksheet[1..-1].map { |row| row.cells.first.value }
+      end
 
-        worksheet[1..-1].map.with_index do |row|
+      def processed_blacklist
+        @headings_processor.process(parse_blacklist)
+      end
+
+      def transform_mediators
+        return [] if mediators_worksheet[0].nil?
+
+        mediators_worksheet[1..-1].map.with_index do |row|
           processed_headings.size.times.inject({}) do |hash, index|
             cell = row.cells[index]
             value = cell && cell.value
@@ -36,8 +48,18 @@ module Admin
         end
       end
 
-      def worksheet
-        @rubyxl_workbook[WORKSHEET] if @rubyxl_workbook
+      def processed_headings
+        @headings_processor.process(
+          mediators_worksheet[0].cells.map { |cell| cell.value }
+        )
+      end
+
+      def mediators_worksheet
+        @rubyxl_workbook[MEDIATORS_WORKSHEET] if @rubyxl_workbook
+      end
+
+      def blacklist_worksheet
+        @rubyxl_workbook[BLACKLIST_WORKSHEET] if @rubyxl_workbook
       end
 
     end

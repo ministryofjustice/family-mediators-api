@@ -44,14 +44,25 @@ module Admin
     post '/upload' do
       authenticate!
       begin
-        success, details = Services::ProcessFile.new(
-          params[:spreadsheet_file]
-        ).call
+        file = params[:spreadsheet_file]
+        process_file = Services::ProcessFile.new(file[:tempfile].path)
 
-        if success
-          slim :overview, locals: details
+        if process_file.call
+          slim :overview, locals: {
+            file_name: file[:filename],
+            file_size: file[:tempfile].size,
+            existing_count: API::Models::Mediator.count,
+            sheet_size: process_file.mediators_count,
+            confidential_fields: process_file.confidential_fields,
+            public_fields: process_file.public_fields,
+            dump: process_file.dump
+          }
         else
-          slim :file_errors, locals: details
+          slim :file_errors, locals: {
+            file_errors: process_file.errors,
+            collection_errors: [],
+            item_errors: []
+          }
         end
 
       rescue => error
@@ -80,5 +91,6 @@ module Admin
       authenticate!
       slim :upload_fail
     end
+
   end
 end

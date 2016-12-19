@@ -5,60 +5,46 @@ module Admin
     # necessary, of an XLSX file.
     class ProcessFile
 
-      def initialize(xlsx_file,
-                     file_validator: Validators::FileValidator,
-                     marshaler: Processing::Marshaler,
-                     xl_parser: RubyXL::Parser)
-        @xlsx_file = xlsx_file
-        @file_validator = file_validator
-        @marshaler = marshaler
-        @xl_parser = xl_parser
+      attr_reader :errors
+
+      def initialize(xlsx_path)
+        @xlsx_path = xlsx_path
+        @errors = []
       end
 
       def call
-        raise 'No file specified' unless @xlsx_file
-        rubyxl_workbook = @xl_parser.parse(file.path)
-        as_hashes = Parsers::Workbook.new(rubyxl_workbook).call
-        file_validations = @file_validator.new(as_hashes)
+        raise 'No file specified' unless @xlsx_path
+        rubyxl_workbook = RubyXL::Parser.parse(@xlsx_path)
+        mediators_as_hashes, @blacklist = Parsers::Workbook.new(rubyxl_workbook).call
+        file_validations = Validators::FileValidator.new(mediators_as_hashes, @blacklist)
 
         if file_validations.valid?
-          [ true, valid_locals(as_hashes) ]
+          @processed_mediators = Processing::ConfidentialFieldRemover.call(
+            mediators_as_hashes, @blacklist)
+          true
         else
-          [ false, invalid_locals(file_validations.errors) ]
+          # [ false, invalid_locals(file_validations.errors) ]
+          @errors = file_validations.errors
+          false
         end
       end
 
-      private
-
-      def file
-        @xlsx_file[:tempfile]
+      def mediators_count
+        @processed_mediators.size
       end
 
-      def file_name
-        @xlsx_file[:filename]
+      def dump
+        Processing::Marshaler.to_string(@processed_mediators)
       end
 
-      def file_size
-        file.size
+      def confidential_fields
+        @blacklist
       end
 
-      def valid_locals(as_hashes)
-        {
-          file_name: file_name,
-          file_size: file_size,
-          existing_count: API::Models::Mediator.count,
-          sheet_size: as_hashes.size,
-          dump: @marshaler.to_string(as_hashes)
-        }
+      def public_fields
+        @processed_mediators.any? ? @processed_mediators.first.keys : []
       end
 
-      def invalid_locals(errors)
-        {
-          file_errors: errors,
-          collection_errors: [],
-          item_errors: []
-        }
-      end
     end
   end
 end

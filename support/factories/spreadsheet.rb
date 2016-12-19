@@ -1,12 +1,27 @@
 module Support
   module Factories
     class Spreadsheet
-      def self.build(headings, row_data)
+
+      def self.build(headings, row_data, blacklist = [])
         workbook = RubyXL::Workbook.new
+        set_mediators(headings, row_data, workbook)
+        add_blacklist(blacklist, workbook)
+        workbook
+      end
+
+      def self.set_mediators(headings, row_data, workbook)
         worksheet = workbook[0]
         set_headings(headings, worksheet)
         set_data(row_data, worksheet)
-        workbook
+      end
+
+      def self.add_blacklist(blacklist, workbook)
+        worksheet = workbook.add_worksheet
+        worksheet.add_cell(0, 0, 'Confidential')
+
+        blacklist.each_with_index do |heading, index|
+          worksheet.add_cell(index+1, 0, heading)
+        end
       end
 
       def self.set_data(row_data, worksheet)
@@ -22,6 +37,7 @@ module Support
           worksheet.add_cell(0, index, heading)
         end
       end
+
     end
   end
 end
