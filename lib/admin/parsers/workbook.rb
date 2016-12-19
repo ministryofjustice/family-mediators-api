@@ -24,8 +24,7 @@ module Admin
 
       def parse_mediators
         as_hashes = transform_mediators
-        as_hashes = @data_parser.parse(as_hashes) if @data_parser
-        as_hashes
+        remove_blank_rows(as_hashes)
       end
 
       def parse_blacklist
@@ -34,6 +33,17 @@ module Admin
 
       def processed_blacklist
         @headings_processor.process(parse_blacklist)
+      end
+
+      def remove_blank_rows(hashes)
+        hashes.inject([]) do |compacted, row|
+          compacted << row unless all_values_blank?(row)
+          compacted
+        end
+      end
+
+      def all_values_blank?(row)
+        row.values.all? { |val| (val && val.size == 0) || val.nil? }
       end
 
       def transform_mediators
