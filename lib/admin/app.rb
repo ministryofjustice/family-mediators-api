@@ -23,6 +23,10 @@ module Admin
       end
     end
 
+    get '' do
+      redirect 'admin/', 302
+    end
+
     get '/' do
       slim :start
     end
