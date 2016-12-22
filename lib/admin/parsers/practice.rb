@@ -27,9 +27,9 @@ module Admin
 
         def build_practice_hash(parts)
 
-          parts.inject({address:[]}) do |result, part|
+          parts.inject({}) do |result, part|
             result[:email] = part if part.match(EMAIL_REGEX)
-            result[:address] << part if part.match(POSTCODE_REGEX)
+            result[:address] = part if part.match(POSTCODE_REGEX)
             result[:tel] = part if part.match(TEL_REGEX)
             result[:url] = part if part.match(URL_REGEX)
             result

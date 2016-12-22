@@ -22,11 +22,7 @@ Feature: The spreadsheet administrator enters practice data for a mediator under
     Examples: Invalid URL
       | PracticeCell                                      | Message                       |
       | 15 Smith Street, London WC1R 4RL \| www.smith.com | Practice 1: Must be valid URL |
-
-    Examples: Invalid address
-      | PracticeCell            | Message                                      |
-      | 15 Smith Street, London | Practice 1: Must have a single valid address |
-
+    
     Examples: Invalid email
       | PracticeCell                                       | Message                                 |
       | 15 Smith Street, London WC1R 4RL \| invalid@@email | Practice 1: Must be valid email address |

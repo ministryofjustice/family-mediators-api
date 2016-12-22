@@ -35,7 +35,7 @@ module Admin
           mediator_hash = create(:mediator_hash, :include_unparsed_practice)
           parsed_mediator = MediatorsCollection.new([mediator_hash]).parsed_data
           expected = mediator_hash.merge(practices: [{
-                                                         address: ['15 Smith Street, London WC1R 4RL'],
+                                                         address: '15 Smith Street, London WC1R 4RL',
                                                          email: 'valid@email.com',
                                                          tel: '01245 605040',
                                                          url: 'http://www.foobar.com/baz/'
