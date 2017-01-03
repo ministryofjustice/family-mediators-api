@@ -7,6 +7,10 @@ Dotenv::load
 require 'lib/env'
 require 'lib/mediators'
 
+map '/robots.txt' do
+  run Proc.new { [200, {'Content-Type' => 'text/plain'}, ["User-Agent: *\nDisallow: /"]] }
+end
+
 map '/api' do
   map '/' do
     run API::App
