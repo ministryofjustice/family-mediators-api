@@ -46,11 +46,11 @@ Feature: A spreadsheet upload is validated against a set of rules. If there are
       | URN   | DCC | Title | Last Name | First Name | Legal Aid Qualified | PPC URN |
       | 1234T | No  | Mr    | Irons     | John       | No                  | 4567E   |
       | 4567E | No  | Mr    | Wayne     | Bruce      | No                  | 5647T   |
+      | 8901E | No  | Mr    | Jon       | Willis     | No                  |         |
     And I click 'Process data and apply updates'
     Then I should see the following collection errors:
-      | Error                  | Value(s) |
-      | PPC URN not recognised | 5647T    |
-
+      | Error                  | Value(s)     |
+      | PPC URN not recognised | 5647T, blank |
 
   Scenario: FMCA or Training Date must be present
     Given I upload a spreadsheet like this:

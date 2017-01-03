@@ -19,7 +19,7 @@ h1.heading-xlarge Family Mediator API: Data update service
       - collection_errors.each do |error|
           tr
             td = error.heading
-            td = error.values.join(' | ')
+            td = error.values.join(', ')
 
 - if item_errors.any?
   h2.heading-large Data errors
