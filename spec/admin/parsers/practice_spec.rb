@@ -21,6 +21,14 @@ module Admin
         end
       end
 
+      context 'POSTCODE_REGEX' do
+        [ 'BN20GB', 'SW17 8LA', 'WC1 R4HA' ].each do |postcode|
+          it "matches postcode of the form: #{postcode}" do
+            expect(postcode).to match(Practice::POSTCODE_REGEX)
+          end
+        end
+      end
+
       context 'null practice data' do
         it 'should return empty array' do
           expect(Practice.parse(nil)).to eq([])
