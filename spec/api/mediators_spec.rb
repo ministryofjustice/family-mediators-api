@@ -64,14 +64,14 @@ describe API::App do
 
     context 'Found' do
       let(:mediator) { create :mediator }
-      before { get "/v1/mediators/#{mediator.id}" }
+      before { get "/v1/mediators/#{mediator.urn_prefix}" }
 
       it 'returns 200' do
         expect(last_response.status).to eq 200
       end
 
       it 'returns the mediator' do
-        expect(JSON.parse(last_response.body)['id']).to eq mediator.id
+        expect(JSON.parse(last_response.body)['id']).to eq mediator.urn_prefix
       end
     end
   end

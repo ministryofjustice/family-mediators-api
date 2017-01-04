@@ -10,6 +10,11 @@ Feature: Uploading a valid spreadsheet will change the data in the database back
     Then I see 'Spreadsheet upload complete'
     When I visit '/api/v1/mediators'
     Then the response data should have 2 items
+    And the ids should be:
+      | 1234 |
+      | 3456 |
+    When I visit '/api/v1/mediators/1234'
+    Then the response should be mediator '1234T'
 
   Scenario: Delete previous records
     Given there's 10 records in the database

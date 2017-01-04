@@ -12,10 +12,22 @@ Then(/^the response data should have (.*) items$/) do |num|
   expect(data.count).to eq(num.to_i)
 end
 
+Then(/^the response should be mediator '(\d+)'$/) do |urn|
+  result = JSON.parse(page.body)
+  expect(result['urn']).to eq(urn)
+end
+
 And(/^I should see the following (.*):$/) do |selector, expected_results|
   selector = '#' + selector.downcase.tr(' ', '-')
   results = get_table_data(selector)
   expected_results.diff!(results)
+end
+
+Then(/^the ids should be:$/) do |id_table|
+  expected_ids = id_table.raw.flatten.map(&:to_i)
+  result = JSON.parse(page.body)
+  observed_ids = result['data'].map{ |item| item['id'] }
+  expect(observed_ids).to eq(expected_ids)
 end
 
 Then(/^the validation error message should be (.*)$/) do |validation_error|
