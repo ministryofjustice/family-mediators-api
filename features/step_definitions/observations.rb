@@ -12,7 +12,7 @@ Then(/^the response data should have (.*) items$/) do |num|
   expect(data.count).to eq(num.to_i)
 end
 
-Then(/^the response should be mediator '(\d+)'$/) do |urn|
+Then(/^the response should be mediator '(.*)'$/) do |urn|
   result = JSON.parse(page.body)
   expect(result['urn']).to eq(urn)
 end
