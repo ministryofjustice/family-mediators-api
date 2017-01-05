@@ -15,7 +15,7 @@ module API
       end
 
       get ':id' do
-        mediators = Models::Mediator.where(id: params[:id])
+        mediators = Models::Mediator.where(urn_prefix: params[:id])
 
         if mediators.any?
           present mediators.first, with: Entities::Mediator

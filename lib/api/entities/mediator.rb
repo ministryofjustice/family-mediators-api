@@ -5,7 +5,7 @@ module API
         date.iso8601
       end
 
-      expose :id
+      expose :urn_prefix, as: 'id'
       expose :data, merge: true
 
       with_options(format_with: :iso_timestamp) do

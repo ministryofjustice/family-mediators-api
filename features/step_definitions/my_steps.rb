@@ -8,7 +8,9 @@ When(/I click '(.*)'$/) do |text|
 end
 
 Given(/^there's (\d+) records in the database$/) do |num|
-  create_list(:mediator, num.to_i)
+  (1..num.to_i).each_with_index do |i|
+    API::Models::Mediator.create(data: {'urn' => "#{1000+i}T"})
+  end
 end
 
 Given(/^I upload a spreadsheet like this:$/) do |table|
