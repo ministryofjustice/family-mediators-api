@@ -42,13 +42,24 @@ The coverage report is available under `/coverage/index.html`
 
 See [MoJ Tsuru documentation](https://docs.google.com/document/d/11xQRRJ_KH4Oipn9qYCt-wk-PEaUbUrrd8pLCi1pijLE/)
 
-## Deploying via Template Deploy
+## Environmental variables
 
 The following environmental variables are used:
 
 * LOG_LEVEL - Can be one of _debug_, _error_, _info_, _warn_ or _fatal_. Assumes _debug_ if not set.
 * RACK_ENV - Can be one of _staging_ or _production_. The app uses the development environment if this is not set.
 * DATABASE_URL - Must be set if RACK_ENV is _staging_ or _production_.
+* USERNAME - For logging into the admin area.
+* PASSWORD_HASH - A hash of the password for logging into the admin area.
+
+To generate the password hash, use bcrypt-ruby. In irb:
+
+    require 'bcrypt'
+
+    BCrypt::Password.create("my password")
+      #=> "$2a$10$vI8aWBnW3fID.ZQ4/zo1G.q1lRps.9cGLcZEiGDMVr5yUP1KUOYTa"
+
+...and use the long string generated.
 
 
 ## API Doc
