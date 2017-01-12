@@ -1,5 +1,3 @@
-require 'pry-byebug'
-
 module Admin
   module Services
 
@@ -18,7 +16,6 @@ module Admin
       end
 
       def call
-        binding.pry
         as_hashes = @marshaler.to_array(@dump)
         data_validations = @data_validator.new(as_hashes)
 

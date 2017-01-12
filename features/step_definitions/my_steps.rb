@@ -17,6 +17,8 @@ Given(/^I upload a spreadsheet like this:$/) do |table|
   login
   mediators_data_table = DataHelpers::MediatorsDataTable.new(table.raw)
   with_practice_data = DataHelpers::PracticeData.new(mediators_data_table)
+  puts ">>>>> #{with_practice_data.headings}"
+  puts ">>>>> #{with_practice_data.data}"
   upload_spreadsheet(with_practice_data.headings, with_practice_data.data)
 end
 
