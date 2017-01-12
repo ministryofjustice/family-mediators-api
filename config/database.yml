@@ -12,3 +12,4 @@ development:
 test:
   <<: *default
   database: mediators_test
+
