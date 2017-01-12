@@ -8,6 +8,5 @@ if ENV['RACK_ENV'] == 'production' && ENV['DATABASE_URL']
   db_config['production'] = {'url' => ENV['DATABASE_URL']}
 end
 
-puts ">>>>> #{db_config}"
 ActiveRecord::Base.configurations = db_config
 ActiveRecord::Base.establish_connection(ENV['RACK_ENV'].to_sym)
