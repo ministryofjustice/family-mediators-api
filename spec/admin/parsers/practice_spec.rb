@@ -1,132 +1,155 @@
 module Admin
   module Parsers
     describe Practice do
-      context 'URL_REGEX' do
+      context 'URL matcher' do
         %w{ http://foo.com https://foo.com foo.com http://www.bar.co.uk foo.com/a/path/ http://foo.com/a/path/}.each do |url|
           it "matches URL of the form: #{url}" do
-            expect(url).to match(Practice::URL_REGEX)
+            expect(url).to match(Practice::MATCHERS[:url])
           end
         end
 
         it 'does not match an email-like string' do
-          expect('andy@foo.com').to_not match(Practice::URL_REGEX)
+          expect('andy@foo.com').to_not match(Practice::MATCHERS[:url])
         end
       end
 
-      context 'TEL_REGEX' do
+      context 'TEL matcher' do
         [ '07974877182', '0201 3082097', '0300 4000636', '123456789', '07977 789786' ].each do |tel|
           it "matches telephone number of the form: #{tel}" do
-            expect(tel).to match(Practice::TEL_REGEX)
+            expect(tel).to match(Practice::MATCHERS[:tel])
           end
         end
       end
 
-      context 'POSTCODE_REGEX' do
+      context 'POSTCODE matcher' do
         [ 'BN20GB', 'SW17 8LA', 'WC1 R4HA' ].each do |postcode|
           it "matches postcode of the form: #{postcode}" do
-            expect(postcode).to match(Practice::POSTCODE_REGEX)
+            expect(postcode).to match(Practice::MATCHERS[:address])
           end
         end
       end
 
       context 'null practice data' do
         it 'should return empty array' do
-          expect(Practice.parse(nil)).to eq([])
+          expect(subject.parse(nil)).to eq([])
         end
       end
 
-      context 'single unparsed practice' do
-        subject { Practice.parse(unparsed_practice)[0] }
+      let(:address)  { '1 Null Way, Wessex, BN20GB' }
+      let(:tel)      { '012345-909090' }
+      let(:email)    { 'foo@bar.com' }
+      let(:url)      { 'http://foo.com/bar' }
+      let(:practice) { [address, tel, email, url].join(' | ') }
 
-        context 'when postcode is present' do
-          let(:unparsed_practice) { create(:unparsed_practice) }
-          it { should include(address: create(:parsed_practice)[:address]) }
+      let(:result)   { subject.parse(unparsed) }
+
+      context 'Single unparsed practice' do
+        shared_examples :include_if_match do |part|
+          context "When #{part} is present" do
+            it "Parsed should have #{part}" do
+              expect(result.first).to include(part => parsed[part])
+            end
+          end
         end
 
-        context 'when postcode is missing' do
-          let(:unparsed_practice) { create(:unparsed_practice, :missing_postcode) }
-          it { should_not include(:address)}
+        shared_examples :warn_if_no_match do |part|
+          context "When #{part} is unmatchable" do
+            it "Parsed should have nil #{part}" do
+              expect(result.first).to include(part => nil)
+            end
+
+            it 'Should issue a warning' do
+              result
+              expect(subject.warnings).to eq(["Practice 1: Could not identify '#{parsed[part]}'"])
+            end
+          end
         end
 
-        context 'when phonenumber-like string is present' do
-          let(:unparsed_practice) { create(:unparsed_practice_all_parts) }
-          it { should include(tel: create(:parsed_practice_all_parts)[:tel])}
+        let(:unparsed) { practice }
+
+        let(:parsed) do
+          { address: address, tel: tel, email: email, url: url }
         end
 
-        context 'when phonenumber-like string is not present' do
-          let(:unparsed_practice) { create(:unparsed_practice) }
-          it { should_not include(:tel)}
+        it_should_behave_like :include_if_match, :address
+        it_should_behave_like :include_if_match, :tel
+        it_should_behave_like :include_if_match, :email
+        it_should_behave_like :include_if_match, :url
+
+        it_should_behave_like :warn_if_no_match, :address do
+          let(:address) { '0 Goofyland Ave, Booshire' }
         end
 
-        context 'when email-like string is present' do
-          let(:unparsed_practice) { create(:unparsed_practice_all_parts) }
-          it { should include(email: create(:parsed_practice_all_parts)[:email])}
+        it_should_behave_like :warn_if_no_match, :tel do
+          let(:tel) { '0-90x68-bananas' }
         end
 
-        context 'when email-like string is not present' do
-          let(:unparsed_practice) { create(:unparsed_practice) }
-          it { should_not include(:email)}
+        it_should_behave_like :warn_if_no_match, :email do
+          let(:email) { 'ned@@@flip.flap' }
         end
 
-        context 'when url-like string is present' do
-          let(:unparsed_practice) { create(:unparsed_practice_all_parts) }
-          it { should include(url: create(:parsed_practice_all_parts)[:url])}
-        end
-
-        context 'when url-like string is not present' do
-          let(:unparsed_practice) { create(:unparsed_practice) }
-          it { should_not include(:url)}
-        end
-
-        context 'when all parts present' do
-          let(:unparsed_practice) { create(:unparsed_practice_all_parts)}
-          let(:parsed_practice) { create(:parsed_practice_all_parts) }
-          it { should include(address: parsed_practice[:address])}
-          it { should include(tel: parsed_practice[:tel])}
-          it { should include(email: parsed_practice[:email])}
-          it { should include(url: parsed_practice[:url])}
+        it_should_behave_like :warn_if_no_match, :url do
+          let(:url) { 'httpx://boing.net' }
         end
 
         context 'when parts are in different order' do
-          let(:unparsed_practice) { create(:shuffled_unparsed_practice)}
-          let(:parsed_practice) { create(:parsed_practice_all_parts) }
-          it { should include(address: parsed_practice[:address])}
-          it { should include(tel: parsed_practice[:tel])}
-          it { should include(email: parsed_practice[:email])}
-          it { should include(url: parsed_practice[:url])}
+          let(:unparsed) { [tel, url, address, email].join(' | ') }
+
+          it_should_behave_like :include_if_match, :address
+          it_should_behave_like :include_if_match, :tel
+          it_should_behave_like :include_if_match, :email
+          it_should_behave_like :include_if_match, :url
         end
 
-        context 'when parts have whitespace' do
-          let(:unparsed_practice) { create(:whitespaced_unparsed_practice)}
-          let(:parsed_practice) { create(:parsed_practice_all_parts) }
-          it 'should remove excess whitespace for address' do
-            expect(subject).to include(address: parsed_practice[:address])
+        context 'When parts have whitespace' do
+          shared_examples :removes_white_space do |part|
+            context "When #{part} has extra whitespace" do
+              it "Should remove the extra whitespace" do
+                expect(result.first[part]).to eq(expected)
+              end
+            end
           end
 
-          it 'should remove excess whitespace for tel' do
-            expect(subject).to include(tel: parsed_practice[:tel])
+          it_should_behave_like :removes_white_space, :address do
+            let(:address)  { '1     Woosh Way,        BN20GB' }
+            let(:expected) { '1 Woosh Way, BN20GB' }
           end
 
-          it 'should remove excess whitespace for email' do
-            expect(subject).to include(email: parsed_practice[:email])
+          it_should_behave_like :removes_white_space, :tel do
+            let(:tel)      { '012345       67890' }
+            let(:expected) { '012345 67890' }
           end
 
-          it 'should remove excess whitespace for url' do
-            expect(subject).to include(url: parsed_practice[:url])
+          it_should_behave_like :removes_white_space, :email do
+            let(:email)    { '       fred@foo.com  ' }
+            let(:expected) { 'fred@foo.com' }
+          end
+
+          it_should_behave_like :removes_white_space, :url do
+            let(:url)      { '       http://bish.com  ' }
+            let(:expected) { 'http://bish.com' }
           end
         end
       end
 
-      context 'multiple practices' do
-        subject { Practice.parse(unparsed_practices) }
-        let(:unparsed_practices) do
-          "#{create(:unparsed_practice)}
-          #{create(:unparsed_practice)}
-          #{create(:unparsed_practice)}"
+      context 'Missing parts' do
+        let(:unparsed) { [address, email].join(' | ') }
+
+        it 'Still has keys but with nil values' do
+          expect(result.first).to include(tel: nil)
+          expect(result.first).to include(url: nil)
         end
 
-        it 'returns an array of parsed practice hashes' do
-          expect(subject.size).to eq(3)
+        it 'Raises no warnings' do
+          expect(subject.warnings.size).to eq(0)
+        end
+      end
+
+      context 'Multiple practices' do
+        let(:unparsed) { [practice, practice, practice].join("\n") }
+
+        it 'Returns an array of parsed practice hashes' do
+          expect(result.size).to eq(3)
         end
       end
 

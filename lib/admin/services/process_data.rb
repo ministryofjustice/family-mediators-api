@@ -1,3 +1,5 @@
+require 'pry-byebug'
+
 module Admin
   module Services
 
@@ -16,12 +18,12 @@ module Admin
       end
 
       def call
+        binding.pry
         as_hashes = @marshaler.to_array(@dump)
-        with_expanded_practices = Parsers::MediatorsCollection.new(as_hashes).parsed_data
-        data_validations = @data_validator.new(with_expanded_practices)
+        data_validations = @data_validator.new(as_hashes)
 
         if data_validations.valid?
-          @data_store.save(with_expanded_practices)
+          @data_store.save(as_hashes)
           [ true, {} ]
         else
           [ false, invalid_locals(data_validations) ]

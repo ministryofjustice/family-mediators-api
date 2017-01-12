@@ -17,14 +17,16 @@ module Admin
       end
 
       def call
-        [ parse_mediators, processed_blacklist ]
+        mediators, warnings = parse_mediators
+        [ mediators, processed_blacklist, warnings ]
       end
 
       private
 
       def parse_mediators
         as_hashes = transform_mediators
-        remove_blank_rows(as_hashes)
+        squeezed = remove_blank_rows(as_hashes)
+        MediatorsCollection.new(squeezed).expand_practices
       end
 
       def parse_blacklist

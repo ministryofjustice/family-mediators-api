@@ -23,10 +23,11 @@ module Admin
 
         let(:expected_blacklist) { [ :bish_bosh, :bash ] }
 
-        it 'Returns 2 arrays' do
-          expect(subject.call.size).to eq(2)
-          expect(subject.call.first).to be_an(Array)
-          expect(subject.call.last).to be_an(Array)
+        it 'Returns 3 arrays' do
+          expect(subject.call.size).to eq(3)
+          expect(subject.call[0]).to be_an(Array)
+          expect(subject.call[1]).to be_an(Array)
+          expect(subject.call[2]).to be_an(Array)
         end
 
         it 'First array is data' do
@@ -34,7 +35,7 @@ module Admin
         end
 
         it 'Second array is array of blacklisted cols' do
-          expect(subject.call.last).to eq(expected_blacklist)
+          expect(subject.call[1]).to eq(expected_blacklist)
         end
       end
 

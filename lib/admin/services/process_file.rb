@@ -5,7 +5,7 @@ module Admin
     # necessary, of an XLSX file.
     class ProcessFile
 
-      attr_reader :errors
+      attr_reader :errors, :warnings
 
       def initialize(xlsx_path)
         @xlsx_path = xlsx_path
@@ -15,7 +15,7 @@ module Admin
       def call
         raise 'No file specified' unless @xlsx_path
         rubyxl_workbook = RubyXL::Parser.parse(@xlsx_path)
-        mediators_as_hashes, @blacklist = Parsers::Workbook.new(rubyxl_workbook).call
+        mediators_as_hashes, @blacklist, @warnings = Parsers::Workbook.new(rubyxl_workbook).call
         file_validations = Validators::FileValidator.new(mediators_as_hashes, @blacklist)
 
         if file_validations.valid?
@@ -23,7 +23,6 @@ module Admin
             mediators_as_hashes, @blacklist)
           true
         else
-          # [ false, invalid_locals(file_validations.errors) ]
           @errors = file_validations.errors
           false
         end
