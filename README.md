@@ -42,6 +42,15 @@ The coverage report is available under `/coverage/index.html`
 
 See [MoJ Tsuru documentation](https://docs.google.com/document/d/11xQRRJ_KH4Oipn9qYCt-wk-PEaUbUrrd8pLCi1pijLE/)
 
+## Deploying via Template Deploy
+
+The following environmental variables are used:
+
+* LOG_LEVEL - Can be one of _debug_, _error_, _info_, _warn_ or _fatal_. Assumes _debug_ if not set.
+* RACK_ENV - Can be one of _staging_ or _production_. The app uses the development environment if this is not set.
+* DATABASE_URL - Must be set if RACK_ENV is _staging_ or _production_.
+
+
 ## API Doc
 
 ### Admin App

@@ -4,8 +4,8 @@ LOGGER.info "LOG_LEVEL: #{LOGGER.level}"
 
 db_config = YAML::load_file(File.expand_path('../../config/database.yml', __FILE__))
 
-if ENV['RACK_ENV'] == 'production' && ENV['DATABASE_URL']
-  db_config['production'] = {'url' => ENV['DATABASE_URL']}
+if %w{ staging production }.include?(ENV['RACK_ENV'])
+  db_config[ENV['RACK_ENV']] = {'url' => ENV['DATABASE_URL']}
 end
 
 ActiveRecord::Base.configurations = db_config
