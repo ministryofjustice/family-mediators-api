@@ -60,7 +60,7 @@ module Admin
 
             it 'Should issue a warning' do
               result
-              expect(subject.warnings).to eq(["Practice 1: Could not identify '#{parsed[part]}'"])
+              expect(subject.warnings).to eq(["Practice 1: Could not identify: #{parsed[part]}"])
             end
           end
         end
@@ -85,7 +85,7 @@ module Admin
         end
 
         it_should_behave_like :warn_if_no_match, :email do
-          let(:email) { 'ned@@@flip.flap' }
+          let(:email) { 'ned(at)flip.flap' }
         end
 
         it_should_behave_like :warn_if_no_match, :url do
