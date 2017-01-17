@@ -10,31 +10,38 @@ module Admin
       MEDIATORS_WORKSHEET = 0
       BLACKLIST_WORKSHEET = 1
 
+      attr_reader :blacklist
+
       def initialize(rubyxl_workbook,
-                     headings_processor: Admin::Processing::Headings)
+                     headings_processor: Admin::Processing::Headings,
+                     mediators_collection_class: MediatorsCollection)
         @rubyxl_workbook = rubyxl_workbook
-        @headings_processor = headings_processor
+        parse_mediators(mediators_collection_class, headings_processor)
+        @blacklist = processed_blacklist(headings_processor)
       end
 
-      def call
-        mediators, warnings = parse_mediators
-        [ mediators, processed_blacklist, warnings ]
+      def mediators
+        @collection.mediators
+      end
+
+      def warnings
+        @collection.warnings
       end
 
       private
 
-      def parse_mediators
-        as_hashes = transform_mediators
+      def parse_mediators(mediators_collection_class, headings_processor)
+        as_hashes = transform_mediators(headings_processor)
         squeezed = remove_blank_rows(as_hashes)
-        MediatorsCollection.new(squeezed).expand_practices
+        @collection = mediators_collection_class.new(squeezed)
       end
 
       def parse_blacklist
         blacklist_worksheet[1..-1].map { |row| row.cells.first.value }
       end
 
-      def processed_blacklist
-        @headings_processor.process(parse_blacklist)
+      def processed_blacklist(headings_processor)
+        headings_processor.process(parse_blacklist)
       end
 
       def remove_blank_rows(hashes)
@@ -48,20 +55,21 @@ module Admin
         row.values.all? { |val| (val && val.size == 0) || val.nil? }
       end
 
-      def transform_mediators
+      def transform_mediators(headings_processor)
         return [] if mediators_worksheet[0].nil?
+        headings = processed_headings(headings_processor)
 
         mediators_worksheet[1..-1].map.with_index do |row|
-          processed_headings.size.times.inject({}) do |hash, index|
+          headings.size.times.inject({}) do |hash, index|
             cell = row.cells[index]
             value = cell && cell.value
-            hash.merge({processed_headings[index].to_sym => value})
+            hash.merge({headings[index].to_sym => value})
           end
         end
       end
 
-      def processed_headings
-        @headings_processor.process(
+      def processed_headings(headings_processor)
+        headings_processor.process(
           mediators_worksheet[0].cells.map { |cell| cell.value }
         )
       end

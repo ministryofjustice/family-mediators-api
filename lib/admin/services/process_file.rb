@@ -5,27 +5,33 @@ module Admin
     # necessary, of an XLSX file.
     class ProcessFile
 
-      attr_reader :errors, :warnings
+      attr_reader :errors
 
       def initialize(xlsx_path)
         @xlsx_path = xlsx_path
         @errors = []
+        @processed_mediators = []
       end
 
       def call
         raise 'No file specified' unless @xlsx_path
         rubyxl_workbook = RubyXL::Parser.parse(@xlsx_path)
-        mediators_as_hashes, @blacklist, @warnings = Parsers::Workbook.new(rubyxl_workbook).call
-        file_validations = Validators::FileValidator.new(mediators_as_hashes, @blacklist)
+        @workbook = Parsers::Workbook.new(rubyxl_workbook)
+        file_validations = Validators::FileValidator.new(
+          @workbook.mediators, @workbook.blacklist)
 
         if file_validations.valid?
           @processed_mediators = Processing::ConfidentialFieldRemover.call(
-            mediators_as_hashes, @blacklist)
+            @workbook.mediators, @workbook.blacklist)
           true
         else
           @errors = file_validations.errors
           false
         end
+      end
+
+      def warnings
+        @workbook.warnings
       end
 
       def mediators_count
@@ -37,7 +43,7 @@ module Admin
       end
 
       def confidential_fields
-        @blacklist
+        @workbook.blacklist
       end
 
       def public_fields

@@ -23,19 +23,12 @@ module Admin
 
         let(:expected_blacklist) { [ :bish_bosh, :bash ] }
 
-        it 'Returns 3 arrays' do
-          expect(subject.call.size).to eq(3)
-          expect(subject.call[0]).to be_an(Array)
-          expect(subject.call[1]).to be_an(Array)
-          expect(subject.call[2]).to be_an(Array)
+        it 'Parses mediators' do
+          expect(subject.mediators).to eq(expected_data)
         end
 
-        it 'First array is data' do
-          expect(subject.call.first).to eq(expected_data)
-        end
-
-        it 'Second array is array of blacklisted cols' do
-          expect(subject.call[1]).to eq(expected_blacklist)
+        it 'Parses blacklist' do
+          expect(subject.blacklist).to eq(expected_blacklist)
         end
       end
 
@@ -52,7 +45,7 @@ module Admin
         end
 
         it 'Transforms data' do
-          expect(subject.call.first).to eq(expected_data)
+          expect(subject.mediators).to eq(expected_data)
         end
       end
 
@@ -65,7 +58,7 @@ module Admin
         end
 
         it 'Ignores empty rows' do
-          expect(subject.call.first).to eq(expected_data)
+          expect(subject.mediators).to eq(expected_data)
         end
       end
 
@@ -75,11 +68,11 @@ module Admin
         let(:blacklist) { [] }
 
         it 'Returns empty data array' do
-          expect(subject.call.first).to eq([])
+          expect(subject.mediators).to eq([])
         end
 
         it 'Returns empty blacklist array' do
-          expect(subject.call.last).to eq([])
+          expect(subject.blacklist).to eq([])
         end
       end
 
