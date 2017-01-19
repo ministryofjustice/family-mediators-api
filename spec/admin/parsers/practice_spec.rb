@@ -14,7 +14,7 @@ module Admin
       end
 
       context 'TEL_REGEX' do
-        [ '07974 877182', '0201 308 2097', '0300 4000 636', '123456789', '07977-789786' ].each do |tel|
+        [ '07974 877182', '0201 308 2097', '0300 4000 636', '123456789', '07977 789786' ].each do |tel|
           it "matches telephone number of the form: #{tel}" do
             expect(tel).to match(Practice::TEL_REGEX)
           end

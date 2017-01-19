@@ -17,7 +17,7 @@ Feature: The spreadsheet administrator enters practice data for a mediator under
 
     Examples: Invalid telephone number
       | PracticeCell                              | Message                                   |
-      | 0712335\|15 Smith Street, London WC1R 4RL | Practice 1: Must be valid UK phone number |
+      | 07123358\|15 Smith Street, London WC1R 4RL | Practice 1: Must be valid UK phone number |
 
     Examples: Invalid URL
       | PracticeCell                                      | Message                       |
