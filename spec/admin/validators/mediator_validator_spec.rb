@@ -22,13 +22,14 @@ module Admin
 
       describe 'urn' do
         it_should_behave_like 'a URN', 'urn'
+        it_should_behave_like 'a required field', 'urn', '1001T'
       end
 
       describe 'ppc_urn' do
         it_should_behave_like 'a URN', 'ppc_urn'
 
-        context 'when "not known"' do
-          let(:data) { create(:mediator_hash, ppc_urn: 'not known') }
+        context 'when blank' do
+          let(:data) { create(:mediator_hash, ppc_urn: '') }
           it { should be_valid }
         end
       end
@@ -41,7 +42,8 @@ module Admin
 
       %w(title first_name last_name).each do |field_name|
         describe field_name do
-          it_should_behave_like 'a required string', field_name
+          it_should_behave_like 'a required field', field_name
+          it_should_behave_like 'a string', field_name
         end
       end
 
@@ -65,7 +67,7 @@ module Admin
           MediatorValidator.new(missing_data).validate
         end
 
-        keys = FactoryGirl.create(:mediator_hash).keys
+        keys = FactoryGirl.create(:mediator_hash).keys - [:ppc_urn]
 
         keys.each do |val|
           context "when #{val} missing" do

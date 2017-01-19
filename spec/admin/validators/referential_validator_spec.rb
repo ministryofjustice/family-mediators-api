@@ -99,6 +99,8 @@ module Admin
           end
         end
 
+        # In the past, the PPC URN was sometimes set to 'not known' - this is
+        # no longer allowed.
         context "when is set to 'not known'" do
           let(:result) do
             data = [
@@ -109,8 +111,8 @@ module Admin
             ReferentialValidator.new(data).validate
           end
 
-          it 'is valid' do
-            expect(result.success?).to eq(true)
+          it 'is invalid' do
+            expect(result.success?).to eq(false)
           end
 
         end

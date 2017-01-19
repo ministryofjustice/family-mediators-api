@@ -39,9 +39,9 @@ module Admin
       end
 
       def supervisor_presence
-        result = ppc_urns - urns - ['not known']
+        result = ppc_urns.reject { |urn| urn.blank? } - urns
         if result.any?
-          humanised_result = result.map { |val| val.strip.size == 0 ? 'blank' : val }
+          humanised_result = result.map { |val| val.blank? ? 'blank' : val }
           @validation_result.add(ErrorMessage.new(heading: 'PPC URN not recognised', values: humanised_result))
         end
       end
