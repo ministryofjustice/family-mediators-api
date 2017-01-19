@@ -111,7 +111,7 @@ module Admin
             ReferentialValidator.new(data).validate
           end
 
-          it 'is valid' do
+          it 'is invalid' do
             expect(result.success?).to eq(false)
           end
 
