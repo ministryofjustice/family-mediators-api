@@ -33,8 +33,11 @@ module Admin
             )
           end
         end
+
+        # 'required' & 'optional' refer to the keys, not the values
+
         required(:urn)                 { filled? & format?(/^\d{4}[TAP]$/) }
-        required(:ppc_urn)             { filled? & format?(/^(\d{4}[TAP]|not known)$/) }
+        required(:ppc_urn)             { empty? | format?(/^(\d{4}[TAP])$/) }
         required(:first_name)          { filled? & str? }
         required(:last_name)           { filled? & str? }
         required(:title)               { filled? & str? }

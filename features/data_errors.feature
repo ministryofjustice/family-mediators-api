@@ -13,11 +13,11 @@ Feature: A spreadsheet upload is validated against a set of rules. If there are
   Scenario: Mediator data errors
     Given I upload a spreadsheet like this:
       | URN   | DCC | Title | Last Name | First Name | Legal Aid Qualified | Legal Aid Franchise | PPC URN   | FMCA Date  |
-      | 1234T |     | Mr    | Irons     | John       | No                  | No                  | not known | 27/03/2001 |
-      | 3459A | No  | Mr    | Wayne     | Bruce      |                     | No                  | not known | Blah       |
-      | 5436P | No  | Mr    | Romanova  | Natalia    | No                  |                     | not known | 18/2015    |
-      | 1948A |     | Mr    | Kovacs    |            | No                  | No                  | not known | 01/02/2013 |
-      | 1948A | No  |       |           | Loki       | No                  | No                  | not known | 05/2001    |
+      | 1234T |     | Mr    | Irons     | John       | No                  | No                  |           | 27/03/2001 |
+      | 3459A | No  | Mr    | Wayne     | Bruce      |                     | No                  |           | Blah       |
+      | 5436P | No  | Mr    | Romanova  | Natalia    | No                  |                     |           | 18/2015    |
+      | 1948A |     | Mr    | Kovacs    |            | No                  | No                  |           | 01/02/2013 |
+      | 1948A | No  |       |           | Loki       | No                  | No                  |           | 05/2001    |
     And I click 'Process data and apply updates'
     Then I should see the following item errors:
       | Row | Field               | Message                 |
@@ -34,8 +34,8 @@ Feature: A spreadsheet upload is validated against a set of rules. If there are
   Scenario: Duplicate registration number
     Given I upload a spreadsheet like this:
       | URN   | DCC | Title | Last Name | First Name | Legal Aid Qualified | PPC URN   |
-      | 1234T | No  | Mrs   | Irons     | John       | No                  | not known |
-      | 1234T | No  | Mrs   | Wayne     | Bruce      | No                  | not known |
+      | 1234T | No  | Mrs   | Irons     | John       | No                  |           |
+      | 1234T | No  | Mrs   | Wayne     | Bruce      | No                  |           |
     And I click 'Process data and apply updates'
     Then I should see the following collection errors:
       | Error         | Value(s) |
@@ -49,13 +49,13 @@ Feature: A spreadsheet upload is validated against a set of rules. If there are
       | 8901E | No  | Mr    | Jon       | Willis     | No                  |         |
     And I click 'Process data and apply updates'
     Then I should see the following collection errors:
-      | Error                  | Value(s)     |
-      | PPC URN not recognised | 5647T, blank |
+      | Error                  | Value(s) |
+      | PPC URN not recognised | 5647T    |
 
   Scenario: FMCA or Training Date must be present
     Given I upload a spreadsheet like this:
       | FMCA Date | Training Date | URN   | DCC | Title | Last Name | First Name | Legal Aid Qualified | Legal Aid Franchise | PPC URN   |
-      |           |               | 1234T | Yes | Mr    | Irons     | John       | No                  | No                  | not known |
+      |           |               | 1234T | Yes | Mr    | Irons     | John       | No                  | No                  |           |
     And I click 'Process data and apply updates'
     Then I should see the following item errors:
       | Row | Field         | Message                                    |
