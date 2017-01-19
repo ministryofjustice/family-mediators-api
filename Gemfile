@@ -13,9 +13,10 @@ gem 'rubyXL'
 gem 'sinatra'
 gem 'sinatra-contrib'
 gem 'slim'
+gem 'rubocop', require: false
 
 group :development do
-  gem 'rubocop', require: false
+#  gem 'rubocop', require: false
 end
 
 group :test do
