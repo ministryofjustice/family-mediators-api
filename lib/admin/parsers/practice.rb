@@ -13,7 +13,7 @@ module Admin
 
       def parse(practices_data, line_parser = PracticeLine.new)
         practices = split_into_lines(practices_data).map.each_with_index do |practice_line, index|
-          line_parser.to_h(practice_line, index+1)
+          line_parser.parse(practice_line, index+1)
         end
 
         @warnings = line_parser.warnings

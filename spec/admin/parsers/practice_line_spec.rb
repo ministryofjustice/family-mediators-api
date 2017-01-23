@@ -40,7 +40,7 @@ module Admin
         { address: address, tel: tel, email: email, url: url }
       end
 
-      let(:result)   { subject.to_h(practice, 1) }
+      let(:result)   { subject.parse(practice, 1) }
 
       shared_examples :include_if_match do |part|
         context "When #{part} is present" do

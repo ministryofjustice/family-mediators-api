@@ -28,21 +28,26 @@ module Admin
         @warnings = []
       end
 
-      def to_h(line, practice_num)
-        practice_hash = {}
+      def parse(line, practice_num)
         parts = split_into_parts(line)
-        match(parts, practice_hash)
-        @warnings += parts.map { |part| "Practice #{practice_num}: Could not identify: #{part}" }
+        practice_hash = {}
+        unmatched = allocate_matches(parts, practice_hash)
+        add_to_warnings(unmatched, practice_num) if unmatched.any?
         practice_hash
       end
 
       private
 
-      def match(parts, practice_hash)
-        MATCHERS.each do |key, regex|
-          matches = parts.grep(regex)
+      def add_to_warnings(parts, practice_num)
+        @warnings += parts.map { |part| "Practice #{practice_num}: Could not identify: #{part}" }
+      end
+
+      def allocate_matches(parts, practice_hash)
+        MATCHERS.inject(parts) do |parts_to_match, (key, regex)|
+          matches = parts_to_match.grep(regex)
           practice_hash[key] = matches.first
-          parts.delete(matches.first)
+          parts_to_match.delete(practice_hash[key])
+          parts_to_match
         end
       end
 
@@ -51,13 +56,8 @@ module Admin
       end
 
       def sanitise(string)
-        string.strip.squeeze(' ') unless string.nil? || blank?(string)
+        string.strip.squeeze(' ') unless string.blank?
       end
-
-      def blank?(string)
-        string.strip.size == 0
-      end
-
     end
 
   end

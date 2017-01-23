@@ -16,7 +16,7 @@ module Admin
                      headings_processor: Admin::Processing::Headings,
                      mediators_collection_class: MediatorsCollection)
         @rubyxl_workbook = rubyxl_workbook
-        parse_mediators(mediators_collection_class, headings_processor)
+        @collection = parse_mediators(mediators_collection_class, headings_processor)
         @blacklist = processed_blacklist(headings_processor)
       end
 
@@ -33,7 +33,7 @@ module Admin
       def parse_mediators(mediators_collection_class, headings_processor)
         as_hashes = transform_mediators(headings_processor)
         squeezed = remove_blank_rows(as_hashes)
-        @collection = mediators_collection_class.new(squeezed)
+        mediators_collection_class.new(squeezed)
       end
 
       def parse_blacklist

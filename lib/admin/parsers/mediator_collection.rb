@@ -19,11 +19,15 @@ module Admin
         parser = Practice.new
         @warnings = []
 
-        @mediators = @hashes.map.each_with_index do |hash, index|
-          hash[:practices] = parser.parse(hash[:practices]) if hash.key?(:practices)
-          @warnings += prefix_warnings(parser.warnings, index+1)
-          hash
+        @mediators = @hashes.map.each_with_index do |mediator, index|
+          expand_practice(mediator, parser, index+1)
         end
+      end
+
+      def expand_practice(mediator, parser, record_num)
+        mediator[:practices] = parser.parse(mediator[:practices]) if mediator.key?(:practices)
+        @warnings += prefix_warnings(parser.warnings, record_num)
+        mediator
       end
 
       def prefix_warnings(warnings, record_num)

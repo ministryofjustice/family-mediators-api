@@ -11,6 +11,7 @@ module Admin
         @xlsx_path = xlsx_path
         @errors = []
         @processed_mediators = []
+        @workbook = nil
       end
 
       def call
@@ -18,11 +19,11 @@ module Admin
         rubyxl_workbook = RubyXL::Parser.parse(@xlsx_path)
         @workbook = Parsers::Workbook.new(rubyxl_workbook)
         file_validations = Validators::FileValidator.new(
-          @workbook.mediators, @workbook.blacklist)
+          workbook_mediators, workbook_blacklist)
 
         if file_validations.valid?
           @processed_mediators = Processing::ConfidentialFieldRemover.call(
-            @workbook.mediators, @workbook.blacklist)
+            workbook_mediators, workbook_blacklist)
           true
         else
           @errors = file_validations.errors
@@ -48,6 +49,16 @@ module Admin
 
       def public_fields
         @processed_mediators.any? ? @processed_mediators.first.keys : []
+      end
+
+      private
+
+      def workbook_blacklist
+        @workbook.blacklist
+      end
+
+      def workbook_mediators
+        @workbook.mediators
       end
 
     end
