@@ -14,4 +14,5 @@ form.form action="/admin/login" method="post"
     input#password.form-control type="password" name="password" /
 
   .form-group
+    input type="hidden" name="token" value="#{env['rack.session'][:csrf]}"
     input.button type="submit" value="Login" /

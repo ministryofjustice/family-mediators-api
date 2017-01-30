@@ -3,8 +3,7 @@ require 'sinatra/json'
 module Admin
   class App < Sinatra::Base
 
-    TEN_MINUTES   = 60 * 10
-    use Rack::Session::Pool, expire_after: TEN_MINUTES
+
     helpers Helpers
 
     set :views, File.dirname(__FILE__) + '/../../views'

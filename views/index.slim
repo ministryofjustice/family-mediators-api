@@ -15,4 +15,5 @@ form.form method='post' action='/admin/upload' enctype='multipart/form-data'
     input#file-name.form-control type="file" name='spreadsheet_file' /
 
   .form-group
+    input type="hidden" name="token" value="#{env['rack.session'][:csrf]}"
     input.button type="submit" value="Continue" /
