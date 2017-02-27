@@ -2,7 +2,12 @@ describe Admin::App do
   include Rack::Test::Methods
 
   def app
-    Admin::App
+    @app ||= Rack::Builder.new do
+      use Rack::Session::Pool, expire_after: 600
+      use Rack::Protection
+      use Rack::Protection::AuthenticityToken, authenticity_param: 'token'
+      run Admin::App
+    end
   end
 
   context '/healthcheck' do
@@ -52,7 +57,7 @@ describe Admin::App do
       context "POST /#{path}" do
 
         before do
-          post "/#{path}"
+          post "/#{path}", { 'token': 'hello'}
         end
 
         it 'has 302 status' do
