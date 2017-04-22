@@ -1,49 +1,31 @@
 module Admin
   module Parsers
+
+    # Parse a string of practices into an array of hashes.
     class Practice
       RECORD_SEPARATOR = "\n"
-      PART_SEPARATOR = '|'
-      EMAIL_REGEX = /@/i
-      TEL_REGEX = /[\d\s]{8,12}/
-      POSTCODE_REGEX = /((GIR\s*0AA)|((([A-PR-UWYZ][0-9]{1,2})|(([A-PR-UWYZ][A-HK-Y][0-9]{1,2})|(([A-PR-UWYZ][0-9][A-HJKSTUW])|([A-PR-UWYZ][A-HK-Y][0-9][ABEHMNPRVWXY]))))\s*[A-Z]?[0-9][ABD-HJLNP-UW-Z]{2}))/i
-      URL_REGEX = /\A((http|https):\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?\Z/i
 
-      class << self
-        def parse(practices_data)
-          split_into_lines(practices_data).map do |practice_line|
-            identify_parts(practice_line)
-          end
-        end
+      attr_reader :warnings
 
-        def split_into_lines(practices_data)
-          practices_data && practices_data.split(RECORD_SEPARATOR) || []
-        end
-
-        def identify_parts(practice_line)
-          parts = split_into_parts(practice_line)
-          parts = parts.map { |part| sanitise(part) }
-          build_practice_hash(parts)
-        end
-
-        def build_practice_hash(parts)
-
-          parts.inject({}) do |result, part|
-            result[:email] = part if part.match(EMAIL_REGEX)
-            result[:address] = part if part.match(POSTCODE_REGEX)
-            result[:tel] = part if part.match(TEL_REGEX)
-            result[:url] = part if part.match(URL_REGEX)
-            result
-          end
-        end
-
-        def split_into_parts(practice_line)
-          practice_line.split(PART_SEPARATOR)
-        end
-
-        def sanitise(string)
-          string.strip.squeeze(' ')
-        end
+      def initialize
+        @warnings = []
       end
+
+      def parse(practices_data, line_parser = PracticeLine.new)
+        practices = split_into_lines(practices_data).map.each_with_index do |practice_line, index|
+          line_parser.parse(practice_line, index+1)
+        end
+
+        @warnings = line_parser.warnings
+        practices
+      end
+
+      private
+
+      def split_into_lines(practices_data)
+        practices_data && practices_data.split(RECORD_SEPARATOR) || []
+      end
+
     end
   end
 end

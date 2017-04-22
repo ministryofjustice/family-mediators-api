@@ -3,6 +3,7 @@ require 'zlib'
 
 require_relative 'parsers/mediator_collection'
 require_relative 'parsers/practice'
+require_relative 'parsers/practice_line'
 require_relative 'parsers/workbook'
 require_relative 'validators/mediator_validations'
 require_relative 'validators/file_validator'

@@ -18,7 +18,7 @@ module Admin
         [ { foo: 'ding', bar: 'dong', baz: 'dang' } ]
       end
 
-      let(:workbook_parser) { double('WorkbookParser', call: [mediator_data, blacklist]) }
+      let(:workbook_parser) { double('WorkbookParser', mediators: mediator_data, blacklist: blacklist, warnings: []) }
       let(:file_validator)  { double('FileValidator', valid?: true, errors: []) }
 
       context 'No file given' do

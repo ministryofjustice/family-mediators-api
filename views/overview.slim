@@ -17,6 +17,12 @@ table.check-your-answers
         | Existing mediator count: #{existing_count}
 
     tr
+      td Warnings
+      td#warnings
+        - warnings.each do |warning|
+          = warning
+          br
+    tr
       td Confidential fields
       td
         - confidential_fields.each do |confidential_field|

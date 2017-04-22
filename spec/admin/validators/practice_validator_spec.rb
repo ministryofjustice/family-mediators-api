@@ -91,6 +91,19 @@ module Admin
         let(:practice_hash) { create(:parsed_practice, address: [address, address]) }
         it { should_not be_valid }
       end
+
+      context 'Practice with only 2 parts' do
+        let(:practice_hash) do
+          {
+            address: '1 Foo Rd, Wessex BN2 0GB',
+            tel: '01234-567890',
+            email: nil,
+            url: nil
+          }
+        end
+
+        it { should be_valid }
+      end
     end
   end
 end

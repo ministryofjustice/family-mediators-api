@@ -26,7 +26,7 @@ group :test do
   gem 'codeclimate-test-reporter', '~> 1.0.0', require: nil
   gem 'database_cleaner'
   gem 'factory_girl'
-  gem 'pry', :require => false
+  gem 'pry-byebug', :require => false
   gem 'rack-test', require: 'rack/test'
   gem 'rspec'
   gem 'simplecov', :require => false
