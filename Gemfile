@@ -13,7 +13,7 @@ gem 'rubyXL'
 gem 'sinatra', '~> 1.4.7'
 gem 'sinatra-contrib'
 gem 'slim', '< 4.0.0'
-gem 'rubocop', '~> 0.48.0', require: false
+gem 'rubocop', '~> 0.49.0', require: false
 
 group :development do
 #  gem 'rubocop', require: false
