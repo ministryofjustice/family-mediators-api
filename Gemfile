@@ -1,19 +1,19 @@
 # frozen_string_literal: true
 source 'https://rubygems.org'
 
-gem 'activerecord'
+gem 'activerecord', '~> 5.0.7'
 gem 'bcrypt'
 gem 'dotenv'
 gem 'hanami-validations'
-gem 'grape'
+gem 'grape', '~> 0.18.0'
 gem 'grape-entity'
 gem 'pg'
 gem 'rake'
 gem 'rubyXL'
-gem 'sinatra'
+gem 'sinatra', '~> 1.4.7'
 gem 'sinatra-contrib'
-gem 'slim'
-gem 'rubocop', require: false
+gem 'slim', '< 4.0.0'
+gem 'rubocop', '~> 0.48.0', require: false
 
 group :development do
 #  gem 'rubocop', require: false
