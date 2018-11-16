@@ -1,5 +1,10 @@
 AllCops:
   DisabledByDefault: true
+  Exclude:
+    - './*'
+    - 'spec/**/*'
+    - 'vendor/**/*'
+    - 'node_modules/**/*'
 
 #################### Security ############################
 
