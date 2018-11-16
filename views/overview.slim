@@ -39,4 +39,5 @@ p
 form.form method='post' action='/admin/upload-process'
   .form-group
     input type="hidden" name="dump" value="#{dump}"
+    input type="hidden" name="token" value="#{env['rack.session'][:csrf]}"
     input.button type="submit" value="Process data and apply updates"

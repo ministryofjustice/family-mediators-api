@@ -2,7 +2,12 @@ describe Admin::App do
   include Rack::Test::Methods
 
   def app
-    Admin::App
+    @app ||= Rack::Builder.new do
+      use Rack::Session::Pool, expire_after: 600
+      use Rack::Protection
+      use Rack::Protection::AuthenticityToken
+      run Admin::App
+    end
   end
 
   context '/healthcheck' do
@@ -22,7 +27,7 @@ describe Admin::App do
 
   context 'unsuccessfully uploads file' do
     it 'redirects to /upload-fail' do
-      post '/upload', {xlsx_file: nil}, {'rack.session' => {'user' => ''}}
+      post '/upload', {xlsx_file: nil, 'authenticity_token' => 'a' }, {'rack.session' => {:csrf => 'a', 'user' => ''}}
       follow_redirect!
       expect(last_request.path).to eq('/upload-fail')
     end
@@ -52,7 +57,7 @@ describe Admin::App do
       context "POST /#{path}" do
 
         before do
-          post "/#{path}"
+          post "/#{path}", { 'authenticity_token' => 'a', }, {'rack.session' => {:csrf => 'a'}}
         end
 
         it 'has 302 status' do
