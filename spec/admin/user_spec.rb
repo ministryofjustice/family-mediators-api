@@ -30,12 +30,10 @@ describe Admin::User do
     end
 
     context 'when valid username and password' do
-      it 'returns nil' do
+      it 'returns the user' do
         user = Admin::User.authenticate(username: 'username', password: 'password')
         expect(user).to be_instance_of(Admin::User)
       end
     end
-
   end
-
 end

@@ -36,6 +36,10 @@ Then(/^the validation error message should be (.*)$/) do |validation_error|
   expect(results).to eq(validation_error)
 end
 
+Then(/^I am shown the admin homepage$/) do
+  expect(page).to have_current_path('/admin/')
+end
+
 Then(/^I am shown a login form$/) do
   expect(page).to have_current_path('/admin/login')
 end

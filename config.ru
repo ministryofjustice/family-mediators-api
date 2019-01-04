@@ -1,6 +1,8 @@
 $LOAD_PATH.unshift File.dirname(__FILE__)
 $LOAD_PATH.unshift("#{File.dirname(__FILE__)}/lib")
 
+$stdout.sync = true
+
 require 'dotenv'
 Dotenv::load
 
@@ -9,6 +11,10 @@ require 'lib/mediators'
 
 map '/robots.txt' do
   run Proc.new { [200, {'Content-Type' => 'text/plain'}, ["User-Agent: *\nDisallow: /"]] }
+end
+
+map '/' do
+  run Proc.new { [302, {'Location' => '/admin'}, []] }
 end
 
 map '/api' do

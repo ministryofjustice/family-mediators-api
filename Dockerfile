@@ -1,11 +1,12 @@
 FROM ministryofjustice/ruby:2.3.1-webapp-onbuild
 
 RUN touch /etc/inittab
-RUN apt-key adv --keyserver hkps.pool.sks-keyservers.net --recv 9D41F3C3 && \
+
+RUN curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
     echo "deb http://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
-    wget -qO- https://deb.nodesource.com/setup_4.x | bash - && \
-    apt-get update
-RUN apt-get install -y yarn && apt-get upgrade -y
+    curl -sL https://deb.nodesource.com/setup_8.x | bash -
+
+RUN apt-get install -y yarn
 RUN yarn
 
 WORKDIR /usr/src/app
