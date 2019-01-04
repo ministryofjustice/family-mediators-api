@@ -1,10 +1,14 @@
 require 'sinatra/json'
+require 'securerandom'
 
 module Admin
   class App < Sinatra::Base
 
-    TEN_MINUTES   = 60 * 10
-    use Rack::Session::Pool, expire_after: TEN_MINUTES
+    use Rack::Session::Cookie,
+        key: '_fma_session',
+        expire_after: 600,  # 10 minutes
+        secret: ENV.fetch('SESSION_SECRET') { SecureRandom.hex(64) }
+
     helpers Helpers
 
     set :views, File.dirname(__FILE__) + '/../../views'
