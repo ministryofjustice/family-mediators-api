@@ -1,7 +1,7 @@
 # Family Mediators API
-[![Travis CI](https://travis-ci.org/ministryofjustice/family-mediators-api.svg?branch=master)](https://travis-ci.org/ministryofjustice/family-mediators-api)
-[![Code Climate](https://codeclimate.com/github/ministryofjustice/family-mediators-api/badges/gpa.svg)](https://codeclimate.com/github/ministryofjustice/family-mediators-api)
-[![Test Coverage](https://codeclimate.com/github/ministryofjustice/family-mediators-api/badges/coverage.svg)](https://codeclimate.com/github/ministryofjustice/family-mediators-api/coverage)
+[![CircleCI](https://circleci.com/gh/ministryofjustice/family-mediators-api/tree/master.svg?style=svg)](https://circleci.com/gh/ministryofjustice/family-mediators-api/tree/master)
+[![Maintainability](https://api.codeclimate.com/v1/badges/abc80e4ca233b458effe/maintainability)](https://codeclimate.com/github/ministryofjustice/family-mediators-api/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/abc80e4ca233b458effe/test_coverage)](https://codeclimate.com/github/ministryofjustice/family-mediators-api/test_coverage)
 
 Maintains a list of family mediators. Provides an API and an HTML admin UI for
 uploading spreadsheets of mediator data. 
