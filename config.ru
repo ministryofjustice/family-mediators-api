@@ -6,6 +6,9 @@ $stdout.sync = true
 require 'dotenv'
 Dotenv::load
 
+require 'raven'
+use Raven::Rack # will use SENTRY_DSN env variable, if set
+
 require 'lib/env'
 require 'lib/mediators'
 
