@@ -7,6 +7,7 @@ require 'dotenv'
 Dotenv.load
 
 require 'lib/env'
+require 'lib/root_app'
 require 'lib/mediators'
 
 Dir["#{__dir__}/../support/factories/*.rb"].each { |f| require f }

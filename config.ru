@@ -10,14 +10,11 @@ require 'raven'
 use Raven::Rack # will use SENTRY_DSN env variable, if set
 
 require 'lib/env'
+require 'lib/root_app'
 require 'lib/mediators'
 
-map '/robots.txt' do
-  run Proc.new { [200, {'Content-Type' => 'text/plain'}, ["User-Agent: *\nDisallow: /"]] }
-end
-
 map '/' do
-  run Proc.new { [302, {'Location' => '/admin'}, []] }
+  run RootApp
 end
 
 map '/api' do
