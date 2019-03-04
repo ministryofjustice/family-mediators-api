@@ -73,10 +73,9 @@ jobs:
               --label build.git.sha=${CIRCLE_SHA1} \
               --label build.git.branch=${CIRCLE_BRANCH} \
               --label build.date=${BUILD_DATE} \
-              --build-arg APP_BUILD_DATE=${BUILD_DATE} \
-              --build-arg APP_BUILD_TAG=${CIRCLE_BRANCH} \
-              --build-arg APP_GIT_COMMIT=${CIRCLE_SHA1} \
-              --build-arg APP_VERSION=${CIRCLE_BUILD_NUM} \
+              --build-arg BUILD_DATE=${BUILD_DATE} \
+              --build-arg BUILD_TAG=${CIRCLE_BRANCH} \
+              --build-arg GIT_COMMIT=${CIRCLE_SHA1} \
               -t app .
 
       - run:

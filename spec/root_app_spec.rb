@@ -31,7 +31,7 @@ describe RootApp do
     it 'returns the expected payload' do
       expect(
         JSON.parse(last_response.body).keys
-      ).to eq(%w(version_number build_date commit_id build_tag))
+      ).to eq(%w(build_date build_tag commit_id))
     end
   end
 end
