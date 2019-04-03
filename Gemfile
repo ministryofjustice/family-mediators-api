@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 source 'https://rubygems.org'
 
+ruby '2.5.3'
+
 gem 'activerecord', '~> 5.0.7'
 gem 'bcrypt'
 gem 'dotenv'
@@ -14,11 +16,6 @@ gem 'sentry-raven'
 gem 'sinatra', '~> 1.4.7'
 gem 'sinatra-contrib'
 gem 'slim', '< 4.0.0'
-gem 'rubocop', '~> 0.49.0', require: false
-
-group :development do
-#  gem 'rubocop', require: false
-end
 
 group :test do
   gem 'cucumber'
@@ -27,8 +24,9 @@ group :test do
   gem 'codeclimate-test-reporter', '~> 1.0.0', require: nil
   gem 'database_cleaner'
   gem 'factory_girl'
-  gem 'pry', :require => false
+  gem 'pry', require: false
   gem 'rack-test', require: 'rack/test'
   gem 'rspec'
-  gem 'simplecov', :require => false
+  gem 'rubocop', '~> 0.52.1', require: false
+  gem 'simplecov', require: false
 end

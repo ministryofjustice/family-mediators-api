@@ -6,6 +6,14 @@
 Maintains a list of family mediators. Provides an API and an HTML admin UI for
 uploading spreadsheets of mediator data. 
 
+## Docker
+
+The application can be run inside a docker container. This will take care of the ruby environment, postgres database, 
+and any other dependency for you, without having to configure anything in your machine.
+
+* `docker-compose up`
+
+The application will be run in "production" mode, so will be as accurate as possible to a real production environment.  
 
 ## Local set-up
 
@@ -38,13 +46,17 @@ The coverage report is available under `/coverage/index.html`
     irb> ...etc
 
 
-## Deploy to cloud development environment via Tsuru
+## Deploy to cloud development environment via Tsuru (deprecated)
 
 See [MoJ Tsuru documentation](https://docs.google.com/document/d/11xQRRJ_KH4Oipn9qYCt-wk-PEaUbUrrd8pLCi1pijLE/)
 
-## Environmental variables
+## Deploy to new kubernetes cloud platform
 
-The following environmental variables are used:
+Refer to the [deploy repository](https://github.com/ministryofjustice/family-mediators-api-deploy)
+
+## Environment variables
+
+The following environment variables are used:
 
 * LOG_LEVEL - Can be one of _debug_, _error_, _info_, _warn_ or _fatal_. Assumes _debug_ if not set.
 * RACK_ENV - Can be one of _staging_ or _production_. The app uses the development environment if this is not set.
@@ -61,6 +73,8 @@ To generate the password hash, use bcrypt-ruby. In irb:
 
 ...and use the long string generated.
 
+When running the app locally you can set these ENV variables in the `.env` file.  
+This file is also used by `docker-compose` but will not be used in production environments.
 
 ## API Doc
 
