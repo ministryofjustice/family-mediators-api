@@ -81,7 +81,7 @@ jobs:
       - run:
           name: push docker image
           command: |
-            login="$(aws ecr get-login --region eu-west-1 --no-include-email)"
+            login="$(aws ecr get-login --region ${AWS_DEFAULT_REGION} --no-include-email)"
             ${login}
 
             docker tag app "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}"
@@ -109,7 +109,7 @@ jobs:
 
             kubectl set image -n family-mediators-api-staging \
                     deployment/family-mediators-api-deployment-staging \
-                    family-mediators-api-web-staging="${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}"
+                    webapp="${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}"
 
             kubectl annotate -n family-mediators-api-staging \
                     deployment/family-mediators-api-deployment-staging \
@@ -126,7 +126,7 @@ jobs:
       - run:
           name: promote staging image to production
           command: |
-            login="$(aws ecr get-login --region eu-west-1 --no-include-email)"
+            login="$(aws ecr get-login --region ${AWS_DEFAULT_REGION} --no-include-email)"
             ${login}
 
             docker pull "${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}"
@@ -155,7 +155,7 @@ jobs:
 
             kubectl set image -n family-mediators-api-production \
                     deployment/family-mediators-api-deployment-production \
-                    family-mediators-api-web-production="${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}"
+                    webapp="${ECR_ENDPOINT}/${GITHUB_TEAM_NAME_SLUG}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_SHA1}"
 
             kubectl annotate -n family-mediators-api-production \
                     deployment/family-mediators-api-deployment-production \
