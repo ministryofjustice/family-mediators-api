@@ -1,0 +1,22 @@
+# Simplify running the application inside a container locally.
+# Usage: `docker-compose up`
+#
+# Do not use docker-compose in production environments.
+#
+version: '3'
+
+services:
+  db:
+    image: postgres
+  web:
+    build: .
+    environment:
+      DATABASE_URL: postgresql://postgres@db/mediators
+      RACK_ENV: production
+      LOG_LEVEL: debug
+    volumes:
+      - .env:/usr/src/app/.env
+    ports:
+      - "9292:9292"
+    depends_on:
+      - db
