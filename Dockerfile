@@ -25,6 +25,8 @@ FROM base
 
 COPY --from=documentation /usr/src/app/documentation/output.html ./documentation/output.html
 
+ENV RACK_ENV production
+
 ARG BUILD_DATE
 ENV BUILD_DATE ${BUILD_DATE}
 

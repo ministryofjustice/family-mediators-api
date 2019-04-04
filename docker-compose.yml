@@ -12,7 +12,6 @@ services:
     build: .
     environment:
       DATABASE_URL: postgresql://postgres@db/mediators
-      RACK_ENV: production
       LOG_LEVEL: debug
     volumes:
       - .env:/usr/src/app/.env
