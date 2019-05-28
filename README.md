@@ -46,11 +46,7 @@ The coverage report is available under `/coverage/index.html`
     irb> ...etc
 
 
-## Deploy to cloud development environment via Tsuru (deprecated)
-
-See [MoJ Tsuru documentation](https://docs.google.com/document/d/11xQRRJ_KH4Oipn9qYCt-wk-PEaUbUrrd8pLCi1pijLE/)
-
-## Deploy to new kubernetes cloud platform
+## Deploy to kubernetes cloud platform
 
 Refer to the [deploy repository](https://github.com/ministryofjustice/family-mediators-api-deploy)
 
