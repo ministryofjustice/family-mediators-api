@@ -6,6 +6,19 @@
   },
   "author": "nick.rowlands@digital.justice.gov.uk",
   "dependencies": {
-    "aglio": "^2.3.0"
+    "aglio": "^2.3.0",
+    "braces": "^2.3.1",
+    "clean-css": "^4.1.11",
+    "constantinople": "^3.1.1",
+    "cryptiles": "^4.1.2",
+    "debug": "^2.6.9",
+    "deep-extend": "^0.5.1",
+    "extend": "^3.0.2",
+    "fresh": "^0.5.2",
+    "mime": "^1.4.1",
+    "randomatic": "^3.0.0",
+    "tough-cookie": "^2.3.3",
+    "tunnel-agent": "^0.6.0",
+    "uglify-js": "^2.6.0"
   }
 }
