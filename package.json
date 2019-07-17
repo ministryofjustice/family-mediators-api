@@ -6,6 +6,6 @@
   },
   "author": "nick.rowlands@digital.justice.gov.uk",
   "dependencies": {
-    "aglio": "^2.2.1"
+    "aglio": "^2.3.0"
   }
 }
