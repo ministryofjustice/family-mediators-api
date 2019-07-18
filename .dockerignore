@@ -19,4 +19,5 @@ coverage/
 tags
 .ctags_exclude
 
+scripts/
 node_modules/

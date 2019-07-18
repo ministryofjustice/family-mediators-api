@@ -14,7 +14,7 @@ RUN curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
 
 RUN apt-get install -y nodejs yarn
 
-COPY package.json yarn.lock api.apib ./
+COPY package.json api.apib ./
 RUN yarn install --frozen-lockfile
 
 # Produce the API documentation (using `aglio`)
