@@ -74,6 +74,13 @@ This file is also used by `docker-compose` but will not be used in production en
 
 ## API Doc
 
+Documentation is generated as part of the docker build, using [aglio](https://github.com/danielgtaylor/aglio) to parse 
+an [API Blueprint](api.apib).
+
+Although this documentation can be also generated locally, it requires a vast amount of node modules dependencies, 
+and a very specific NodeJS version, so if you want to see the generated documentation it is quicker and easier to just 
+do `docker-compose up` and go to `http://localhost:9292/api/documentation`
+
 ### Admin App
 
 * /admin - Homepage
