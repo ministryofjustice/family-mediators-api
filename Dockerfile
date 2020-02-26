@@ -1,18 +1,56 @@
-FROM ministryofjustice/ruby:2.5.3-webapp-onbuild AS base
+FROM ruby:2.5.3-alpine as base
+MAINTAINER UCPD Cross Justice Delivery
+
+# build dependencies:
+#   - virtual: create virtual package for later deletion
+#   - build-base for alpine fundamentals
+#   - libxml2-dev/libxslt-dev for nokogiri, at least
+#   - postgresql-dev for pg/activerecord gems
+#
+RUN apk --no-cache add --virtual build-deps \
+  build-base \
+  libxml2-dev \
+  libxslt-dev \
+  postgresql-dev \
+  bash \
+  curl \
+&& apk --no-cache add \
+  postgresql-client \
+  linux-headers \
+  xz-libs \
+  tzdata
+
+# ensure everything is executable
+RUN chmod +x /usr/local/bin/*
+
+# add non-root user and group with alpine first available uid, 1000
+RUN addgroup -g 1000 -S appgroup && \
+    adduser -u 1000 -S appuser -G appgroup
+
+# create app directory in conventional, existing dir /usr/src
+RUN mkdir -p /usr/src/app && mkdir -p /usr/src/app/tmp
+
+# create documentarion directory for api docs
+RUN mkdir -p /usr/src/app/documentation
 
 WORKDIR /usr/src/app
-RUN mkdir ./documentation
 
+COPY Gemfile* ./
+
+RUN gem install bundler -v 1.17.3 && \
+    bundle config --global without test:development && \
+    bundle install --frozen --jobs 2 --retry 3
+
+COPY . .
+
+#### begin documentation ####
 
 FROM base AS documentation
 
-RUN touch /etc/inittab
-
-RUN curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
-    echo "deb http://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
-    curl -sL https://deb.nodesource.com/setup_8.x | bash -
-
-RUN apt-get install -y nodejs yarn
+RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/v3.7/main/ \
+  nodejs=8.9.3-r1 \
+  yarn \
+  python
 
 COPY package.json api.apib ./
 RUN yarn install --frozen-lockfile
@@ -20,10 +58,17 @@ RUN yarn install --frozen-lockfile
 # Produce the API documentation (using `aglio`)
 RUN npm run-script build
 
+#### end documentation ####
 
 FROM base
 
 COPY --from=documentation /usr/src/app/documentation/output.html ./documentation/output.html
+
+# tidy up installation
+RUN apk del build-deps && rm -rf /tmp/*
+
+# non-root/appuser should own only what they need to
+RUN chown -R appuser:appgroup tmp db
 
 ENV RACK_ENV production
 
@@ -35,12 +80,6 @@ ENV BUILD_TAG ${BUILD_TAG}
 
 ARG GIT_COMMIT
 ENV GIT_COMMIT ${GIT_COMMIT}
-
-# Run the application as user `moj` (created in the base image)
-# uid=1000(moj) gid=1000(moj) groups=1000(moj)
-# Some directories/files need to be chowned otherwise we get Errno::EACCES
-#
-RUN chown $APPUSER:$APPUSER ./db/schema.rb
 
 ENV APPUID 1000
 USER $APPUID
