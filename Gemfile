@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 source 'https://rubygems.org'
 
-ruby '2.5.3'
+ruby '2.6.5'
 
 gem 'activerecord', '~> 5.0.7'
 gem 'bcrypt'
@@ -9,11 +9,11 @@ gem 'dotenv'
 gem 'hanami-validations'
 gem 'grape', '~> 1.1.0'
 gem 'grape-entity'
-gem 'pg'
+gem 'pg', '~> 1.1'
 gem 'puma'
 gem 'rake'
 gem 'rubyXL'
-gem 'sentry-raven'
+gem 'sentry-raven', '~> 2.0'
 gem 'sinatra', '~> 1.4.7'
 gem 'sinatra-contrib'
 gem 'slim', '< 4.0.0'

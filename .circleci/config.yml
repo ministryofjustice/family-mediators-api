@@ -7,7 +7,7 @@ version: 2
 references:
   app_containers: &app_containers
     docker:
-      - image: circleci/ruby:2.5.3-node-browsers
+      - image: circleci/ruby:2.6.5-node-browsers
         environment:
           RACK_ENV: test
       - image: circleci/postgres:10.4
