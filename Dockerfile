@@ -1,4 +1,4 @@
-FROM ruby:2.5.3-alpine as base
+FROM ruby:2.6.5-alpine as base
 MAINTAINER UCPD Cross Justice Delivery
 
 # build dependencies:
