@@ -3,12 +3,11 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/abc80e4ca233b458effe/maintainability)](https://codeclimate.com/github/ministryofjustice/family-mediators-api/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/abc80e4ca233b458effe/test_coverage)](https://codeclimate.com/github/ministryofjustice/family-mediators-api/test_coverage)
 
-Maintains a list of family mediators. Provides an API and an HTML admin UI for
-uploading spreadsheets of mediator data. 
+Maintains a list of family mediators. Provides an API and an admin UI for uploading spreadsheets of mediator data.
 
 ## Docker
 
-The application can be run inside a docker container. This will take care of the ruby environment, postgres database, 
+The application can be run inside a docker container. This will take care of the ruby environment, postgres database,
 and any other dependency for you, without having to configure anything in your machine.
 
 * `docker-compose up`
@@ -25,13 +24,17 @@ Set up the DB if this is the first time:
 
 Run the app:
 
-    rackup
+    bundle exec rackup
 
 ...and goto http://localhost:9292/api/v1/mediators/
 
+### To run the tests:
+
+* `RACK_ENV=test bundle exec rake db:setup db:migrate`
+
 ### Run build
 
-The default rake command runs specs, features, generates coverage report and runs Rubocop. 
+The default rake command runs specs, features, generates coverage report and runs Rubocop.
 
     rake
 
@@ -40,9 +43,9 @@ The coverage report is available under `/coverage/index.html`
 
 ## Play around in IRB
 
-    RACK_ENV=development irb
+    RACK_ENV=development irb -r './lib/env' -r './lib/mediators'
     irb> require_relative 'lib/mediators'
-    irb> Mediators::Models::Mediator.all.to_a
+    irb> API::Models::Mediator.all.to_a
     irb> ...etc
 
 
@@ -74,11 +77,11 @@ This file is also used by `docker-compose` but will not be used in production en
 
 ## API Doc
 
-Documentation is generated as part of the docker build, using [aglio](https://github.com/danielgtaylor/aglio) to parse 
+Documentation is generated as part of the docker build, using [aglio](https://github.com/danielgtaylor/aglio) to parse
 an [API Blueprint](api.apib).
 
-Although this documentation can be also generated locally, it requires a vast amount of node modules dependencies, 
-and a very specific NodeJS version, so if you want to see the generated documentation it is quicker and easier to just 
+Although this documentation can be also generated locally, it requires a vast amount of node modules dependencies,
+and a very specific NodeJS version, so if you want to see the generated documentation it is quicker and easier to just
 do `docker-compose up` and go to `http://localhost:9292/api/documentation`
 
 ### Admin App
@@ -116,7 +119,7 @@ All dates are in ISO 8601 standard. All booleans are a string 'Yes' or 'No', to 
   *  **tel** *string*: The phone number to contact the mediator at this practice.
   * **website** *string*: Website URL for this practice.
   * **email** *string*: Email to contact the mediator at this practice
-  * **address** *string*: Full address of the practice 
+  * **address** *string*: Full address of the practice
 * **legal_aid_franchise** *boolean*: Whether the mediator is part of an organisation registered with Legal Aid.
 * **legal_aid_qualified** *boolean*: Whether the mediator is qualified to work within Legal Aid. If both this and legal_aid_franchise are true then the mediator can work with clients receiving Legal Aid.
 
@@ -137,4 +140,3 @@ In addition to the previous field set, the full set also comprises the following
 * **training_date** *date*: Date on which this mediator started training.
 * **accredited_for** *string*:
 * **cpd_up_to_date** *string*:
-
