@@ -15,4 +15,12 @@ class RootApp < Sinatra::Base
     content_type :json
     BUILD_ARGS.to_json
   end
+
+  get '/security.txt' do
+    redirect '/.well-known/security.txt'
+  end
+
+  get '/.well-known/security.txt' do
+    redirect 'https://raw.githubusercontent.com/ministryofjustice/security-guidance/master/contact/vulnerability-disclosure-security.txt', 301
+  end
 end
