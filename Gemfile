@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 
 ruby '2.6.5'
 
-gem 'activerecord', '~> 5.0.7'
+gem 'activerecord', '< 6.0.0'
 gem 'bcrypt'
 gem 'dotenv'
 gem 'hanami-validations'
@@ -13,13 +13,13 @@ gem 'pg', '~> 1.1'
 gem 'puma'
 gem 'rake'
 gem 'rubyXL'
-gem 'sentry-raven', '~> 2.0'
+gem 'sentry-raven', '~> 3.0'
 gem 'sinatra', '~> 1.4.7'
 gem 'sinatra-contrib'
 gem 'slim', '< 4.0.0'
 
 group :test do
-  gem 'cucumber'
+  gem 'cucumber', '< 4.0.0'
   gem 'poltergeist', ">= 1.4.0"
   gem 'selenium-webdriver'
   gem 'codeclimate-test-reporter', '~> 1.0.0', require: nil
