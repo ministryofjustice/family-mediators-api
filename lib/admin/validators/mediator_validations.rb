@@ -11,14 +11,13 @@ module Admin
 
       def initialize(mediators)
         @validations = mediators.map do |mediator|
-          MediatorValidator.new(mediator).validate
+          MediatorValidator.new.call(mediator)
         end
         @referential_validations = ReferentialValidator.new(mediators).validate
       end
 
       def valid?
-        validations.all? { |result| result.success? } &&
-          @referential_validations.success?
+        validations.all?(&:success?) && @referential_validations.success?
       end
 
       def collection_errors
@@ -29,7 +28,7 @@ module Admin
         error_messages = []
 
         validations.each_with_index do |result, index|
-          result_messages = result.messages
+          result_messages = result.errors.to_h
           unless result_messages.empty?
             error_messages << ErrorMessage.new(heading: index, values: result_messages)
           end

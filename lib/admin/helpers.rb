@@ -1,12 +1,11 @@
 module Admin
   module Helpers
     def build_messages(messages)
-      html = []
-      messages.each do |index, errors|
-        title = "Practice #{index + 1}: "
-        html << "#{title} #{errors.values.join(' AND ')}"
+      messages.values.map.with_index(1) do |errors, index|
+        # Following line copes with injected PracticeValidator errors in `rule(:practices)`
+        values = errors.is_a?(Hash) ? errors.values : errors
+        "Practice #{index}: #{values.join(' AND ')}"
       end
-      html
     end
 
     def authenticate!
