@@ -52,15 +52,15 @@ module Admin
         mediators_worksheet[1..-1].map.with_index do |row|
           processed_headings.size.times.inject({}) do |hash, index|
             cell = row.cells[index]
-            value = cell && cell.value
+            value = cell&.value
             hash.merge({processed_headings[index].to_sym => value})
           end
         end
       end
 
       def processed_headings
-        @headings_processor.process(
-          mediators_worksheet[0].cells.map { |cell| cell.value }
+        @_processed_headings ||= @headings_processor.process(
+          mediators_worksheet[0].cells.map(&:value)
         )
       end
 
@@ -71,7 +71,6 @@ module Admin
       def blacklist_worksheet
         @rubyxl_workbook[BLACKLIST_WORKSHEET] if @rubyxl_workbook
       end
-
     end
   end
 end
