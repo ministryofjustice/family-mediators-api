@@ -72,6 +72,7 @@ module DataHelpers
             'Title' => 'Mr',
             'First Name' => 'John',
             'Last Name' => 'Smith',
+            'FMCA Date' => '27/03/2001',
             'Legal Aid Qualified' => 'Yes',
             'Legal Aid Franchise' => 'No',
             'PPC URN' => ''

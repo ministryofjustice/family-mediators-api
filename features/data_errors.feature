@@ -59,4 +59,4 @@ Feature: A spreadsheet upload is validated against a set of rules. If there are
     And I click 'Process data and apply updates'
     Then I should see the following item errors:
       | Row | Field         | Message                                    |
-      | 2   | date_presence | FMCA Date or Training Date must be present |
+      | 2   | training_date | FMCA Date or Training Date must be present |
