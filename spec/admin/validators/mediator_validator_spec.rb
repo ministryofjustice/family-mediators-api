@@ -67,7 +67,7 @@ module Admin
           MediatorValidator.new.call(missing_data)
         end
 
-        keys = FactoryGirl.create(:mediator_hash).keys - [:ppc_urn]
+        keys = FactoryBot.create(:mediator_hash).keys - [:ppc_urn]
 
         keys.each do |val|
           context "when #{val} missing" do

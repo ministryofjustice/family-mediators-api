@@ -10,5 +10,5 @@ Capybara.app = Rack::Builder.parse_file(File.expand_path('../../config.ru', __di
 ActiveRecord::Base.logger = nil # Get rid of Sinatra's noisy logging in tests
 
 Dir["#{__dir__}/../../support/factories/*.rb"].each { |f| require f }
-World(FactoryGirl::Syntax::Methods)
+World(FactoryBot::Syntax::Methods)
 

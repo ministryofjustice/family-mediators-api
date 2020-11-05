@@ -1,25 +1,25 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :mediator, class: API::Models::Mediator do
-    data 'name' => 'Fred'
+    data { {'name' => 'Fred'} }
   end
 end
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :mediator_hash, class:Hash do
     skip_create
 
     sequence(:urn, 1000) { |n| "#{n}T" }
-    dcc 'Yes'
-    title 'Mr'
-    first_name 'John'
-    last_name 'Smith'
-    legal_aid_qualified 'Yes'
-    legal_aid_franchise 'No'
+    dcc { 'Yes' }
+    title { 'Mr' }
+    first_name { 'John' }
+    last_name { 'Smith' }
+    legal_aid_qualified { 'Yes' }
+    legal_aid_franchise { 'No' }
     ppc_urn { '1001T' }
-    fmca_date '04/05/2007'
+    fmca_date { '04/05/2007' }
 
     trait :invalid do
-      urn '1234X'
+      urn { '1234X' }
     end
 
     trait :include_practice do
@@ -37,7 +37,7 @@ FactoryGirl.define do
     skip_create
 
     transient do
-      mediator_count 3
+      mediator_count { 3 }
     end
 
     initialize_with do
@@ -50,4 +50,3 @@ FactoryGirl.define do
     end
   end
 end
-

@@ -1,11 +1,11 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :unparsed_practice, class: String do
     skip_create
 
-    address '15 Smith Street, London WC1R 4RL'
+    address { '15 Smith Street, London WC1R 4RL' }
 
     trait :missing_postcode do
-      address '15 Smith Street, London'
+      address { '15 Smith Street, London' }
     end
 
     initialize_with { new("#{address}") }
@@ -15,9 +15,9 @@ FactoryGirl.define do
     end
 
     factory :unparsed_practice_all_parts do
-      tel '01245 605040'
-      url 'http://www.foobar.com/baz/'
-      email 'valid@email.com'
+      tel { '01245 605040' }
+      url { 'http://www.foobar.com/baz/' }
+      email { 'valid@email.com' }
 
       initialize_with { new("#{[address, tel, url, email].compact.join('|')}") }
 

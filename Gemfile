@@ -24,7 +24,7 @@ group :test do
   gem 'selenium-webdriver'
   gem 'codeclimate-test-reporter', '~> 1.0.0', require: nil
   gem 'database_cleaner'
-  gem 'factory_girl'
+  gem 'factory_bot'
   gem 'pry', require: false
   gem 'rack-test', require: 'rack/test'
   gem 'rspec'
