@@ -1,4 +1,4 @@
-FROM ruby:2.6.5-alpine as base
+FROM ruby:2.7.2-alpine as base
 MAINTAINER UCPD Cross Justice Delivery
 
 # build dependencies:
@@ -35,7 +35,7 @@ RUN mkdir -p /usr/src/app/documentation
 
 WORKDIR /usr/src/app
 
-COPY Gemfile* ./
+COPY Gemfile* .ruby-version ./
 
 RUN gem install bundler -v 1.17.3 && \
     bundle config --global without test:development && \
