@@ -1,4 +1,4 @@
-FROM ruby:2.7.2-alpine
+FROM ruby:2.7.2-alpine as base
 MAINTAINER UCPD Cross Justice Delivery
 
 # build dependencies:
@@ -30,7 +30,7 @@ RUN addgroup -g 1000 -S appgroup && \
 # create app directory in conventional, existing dir /usr/src
 RUN mkdir -p /usr/src/app && mkdir -p /usr/src/app/tmp
 
-# create documentarion directory for api docs
+# create documentation directory for api docs
 RUN mkdir -p /usr/src/app/documentation
 
 WORKDIR /usr/src/app
@@ -51,7 +51,7 @@ FROM base AS documentation
 RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/v3.7/main/ \
   nodejs=8.9.3-r1 \
   yarn \
-  python
+  python3
 
 COPY package.json api.apib ./
 RUN yarn install --frozen-lockfile
