@@ -11,6 +11,7 @@ The application can be run inside a docker container. This will take care of the
 and any other dependency for you, without having to configure anything in your machine.
 
 * `docker-compose up`
+* `docker-compose build` - when you need to test your docker configurations
 
 The application will be run in "production" mode, so will be as accurate as possible to a real production environment.  
 
