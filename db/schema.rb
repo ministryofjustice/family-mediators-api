@@ -10,17 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170104143900) do
+ActiveRecord::Schema.define(version: 2017_01_04_143900) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "mediators", force: :cascade do |t|
+  create_table "mediators", id: :serial, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.jsonb    "data",       null: false
-    t.integer  "urn_prefix"
-    t.index ["urn_prefix"], name: "index_mediators_on_urn_prefix", unique: true, using: :btree
+    t.jsonb "data", null: false
+    t.integer "urn_prefix"
+    t.index ["urn_prefix"], name: "index_mediators_on_urn_prefix", unique: true
   end
 
 end
