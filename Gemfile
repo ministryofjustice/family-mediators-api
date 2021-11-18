@@ -22,7 +22,6 @@ group :test do
   gem 'cucumber', '< 4.0.0'
   gem 'poltergeist', ">= 1.4.0"
   gem 'selenium-webdriver'
-  gem 'codeclimate-test-reporter', '~> 1.0.0', require: nil
   gem 'database_cleaner'
   gem 'factory_bot'
   gem 'pry', require: false
