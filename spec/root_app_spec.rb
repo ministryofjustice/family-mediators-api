@@ -59,7 +59,7 @@ describe RootApp do
     end
 
     it 'redirects to the MOJ vulnerability disclosure document' do
-      expect(last_response.location).to eq('https://raw.githubusercontent.com/ministryofjustice/security-guidance/master/contact/vulnerability-disclosure-security.txt')
+      expect(last_response.location).to eq('https://raw.githubusercontent.com/ministryofjustice/security-guidance/main/contact/vulnerability-disclosure-security.txt')
     end
   end
 end

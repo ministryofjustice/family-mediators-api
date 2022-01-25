@@ -21,6 +21,6 @@ class RootApp < Sinatra::Base
   end
 
   get '/.well-known/security.txt' do
-    redirect 'https://raw.githubusercontent.com/ministryofjustice/security-guidance/master/contact/vulnerability-disclosure-security.txt', 301
+    redirect 'https://raw.githubusercontent.com/ministryofjustice/security-guidance/main/contact/vulnerability-disclosure-security.txt', 301
   end
 end
