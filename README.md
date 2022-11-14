@@ -3,7 +3,7 @@
 
 [![CI and CD](https://github.com/ministryofjustice/family-mediators-api/actions/workflows/test-build-deploy.yml/badge.svg)](https://github.com/ministryofjustice/family-mediators-api/actions/workflows/test-build-deploy.yml)
 
-Maintains a list of family mediators. Provides an API and an admin UI for uploading spreadsheets of mediator data.
+Maintains a list of family mediators. Provides an API and an admin UI for uploading spreadsheets of mediator data .
 
 ## Docker
 
