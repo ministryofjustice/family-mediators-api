@@ -27,6 +27,6 @@ group :test do
   gem 'pry', require: false
   gem 'rack-test', require: 'rack/test'
   gem 'rspec'
-  gem 'rubocop', '~> 0.52.1', require: false
+  gem 'rubocop', '~> 1.50.2', require: false
   gem 'simplecov', require: false
 end
