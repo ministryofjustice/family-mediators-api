@@ -2,7 +2,7 @@ LOGGER = Logger.new(STDOUT)
 LOGGER.level = ENV['LOG_LEVEL'] ? ENV['LOG_LEVEL'].to_sym : Logger::DEBUG
 LOGGER.info "LOG_LEVEL: #{LOGGER.level}"
 
-db_config = YAML::load_file(File.expand_path('../../config/database.yml', __FILE__))
+db_config = YAML::load_file(File.expand_path('../../config/database.yml', __FILE__), aliases: true)
 
 # :nocov:
 if %w{ staging production }.include?(ENV['RACK_ENV'])
