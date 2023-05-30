@@ -348,7 +348,7 @@ Style/Alias:
 
 Layout/ArrayAlignment:
   Description: Here we check if the elements of a multi-line array literal are aligned.
-  StyelGuide: 'https://docs.rubocop.org/rubocop/cops_layout.html#layoutarrayalignment'
+  StyleGuide: 'https://docs.rubocop.org/rubocop/cops_layout.html#layoutarrayalignment'
   Enabled: false
 
 Layout/HashAlignment:
