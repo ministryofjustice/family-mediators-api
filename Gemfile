@@ -23,8 +23,8 @@ group :test do
   gem 'poltergeist', ">= 1.4.0"
   gem 'selenium-webdriver'
   gem 'database_cleaner'
+  gem 'debug', '~> 1.8'
   gem 'factory_bot'
-  gem 'pry', require: false
   gem 'rack-test', require: 'rack/test'
   gem 'rspec'
   gem 'rubocop', '~> 1.51', require: false
