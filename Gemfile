@@ -7,7 +7,7 @@ gem 'activerecord', '< 7.0.0'
 gem 'bcrypt'
 gem 'dotenv'
 gem 'dry-validation'
-gem 'grape', '~> 1.3.1'
+gem 'grape', '~> 1.7', '>= 1.7.1'
 gem 'grape-entity'
 gem 'pg'
 gem 'puma'
@@ -23,10 +23,12 @@ group :test do
   gem 'poltergeist', ">= 1.4.0"
   gem 'selenium-webdriver'
   gem 'database_cleaner'
+  gem 'debug', '~> 1.8'
   gem 'factory_bot'
-  gem 'pry', require: false
   gem 'rack-test', require: 'rack/test'
   gem 'rspec'
-  gem 'rubocop', '~> 0.52.1', require: false
+  gem 'rubocop', '~> 1.51', require: false
+  gem 'rubocop-performance', '~> 1.18', require: false
+  gem 'rubocop-rails', '~> 2.19', '>= 2.19.1', require: false
   gem 'simplecov', require: false
 end
