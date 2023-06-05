@@ -27,7 +27,7 @@ group :test do
   gem 'factory_bot'
   gem 'rack-test', require: 'rack/test'
   gem 'rspec'
-  gem 'rubocop', '~> 1.51', require: false
+  gem 'rubocop', '~> 1.52', require: false
   gem 'rubocop-performance', '~> 1.18', require: false
   gem 'rubocop-rails', '~> 2.19', '>= 2.19.1', require: false
   gem 'simplecov', require: false
