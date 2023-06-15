@@ -1,10 +1,8 @@
 module Admin
   module Services
-
     # Orchestrates un-marshaling, expanding practices, validation and
     # saving if successful, of mediator hashes.
     class ProcessData
-
       def initialize(dump,
                      marshaler: Processing::Marshaler,
                      data_validator: Validators::MediatorValidations,
@@ -22,19 +20,19 @@ module Admin
 
         if data_validations.valid?
           @data_store.save(with_expanded_practices)
-          [ true, {} ]
+          [true, {}]
         else
-          [ false, invalid_locals(data_validations) ]
+          [false, invalid_locals(data_validations)]
         end
       end
 
-      private
+    private
 
       def invalid_locals(data_validations)
         {
           file_errors: [],
           item_errors: data_validations.item_errors,
-          collection_errors: data_validations.collection_errors
+          collection_errors: data_validations.collection_errors,
         }
       end
     end

@@ -6,7 +6,7 @@ module Admin
       end
 
       def self.to_array(string)
-        JSON.parse(Zlib::Inflate.inflate(Base64.decode64(string)), { :symbolize_names => true})
+        JSON.parse(Zlib::Inflate.inflate(Base64.decode64(string)), { symbolize_names: true })
       end
     end
   end

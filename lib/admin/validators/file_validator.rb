@@ -15,10 +15,10 @@ module Admin
         @errors.empty?
       end
 
-      private
+    private
 
       def check_any_data
-        @errors << 'The file contains no mediator data' if @mediators.empty?
+        @errors << "The file contains no mediator data" if @mediators.empty?
       end
 
       def check_blacklist
@@ -28,7 +28,6 @@ module Admin
           end
         end
       end
-
     end
   end
 end

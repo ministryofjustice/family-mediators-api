@@ -1,12 +1,10 @@
-require_relative 'mediator_validator'
-require_relative 'error_message'
-require_relative 'referential_validator'
+require_relative "mediator_validator"
+require_relative "error_message"
+require_relative "referential_validator"
 
 module Admin
   module Validators
-
     class MediatorValidations
-
       attr_reader :validations
 
       def initialize(mediators)
@@ -35,7 +33,6 @@ module Admin
         end
         error_messages
       end
-
     end
   end
 end
