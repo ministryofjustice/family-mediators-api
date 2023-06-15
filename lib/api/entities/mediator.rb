@@ -1,9 +1,7 @@
 module API
   module Entities
     class Mediator < Grape::Entity
-      format_with(:iso_timestamp) do |date|
-        date.iso8601
-      end
+      format_with(:iso_timestamp, &:iso8601)
 
       expose :urn_prefix, as: "id"
       expose :data, merge: true

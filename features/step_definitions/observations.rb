@@ -18,7 +18,7 @@ Then(/^the response should be mediator '(.*)'$/) do |urn|
 end
 
 And(/^I should see the following (.*):$/) do |selector, expected_results|
-  selector = "#" + selector.downcase.tr(" ", "-")
+  selector = "##{selector.downcase.tr(' ', '-')}"
   results = get_table_data(selector)
   expected_results.diff!(results)
 end

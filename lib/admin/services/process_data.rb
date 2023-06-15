@@ -19,7 +19,7 @@ module Admin
         data_validations = @data_validator.new(with_expanded_practices)
 
         if data_validations.valid?
-          @data_store.save(with_expanded_practices)
+          @data_store.save!(with_expanded_practices)
           [true, {}]
         else
           [false, invalid_locals(data_validations)]

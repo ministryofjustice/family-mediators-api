@@ -4,7 +4,7 @@ if Gem::Specification.all_names.grep(/^rubocop/).any?
   require_relative "support/console"
   RuboCop::RakeTask.new
 
-  task :coverage_check do
+  task coverage_check: :environment do
     required_percentage = 100
     percentage = JSON(File.read("#{__dir__}/../coverage/.last_run.json"))["result"]["covered_percent"]
     unless percentage == required_percentage

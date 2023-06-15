@@ -1,4 +1,4 @@
-task :clean do
+task clean: :environment do
   directories = %w[coverage]
   directories.each do |dir|
     dir = "#{__dir__}/../#{dir}"

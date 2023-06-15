@@ -4,7 +4,7 @@ module Admin
   module Validators
     class MediatorValidator < Dry::Validation::Contract
       URN_FORMAT = /^\d{4}[TAP]$/
-      YES_NO_VALUES = %w[Yes No]
+      YES_NO_VALUES = %w[Yes No].freeze
 
       schema do
         required(:urn).filled(:string) { format?(URN_FORMAT) }
@@ -43,7 +43,7 @@ module Admin
       rule(:training_date).validate(:date_string)
 
       rule(:training_date) do
-        if !values[:fmca_date].present? && !value.present?
+        if values[:fmca_date].blank? && value.blank?
           key.failure("FMCA Date or Training Date must be present")
         end
       end

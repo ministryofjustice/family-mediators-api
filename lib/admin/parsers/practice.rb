@@ -1,8 +1,8 @@
 module Admin
   module Parsers
     class Practice
-      RECORD_SEPARATOR = "\n"
-      PART_SEPARATOR = "|"
+      RECORD_SEPARATOR = "\n".freeze
+      PART_SEPARATOR = "|".freeze
       EMAIL_REGEX = /@/i
       TEL_REGEX = /[\d\s]{8,12}/
       POSTCODE_REGEX = /((GIR\s*0AA)|((([A-PR-UWYZ][0-9]{1,2})|(([A-PR-UWYZ][A-HK-Y][0-9]{1,2})|(([A-PR-UWYZ][0-9][A-HJKSTUW])|([A-PR-UWYZ][A-HK-Y][0-9][ABEHMNPRVWXY]))))\s*[A-Z]?[0-9][ABD-HJLNP-UW-Z]{2}))/i

@@ -1,4 +1,4 @@
-LOGGER = Logger.new(STDOUT)
+LOGGER = Logger.new($stdout)
 LOGGER.level = ENV["LOG_LEVEL"] ? ENV["LOG_LEVEL"].to_sym : Logger::DEBUG
 LOGGER.info "LOG_LEVEL: #{LOGGER.level}"
 
