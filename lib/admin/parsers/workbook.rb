@@ -56,7 +56,7 @@ module Admin
       end
 
       def processed_headings
-        @_processed_headings ||= @headings_processor.process(
+        @processed_headings ||= @headings_processor.process(
           mediators_worksheet[0].cells.map(&:value),
         )
       end
