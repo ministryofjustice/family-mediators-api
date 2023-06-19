@@ -17,8 +17,8 @@ module Admin
         [{ foo: "ding", bar: "dong", baz: "dang" }]
       end
 
-      let(:workbook_parser) { double("WorkbookParser", call: [mediator_data, blacklist]) }
-      let(:file_validator)  { double("FileValidator", valid?: true, errors: []) }
+      let(:workbook_parser) { instance_double("WorkbookParser", call: [mediator_data, blacklist]) }
+      let(:file_validator)  { instance_double("FileValidator", valid?: true, errors: []) }
 
       context "when there is no file given" do
         subject { described_class.new(nil) }
@@ -60,7 +60,7 @@ module Admin
       end
 
       context "when an invalid file is given" do
-        let(:file_validator) { double("FileValidator", valid?: false, errors: %w[foo bar]) }
+        let(:file_validator) { instance_double("FileValidator", valid?: false, errors: %w[foo bar]) }
 
         it "Returns false" do
           expect(subject.call).to eq(false)

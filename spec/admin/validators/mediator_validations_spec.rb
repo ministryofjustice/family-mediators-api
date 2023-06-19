@@ -42,15 +42,6 @@ module Admin
           end
         end
       end
-
-      describe "#item_errors" do
-        context "when all mediators are valid" do
-          it "is returns no collection messages" do
-            validations = described_class.new(create(:mediator_list))
-            expect(validations.collection_errors).to eq([])
-          end
-        end
-      end
     end
   end
 end
