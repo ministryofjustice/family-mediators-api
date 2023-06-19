@@ -9,7 +9,7 @@ module Admin
         Support::Factories::Spreadsheet.build(headings, data, blacklist)
       end
 
-      context "normal data" do
+      context "with normal data" do
         let(:data) { [%w[John Smith], %w[Donna Jones]] }
         let(:blacklist) { ["Bish bosh", "bash"] }
 
@@ -54,7 +54,7 @@ module Admin
         end
       end
 
-      context "empty rows" do
+      context "when there are empty rows" do
         let(:data) { [%w[Bob Bobbins], [nil, ""]] }
         let(:blacklist) { [] }
 
@@ -67,7 +67,7 @@ module Admin
         end
       end
 
-      context "empty workbook" do
+      context "when there is an empty workbook" do
         let(:headings) { [] }
         let(:data) { [] }
         let(:blacklist) { [] }

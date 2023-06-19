@@ -1,3 +1,4 @@
+desc "Cleanup environment"
 task clean: :environment do
   directories = %w[coverage]
   directories.each do |dir|

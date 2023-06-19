@@ -1,7 +1,7 @@
 module Admin
   module Parsers
     describe Practice do
-      context "URL_REGEX" do
+      context "when URL_REGEX test is called" do
         %w[http://foo.com https://foo.com foo.com http://www.bar.co.uk foo.com/a/path/ http://foo.com/a/path/].each do |url|
           it "matches URL of the form: #{url}" do
             expect(url).to match(Practice::URL_REGEX)
@@ -9,11 +9,12 @@ module Admin
         end
 
         it "does not match an email-like string" do
-          expect("andy@foo.com").not_to match(Practice::URL_REGEX)
+          # expect("andy@foo.com").not_to match(Practice::URL_REGEX)
+          expect(Practice::URL_REGEX).not_to match("andy@foo.com")
         end
       end
 
-      context "TEL_REGEX" do
+      context "when TEL_REGEX test is called" do
         ["07974877182", "0201 3082097", "0300 4000636", "123456789", "07977 789786"].each do |tel|
           it "matches telephone number of the form: #{tel}" do
             expect(tel).to match(Practice::TEL_REGEX)
@@ -21,7 +22,7 @@ module Admin
         end
       end
 
-      context "POSTCODE_REGEX" do
+      context "when POSTCODE_REGEX test is called" do
         ["BN20GB", "SW17 8LA", "WC1 R4HA"].each do |postcode|
           it "matches postcode of the form: #{postcode}" do
             expect(postcode).to match(Practice::POSTCODE_REGEX)
@@ -29,13 +30,13 @@ module Admin
         end
       end
 
-      context "null practice data" do
+      context "but there is null practice data" do
         it "returns empty array" do
           expect(described_class.parse(nil)).to eq([])
         end
       end
 
-      context "single unparsed practice" do
+      context "but there is a single unparsed practice" do
         subject { described_class.parse(unparsed_practice)[0] }
 
         context "when postcode is present" do
@@ -128,7 +129,7 @@ module Admin
         end
       end
 
-      context "multiple practices" do
+      context "when there are multiple practices" do
         subject { described_class.parse(unparsed_practices) }
         let(:unparsed_practices) do
           "#{create(:unparsed_practice)}

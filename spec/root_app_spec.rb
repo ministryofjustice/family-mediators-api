@@ -5,7 +5,7 @@ describe RootApp do
     RootApp
   end
 
-  context "GET /" do
+  context "when GET / called" do
     before do
       get "/"
     end
@@ -19,7 +19,7 @@ describe RootApp do
     end
   end
 
-  context "GET /ping.json" do
+  context "when GET /ping.json called" do
     before do
       get "/ping.json"
     end
@@ -35,7 +35,7 @@ describe RootApp do
     end
   end
 
-  context "GET /security.txt" do
+  context "when GET /security.txt called" do
     before do
       get "/security.txt"
     end
@@ -49,7 +49,7 @@ describe RootApp do
     end
   end
 
-  context "GET /.well-known/security.txt" do
+  context "when GET /.well-known/security.txt called" do
     before do
       get "/.well-known/security.txt"
     end

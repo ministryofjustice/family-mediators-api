@@ -20,7 +20,7 @@ module Admin
       let(:workbook_parser) { double("WorkbookParser", call: [mediator_data, blacklist]) }
       let(:file_validator)  { double("FileValidator", valid?: true, errors: []) }
 
-      context "No file given" do
+      context "when there is no file given" do
         subject { described_class.new(nil) }
 
         it "Raises an error" do
@@ -28,7 +28,7 @@ module Admin
         end
       end
 
-      context "Valid file given" do
+      context "when a valid file is given" do
         it "Returns true" do
           expect(subject.call).to eq(true)
         end
@@ -59,7 +59,7 @@ module Admin
         end
       end
 
-      context "Invalid file given" do
+      context "when an invalid file is given" do
         let(:file_validator) { double("FileValidator", valid?: false, errors: %w[foo bar]) }
 
         it "Returns false" do

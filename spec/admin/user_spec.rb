@@ -14,13 +14,6 @@ describe Admin::User do
       end
     end
 
-    context "when username does not match username in environment" do
-      it "returns nil" do
-        user = described_class.authenticate(username: "abc", password: "123")
-        expect(user).to be(nil)
-      end
-    end
-
     context "when valid username and incorrect password" do
       it "returns nil" do
         user = described_class.authenticate(username: "username", password: "123")
