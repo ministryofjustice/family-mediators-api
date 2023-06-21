@@ -1,7 +1,7 @@
 module Admin
   module Services
     describe ProcessFile do
-      subject { described_class.new("/fake/file/path") }
+      subject(:json_file) { described_class.new("/fake/file/path") }
 
       before do
         allow(RubyXL::Parser).to receive(:parse).and_return(nil)
@@ -21,41 +21,41 @@ module Admin
       let(:file_validator)  { instance_double("FileValidator", valid?: true, errors: []) }
 
       context "when there is no file given" do
-        subject { described_class.new(nil) }
+        subject(:no_file) { described_class.new(nil) }
 
         it "Raises an error" do
-          expect { subject.call }.to raise_error("No file specified")
+          expect { no_file.call }.to raise_error("No file specified")
         end
       end
 
       context "when a valid file is given" do
         it "Returns true" do
-          expect(subject.call).to eq(true)
+          expect(json_file.call).to eq(true)
         end
 
         it "Has no errors" do
-          subject.call
-          expect(subject.errors.size).to eq(0)
+          json_file.call
+          expect(json_file.errors.size).to eq(0)
         end
 
         it "Derives mediator count" do
-          subject.call
-          expect(subject.mediators_count).to eq(1)
+          json_file.call
+          expect(json_file.mediators_count).to eq(1)
         end
 
         it "Derives a dump of mediators" do
-          subject.call
-          expect(subject.dump).to eq("eJyLrlZKy89XslJKycxLV9JRSkosAnHyoZwqECcRyKmNBQAU7wzp\n")
+          json_file.call
+          expect(json_file.dump).to eq("eJyLrlZKy89XslJKycxLV9JRSkosAnHyoZwqECcRyKmNBQAU7wzp\n")
         end
 
         it "Derives list of confidential fields" do
-          subject.call
-          expect(subject.confidential_fields).to eq(blacklist)
+          json_file.call
+          expect(json_file.confidential_fields).to eq(blacklist)
         end
 
         it "Derives list of public fields" do
-          subject.call
-          expect(subject.public_fields).to eq(public_fields)
+          json_file.call
+          expect(json_file.public_fields).to eq(public_fields)
         end
       end
 
@@ -63,12 +63,12 @@ module Admin
         let(:file_validator) { instance_double("FileValidator", valid?: false, errors: %w[foo bar]) }
 
         it "Returns false" do
-          expect(subject.call).to eq(false)
+          expect(json_file.call).to eq(false)
         end
 
         it "Has errors" do
-          subject.call
-          expect(subject.errors.size).not_to eq(0)
+          json_file.call
+          expect(json_file.errors.size).not_to eq(0)
         end
       end
     end

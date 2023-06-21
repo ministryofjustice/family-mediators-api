@@ -1,7 +1,7 @@
 module Admin
   module Parsers
     describe Workbook do
-      subject { described_class.new(rubyxl_workbook) }
+      subject(:workbook) { described_class.new(rubyxl_workbook) }
 
       let(:headings) { ["First Name", "Last Name"] }
 
@@ -23,17 +23,17 @@ module Admin
         let(:expected_blacklist) { %i[bish_bosh bash] }
 
         it "Returns 2 arrays" do
-          expect(subject.call.size).to eq(2)
-          expect(subject.call.first).to be_an(Array)
-          expect(subject.call.last).to be_an(Array)
+          expect(workbook.call.size).to eq(2)
+          expect(workbook.call.first).to be_an(Array)
+          expect(workbook.call.last).to be_an(Array)
         end
 
         it "First array is data" do
-          expect(subject.call.first).to eq(expected_data)
+          expect(workbook.call.first).to eq(expected_data)
         end
 
         it "Second array is array of blacklisted cols" do
-          expect(subject.call.last).to eq(expected_blacklist)
+          expect(workbook.call.last).to eq(expected_blacklist)
         end
       end
 
@@ -50,7 +50,7 @@ module Admin
         end
 
         it "Transforms data" do
-          expect(subject.call.first).to eq(expected_data)
+          expect(workbook.call.first).to eq(expected_data)
         end
       end
 
@@ -63,7 +63,7 @@ module Admin
         end
 
         it "Ignores empty rows" do
-          expect(subject.call.first).to eq(expected_data)
+          expect(workbook.call.first).to eq(expected_data)
         end
       end
 
@@ -73,11 +73,11 @@ module Admin
         let(:blacklist) { [] }
 
         it "Returns empty data array" do
-          expect(subject.call.first).to eq([])
+          expect(workbook.call.first).to eq([])
         end
 
         it "Returns empty blacklist array" do
-          expect(subject.call.last).to eq([])
+          expect(workbook.call.last).to eq([])
         end
       end
     end

@@ -37,7 +37,7 @@ module Admin
       end
 
       context "but there is a single unparsed practice" do
-        subject { described_class.parse(unparsed_practice)[0] }
+        subject(:mediator_details) { described_class.parse(unparsed_practice)[0] }
 
         context "when postcode is present" do
           let(:unparsed_practice) { create(:unparsed_practice) }
@@ -112,25 +112,25 @@ module Admin
           let(:parsed_practice) { create(:parsed_practice_all_parts) }
 
           it "removes excess whitespace for address" do
-            expect(subject).to include(address: parsed_practice[:address])
+            expect(mediator_details).to include(address: parsed_practice[:address])
           end
 
           it "removes excess whitespace for tel" do
-            expect(subject).to include(tel: parsed_practice[:tel])
+            expect(mediator_details).to include(tel: parsed_practice[:tel])
           end
 
           it "removes excess whitespace for email" do
-            expect(subject).to include(email: parsed_practice[:email])
+            expect(mediator_details).to include(email: parsed_practice[:email])
           end
 
           it "removes excess whitespace for url" do
-            expect(subject).to include(url: parsed_practice[:url])
+            expect(mediator_details).to include(url: parsed_practice[:url])
           end
         end
       end
 
       context "when there are multiple practices" do
-        subject { described_class.parse(unparsed_practices) }
+        subject(:mediators_details) { described_class.parse(unparsed_practices) }
         let(:unparsed_practices) do
           "#{create(:unparsed_practice)}
           #{create(:unparsed_practice)}
@@ -138,7 +138,7 @@ module Admin
         end
 
         it "returns an array of parsed practice hashes" do
-          expect(subject.size).to eq(3)
+          expect(mediators_details.size).to eq(3)
         end
       end
     end

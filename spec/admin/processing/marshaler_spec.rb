@@ -1,7 +1,7 @@
 module Admin
   module Processing
     describe Marshaler do
-      subject { described_class }
+      subject(:test_data) { described_class }
 
       let(:array) do
         [42, "foo", { bish: 5, bosh: "hello" }]
@@ -12,11 +12,11 @@ module Admin
       end
 
       it "Dumps" do
-        expect(subject.to_string(array)).to eq(marshaled)
+        expect(test_data.to_string(array)).to eq(marshaled)
       end
 
       it "Loads" do
-        expect(subject.to_array(marshaled)).to eq(array)
+        expect(test_data.to_array(marshaled)).to eq(array)
       end
     end
   end
