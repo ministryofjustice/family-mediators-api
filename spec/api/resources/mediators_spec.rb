@@ -1,4 +1,4 @@
-describe API::App do
+describe API::Resources::Mediators do
   include Rack::Test::Methods
 
   def app

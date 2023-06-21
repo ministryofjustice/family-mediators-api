@@ -1,4 +1,4 @@
-describe API::App do
+describe API::Resources::Healthcheck do
   include Rack::Test::Methods
 
   def app
