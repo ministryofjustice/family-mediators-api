@@ -27,9 +27,9 @@ describe Admin::App do
     end
   end
 
-  context "when no user session" do
+  context "when there is no user session" do
     %w[actions upload upload-success upload-fail].each do |path|
-      context "GET /#{path}" do
+      context "and the GET /#{path} route is called" do
         before do
           get "/#{path}"
         end
@@ -46,7 +46,7 @@ describe Admin::App do
     end
 
     %w[upload upload-process].each do |path|
-      context "POST /#{path}" do
+      context "when the POST /#{path} route is called" do
         before do
           post "/#{path}"
         end
@@ -63,9 +63,9 @@ describe Admin::App do
     end
   end
 
-  context "when user session active" do
+  context "when the user session is active" do
     %w[actions upload upload-success upload-fail].each do |path|
-      context "GET /#{path}" do
+      context "and the GET /#{path} route is called" do
         it "has 200 status" do
           get "/#{path}", session: { "rack.session" => { "user" => "" } }
           expect(last_response.status).to eq(200)
