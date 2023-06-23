@@ -11,12 +11,12 @@ module Admin
     def authenticate!
       unless session[:user]
         session[:original_request] = request.path_info
-        redirect url('/login')
+        redirect url("/login")
       end
     end
 
     def redirect_to_original_request
-      original_request = session[:original_request] || '/actions'
+      original_request = session[:original_request] || "/actions"
       session[:original_request] = nil
       redirect url(original_request)
     end

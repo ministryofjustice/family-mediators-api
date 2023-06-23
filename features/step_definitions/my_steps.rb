@@ -8,8 +8,8 @@ When(/I click '(.*)'$/) do |text|
 end
 
 Given(/^there's (\d+) records in the database$/) do |num|
-  (1..num.to_i).each_with_index do |i|
-    API::Models::Mediator.create(data: {'urn' => "#{1000+i}T"})
+  (1..num.to_i).each do |i|
+    API::Models::Mediator.create(data: { "urn" => "#{1000 + i}T" })
   end
 end
 
@@ -22,8 +22,8 @@ end
 
 Given(/^I upload a mediator with practice data (.*)/) do |practice_data|
   login
-  mediators_data_table = DataHelpers::MediatorsDataTable.create_mediator()
-  with_practice_data = DataHelpers::PracticeData.new(mediators_data_table, practice_data: practice_data)
+  mediators_data_table = DataHelpers::MediatorsDataTable.create_mediator
+  with_practice_data = DataHelpers::PracticeData.new(mediators_data_table, practice_data:)
   upload_spreadsheet(with_practice_data.headings, with_practice_data.data)
 end
 
@@ -33,7 +33,7 @@ Given(/^I am an unauthenticated user$/) do
 end
 
 When(/^I attempt to view some unrestricted content$/) do
-  visit 'http://localhost:9292/admin/upload'
+  visit "http://localhost:9292/admin/upload"
 end
 
 When(/^I authenticate with valid credentials$/) do

@@ -1,4 +1,4 @@
-require 'bcrypt'
+require "bcrypt"
 
 module Admin
   class User
@@ -9,9 +9,9 @@ module Admin
       return nil if params[:username].blank? || params[:password].blank?
 
       username = params[:username].downcase
-      return nil if username != ENV['USERNAME']
+      return nil if username != ENV["USERNAME"]
 
-      password_hash = Password.new(ENV['PASSWORD_HASH'])
+      password_hash = Password.new(ENV["PASSWORD_HASH"])
       User.new(username) if password_hash == params[:password]
     end
 

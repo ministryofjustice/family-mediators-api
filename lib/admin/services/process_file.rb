@@ -1,10 +1,8 @@
 module Admin
   module Services
-
     # Orchestrates reading, parsing, file validation, and marshaling of data if
     # necessary, of an XLSX file.
     class ProcessFile
-
       attr_reader :errors
 
       def initialize(xlsx_path)
@@ -13,14 +11,16 @@ module Admin
       end
 
       def call
-        raise 'No file specified' unless @xlsx_path
+        raise "No file specified" unless @xlsx_path
+
         rubyxl_workbook = RubyXL::Parser.parse(@xlsx_path)
         mediators_as_hashes, @blacklist = Parsers::Workbook.new(rubyxl_workbook).call
         file_validations = Validators::FileValidator.new(mediators_as_hashes, @blacklist)
 
         if file_validations.valid?
           @processed_mediators = Processing::ConfidentialFieldRemover.call(
-            mediators_as_hashes, @blacklist)
+            mediators_as_hashes, @blacklist
+          )
           true
         else
           # [ false, invalid_locals(file_validations.errors) ]
@@ -44,7 +44,6 @@ module Admin
       def public_fields
         @processed_mediators.any? ? @processed_mediators.first.keys : []
       end
-
     end
   end
 end
