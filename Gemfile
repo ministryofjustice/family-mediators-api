@@ -26,6 +26,7 @@ group :test do
   gem 'debug', '~> 1.8'
   gem 'factory_bot'
   gem 'rack-test', require: 'rack/test'
+  gem 'rubocop-govuk', require: false
   gem 'rspec'
   gem 'simplecov', require: false
 end
