@@ -1,3 +1,4 @@
+desc "Delete files and directories"
 task :clean do
   directories = %w[coverage]
   directories.each do |dir|
