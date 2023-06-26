@@ -5,7 +5,7 @@ describe Admin::App do
     Admin::App
   end
 
-  context "/healthcheck" do
+  context "when /healthcheck route is called" do
     before do
       get "/healthcheck"
     end
@@ -19,7 +19,7 @@ describe Admin::App do
     end
   end
 
-  context "unsuccessfully uploads file" do
+  context "when a file is unsuccessfully uploades" do
     it "redirects to /upload-fail" do
       post "/upload", params: { xlsx_file: nil }, session: { "rack.session" => { "user" => "" } }
       follow_redirect!

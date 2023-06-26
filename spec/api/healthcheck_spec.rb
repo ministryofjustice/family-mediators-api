@@ -5,7 +5,7 @@ describe API::App do
     API::App
   end
 
-  context "GET /v1/healthcheck" do
+  context "when GET /v1/healthcheck route called" do
     before do
       get "/v1/healthcheck"
     end

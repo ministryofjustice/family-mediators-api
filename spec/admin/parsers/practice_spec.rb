@@ -1,7 +1,7 @@
 module Admin
   module Parsers
     describe Practice do
-      context "URL_REGEX" do
+      context "when checking if a string is a URL" do
         %w[http://foo.com https://foo.com foo.com http://www.bar.co.uk foo.com/a/path/ http://foo.com/a/path/].each do |url|
           it "matches URL of the form: #{url}" do
             expect(url).to match(Practice::URL_REGEX)
@@ -13,7 +13,7 @@ module Admin
         end
       end
 
-      context "TEL_REGEX" do
+      context "when checking if a string is a telephone number" do
         ["07974877182", "0201 3082097", "0300 4000636", "123456789", "07977 789786"].each do |tel|
           it "matches telephone number of the form: #{tel}" do
             expect(tel).to match(Practice::TEL_REGEX)
@@ -21,7 +21,7 @@ module Admin
         end
       end
 
-      context "POSTCODE_REGEX" do
+      context "when checking if a string is a postcode" do
         ["BN20GB", "SW17 8LA", "WC1 R4HA"].each do |postcode|
           it "matches postcode of the form: #{postcode}" do
             expect(postcode).to match(Practice::POSTCODE_REGEX)
@@ -29,13 +29,13 @@ module Admin
         end
       end
 
-      context "null practice data" do
+      context "if null practice data is given" do
         it "returns empty array" do
           expect(described_class.parse(nil)).to eq([])
         end
       end
 
-      context "single unparsed practice" do
+      context "if a single unparsed practice is given" do
         subject { described_class.parse(unparsed_practice)[0] }
 
         context "when postcode is present" do
@@ -44,19 +44,19 @@ module Admin
           it { is_expected.to include(address: create(:parsed_practice)[:address]) }
         end
 
-        context "when postcode is missing" do
+        context "when the postcode is missing" do
           let(:unparsed_practice) { create(:unparsed_practice, :missing_postcode) }
 
           it { is_expected.not_to include(:address) }
         end
 
-        context "when phonenumber-like string is present" do
+        context "when a phone number-like string is present" do
           let(:unparsed_practice) { create(:unparsed_practice_all_parts) }
 
           it { is_expected.to include(tel: create(:parsed_practice_all_parts)[:tel]) }
         end
 
-        context "when phonenumber-like string is not present" do
+        context "when phone number-like string is not present" do
           let(:unparsed_practice) { create(:unparsed_practice) }
 
           it { is_expected.not_to include(:tel) }
@@ -128,7 +128,7 @@ module Admin
         end
       end
 
-      context "multiple practices" do
+      context "when multiple practices are given" do
         subject { described_class.parse(unparsed_practices) }
         let(:unparsed_practices) do
           "#{create(:unparsed_practice)}
@@ -136,7 +136,7 @@ module Admin
           #{create(:unparsed_practice)}"
         end
 
-        it "returns an array of parsed practice hashes" do
+        it "when an array of parsed practice hashes is returned" do
           expect(subject.size).to eq(3)
         end
       end

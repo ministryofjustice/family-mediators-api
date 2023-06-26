@@ -5,15 +5,15 @@ describe API::App do
     API::App
   end
 
-  context "GET /api/v1/mediators" do
-    context "No mediators" do
+  context "when GET /api/v1/mediators route called" do
+    context "when there are no mediators" do
       before { get "/v1/mediators" }
 
       it "returns 404" do
         expect(last_response.status).to eq 404
       end
 
-      context "response body" do
+      context "when response body" do
         subject(:response_body) { JSON.parse(last_response.body) }
 
         it "return meta count of zero" do
@@ -26,7 +26,7 @@ describe API::App do
       end
     end
 
-    context "Some mediators" do
+    context "with some mediators" do
       before do
         create :mediator
         get "/v1/mediators"
@@ -36,7 +36,7 @@ describe API::App do
         expect(last_response.status).to eq 200
       end
 
-      context "response body" do
+      context "when response body" do
         subject(:response_body) { JSON.parse(last_response.body) }
 
         it { is_expected.to include("meta") }
@@ -49,8 +49,8 @@ describe API::App do
     end
   end
 
-  context "GET /api/v1/mediators/{id}" do
-    context "Not found" do
+  context "when GET /api/v1/mediators/{id} route called" do
+    context "and not found" do
       before { get "/v1/mediators/6789" }
 
       it "returns 404" do
@@ -62,7 +62,7 @@ describe API::App do
       end
     end
 
-    context "Found" do
+    context "and found" do
       let(:mediator) { create :mediator }
 
       before { get "/v1/mediators/#{mediator.urn_prefix}" }

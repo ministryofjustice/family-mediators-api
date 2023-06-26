@@ -34,7 +34,7 @@ module Admin
             expect(result.messages.count).to eq(1)
           end
 
-          context "error message" do
+          context "when an error message" do
             let(:error_message) { result.messages[0] }
 
             it "has heading 'Duplicate registration numbers'" do
@@ -65,15 +65,15 @@ module Admin
               expect(result.messages.count).to eq(2)
             end
 
-            context "error messages" do
+            context "when error messages" do
               let(:error_messages) { result.messages }
 
-              it "has heading 'Duplicate registration numbers'"  do
+              it 'have heading "Duplicate registration numbers" heading' do
                 expect(error_messages[0].heading).to eq("PPC URN not recognised")
                 expect(error_messages[1].heading).to eq("Duplicate URN")
               end
 
-              it "has values '[4567A']" do
+              it "have values '[4567A']" do
                 expect(error_messages[0].values).to eq(%w[4756T])
                 expect(error_messages[1].values).to eq(%w[4567A])
               end
@@ -134,7 +134,7 @@ module Admin
             expect(result.messages.count).to eq(1)
           end
 
-          context "error message" do
+          context "when error message" do
             let(:error_message) { result.messages[0] }
 
             it "has heading 'PPC_ID does not exist'" do
