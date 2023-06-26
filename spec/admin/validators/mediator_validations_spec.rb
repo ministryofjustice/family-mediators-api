@@ -19,9 +19,9 @@ module Admin
         end
       end
 
-      describe "#item_errors" do
+      describe "#item_error" do
         context "when all mediators are valid" do
-          it "is returns no item messages" do
+          it "is returns no item message" do
             validations = described_class.new(create(:mediator_list))
             expect(validations.item_errors).to eq([])
           end
