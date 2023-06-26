@@ -9,7 +9,7 @@ module Admin
         end
 
         it "does not match an email-like string" do
-          expect("andy@foo.com").not_to match(Practice::URL_REGEX)
+          expect(Practice::URL_REGEX).not_to match("andy@foo.com")
         end
       end
 
