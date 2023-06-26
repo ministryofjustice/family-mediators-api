@@ -1,7 +1,7 @@
 module Admin
   module Parsers
     describe Workbook do
-      subject { Workbook.new(rubyxl_workbook) }
+      subject { described_class.new(rubyxl_workbook) }
 
       let(:headings) { ["First Name", "Last Name"] }
 

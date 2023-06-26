@@ -12,9 +12,9 @@ module Admin
         allow(API::Models::Mediator).to receive(:create)
       end
 
-      it "should insert into DB" do
+      it "inserts into DB" do
         expect(API::Models::Mediator).to receive(:create).once
-        DataStore.save(data)
+        described_class.save!(data)
       end
     end
   end

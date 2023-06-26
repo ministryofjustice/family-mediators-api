@@ -43,7 +43,7 @@ module Admin
       rule(:training_date).validate(:date_string)
 
       rule(:training_date) do
-        if !values[:fmca_date].present? && !value.present?
+        if values[:fmca_date].blank? && value.blank?
           key.failure("FMCA Date or Training Date must be present")
         end
       end

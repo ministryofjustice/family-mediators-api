@@ -37,7 +37,7 @@ DatabaseTasks.database_configuration = YAML.load(File.read(File.join(config_dir,
 DatabaseTasks.migrations_paths = File.join(db_dir, "migrate")
 
 desc "Setup database connection"
-task :environment do
+task environment: :environment do
   ActiveRecord::Base.configurations = DatabaseTasks.database_configuration
   ActiveRecord::Base.establish_connection DatabaseTasks.env.to_sym
 end

@@ -2,7 +2,7 @@ module Admin
   module Validators
     describe FileValidator do
       context "Invalidates empty file" do
-        subject { FileValidator.new([], []) }
+        subject { described_class.new([], []) }
 
         it "Deems invalid" do
           expect(subject.valid?).to eq(false)
@@ -18,7 +18,7 @@ module Admin
         let(:mediators) { [{ foo: 42, bar: 43 }] }
 
         context "Found in data" do
-          subject { FileValidator.new(mediators, %w[foo]) }
+          subject { described_class.new(mediators, %w[foo]) }
 
           it "Deems valid" do
             expect(subject.valid?).to eq(true)
@@ -26,7 +26,7 @@ module Admin
         end
 
         context "Not found in data" do
-          subject { FileValidator.new(mediators, %w[bobbins]) }
+          subject { described_class.new(mediators, %w[bobbins]) }
 
           it "Deems invalid" do
             expect(subject.valid?).to eq(false)

@@ -5,7 +5,7 @@ module Admin
         context "when mediators are valid" do
           it "returns true" do
             data = create(:mediator_list)
-            validations = MediatorValidations.new(data)
+            validations = described_class.new(data)
             expect(validations.valid?).to eq(true)
           end
         end
@@ -13,7 +13,7 @@ module Admin
         context "when one mediator is invalid" do
           it "returns false" do
             data = [create(:mediator_hash), create(:mediator_hash, :invalid)]
-            validations = MediatorValidations.new(data)
+            validations = described_class.new(data)
             expect(validations.valid?).to eq(false)
           end
         end
@@ -22,7 +22,7 @@ module Admin
       describe "#item_errors" do
         context "when all mediators are valid" do
           it "is returns no item messages" do
-            validations = MediatorValidations.new(create(:mediator_list))
+            validations = described_class.new(create(:mediator_list))
             expect(validations.item_errors).to eq([])
           end
         end
@@ -30,7 +30,7 @@ module Admin
         context "when one mediator is invalid" do
           let(:item_errors) do
             data = [create(:mediator_hash), create(:mediator_hash, :invalid)]
-            MediatorValidations.new(data).item_errors
+            described_class.new(data).item_errors
           end
 
           it "returns 1 message" do
@@ -46,7 +46,7 @@ module Admin
       describe "#item_errors" do
         context "when all mediators are valid" do
           it "is returns no collection messages" do
-            validations = MediatorValidations.new(create(:mediator_list))
+            validations = described_class.new(create(:mediator_list))
             expect(validations.collection_errors).to eq([])
           end
         end

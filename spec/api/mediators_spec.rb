@@ -39,8 +39,8 @@ describe API::App do
       context "response body" do
         subject(:response_body) { JSON.parse(last_response.body) }
 
-        it { should include("meta") }
-        it { should include("data") }
+        it { is_expected.to include("meta") }
+        it { is_expected.to include("data") }
 
         it "returns an array of mediators" do
           expect(response_body["data"].size).to eq(1)
@@ -64,6 +64,7 @@ describe API::App do
 
     context "Found" do
       let(:mediator) { create :mediator }
+
       before { get "/v1/mediators/#{mediator.urn_prefix}" }
 
       it "returns 200" do

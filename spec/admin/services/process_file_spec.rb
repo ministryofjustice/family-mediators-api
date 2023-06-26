@@ -1,7 +1,7 @@
 module Admin
   module Services
     describe ProcessFile do
-      subject { ProcessFile.new("/fake/file/path") }
+      subject { described_class.new("/fake/file/path") }
 
       before do
         allow(RubyXL::Parser).to receive(:parse).and_return(nil)
@@ -21,7 +21,7 @@ module Admin
       let(:file_validator)  { double("FileValidator", valid?: true, errors: []) }
 
       context "No file given" do
-        subject { ProcessFile.new(nil) }
+        subject { described_class.new(nil) }
 
         it "Raises an error" do
           expect { subject.call }.to raise_error("No file specified")
