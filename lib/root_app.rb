@@ -11,7 +11,7 @@ class RootApp < Sinatra::Base
     redirect '/admin'
   end
 
-  get '/ping.json' do
+  get %r{/ping(\.json)?} do
     content_type :json
     BUILD_ARGS.to_json
   end
