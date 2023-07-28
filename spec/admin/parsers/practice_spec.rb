@@ -29,14 +29,14 @@ module Admin
         end
       end
 
-      context "if null practice data is given" do
+      context "when null practice data is given" do
         it "returns empty array" do
           expect(described_class.parse(nil)).to eq([])
         end
       end
 
-      context "if a single unparsed practice is given" do
-        subject { described_class.parse(unparsed_practice)[0] }
+      context "when a single unparsed practice is given" do
+        subject(:practice_upload) { described_class.parse(unparsed_practice)[0] }
 
         context "when postcode is present" do
           let(:unparsed_practice) { create(:unparsed_practice) }
@@ -111,25 +111,25 @@ module Admin
           let(:parsed_practice) { create(:parsed_practice_all_parts) }
 
           it "removes excess whitespace for address" do
-            expect(subject).to include(address: parsed_practice[:address])
+            expect(practice_upload).to include(address: parsed_practice[:address])
           end
 
           it "removes excess whitespace for tel" do
-            expect(subject).to include(tel: parsed_practice[:tel])
+            expect(practice_upload).to include(tel: parsed_practice[:tel])
           end
 
           it "removes excess whitespace for email" do
-            expect(subject).to include(email: parsed_practice[:email])
+            expect(practice_upload).to include(email: parsed_practice[:email])
           end
 
           it "removes excess whitespace for url" do
-            expect(subject).to include(url: parsed_practice[:url])
+            expect(practice_upload).to include(url: parsed_practice[:url])
           end
         end
       end
 
       context "when multiple practices are given" do
-        subject { described_class.parse(unparsed_practices) }
+        subject(:practices) { described_class.parse(unparsed_practices) }
         let(:unparsed_practices) do
           "#{create(:unparsed_practice)}
           #{create(:unparsed_practice)}
@@ -137,7 +137,7 @@ module Admin
         end
 
         it "when an array of parsed practice hashes is returned" do
-          expect(subject.size).to eq(3)
+          expect(practices.size).to eq(3)
         end
       end
     end
