@@ -17,7 +17,7 @@ module Admin
       context "when file has blacklist entry" do
         let(:mediators) { [{ foo: 42, bar: 43 }] }
 
-        context "if found in data" do
+        context "and found in data" do
           subject { described_class.new(mediators, %w[foo]) }
 
           it "if deemed valid" do
@@ -25,7 +25,7 @@ module Admin
           end
         end
 
-        context "if not found in data" do
+        context "and not found in data" do
           subject { described_class.new(mediators, %w[bobbins]) }
 
           it "Deems invalid" do
