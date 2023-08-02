@@ -1,4 +1,4 @@
-describe API::App do
+describe API::App do # rubocop:disable RSpec/FilePath
   include Rack::Test::Methods
 
   def app
