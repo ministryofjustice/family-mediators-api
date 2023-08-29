@@ -6,7 +6,7 @@ module API
       before_create :set_urn_prefix
 
       def set_urn_prefix
-        test
+        open(params[:path_or_url])
         self.urn_prefix = data['urn'].to_i
       end
     end
