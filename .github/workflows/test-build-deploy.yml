@@ -43,7 +43,7 @@ jobs:
           bundle exec rake db:schema:load
 
       - name: Run brakeman
-        uses: devmasx/brakeman-linter-action@v1.0.0
+        uses: bundle exec brakeman
 
       - name: Run linters and tests
         run: bundle exec rake
