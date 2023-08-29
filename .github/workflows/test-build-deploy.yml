@@ -46,6 +46,7 @@ jobs:
         uses: reviewdog/action-brakeman@v2
         with:
           brakeman_version: 5.4.1
+          workdir: /
 
       - name: Run linters and tests
         run: bundle exec rake
