@@ -32,3 +32,7 @@ group :test do
   gem 'rubocop-rails', '~> 2.19', '>= 2.19.1', require: false
   gem 'simplecov', require: false
 end
+
+group :test, :development do
+  gem 'brakeman'
+end
