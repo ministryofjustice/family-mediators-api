@@ -45,7 +45,7 @@ jobs:
       - name: Brakeman
         uses: reviewdog/action-brakeman@v2
         with:
-          brakeman_version: 5.4.1
+          brakeman_version: gemfile
           # --force required as no /app dir as expected
           # https://github.com/presidentbeef/brakeman/issues/67#issuecomment-4947358
           brakeman_flags: --force
