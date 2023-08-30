@@ -42,6 +42,14 @@ jobs:
           bundle exec rake db:create
           bundle exec rake db:schema:load
 
+      - name: Brakeman
+        uses: reviewdog/action-brakeman@v2
+        with:
+          brakeman_version: gemfile
+          # --force required as no /app dir as expected
+          # https://github.com/presidentbeef/brakeman/issues/67#issuecomment-4947358
+          brakeman_flags: --force
+
       - name: Run linters and tests
         run: bundle exec rake
 

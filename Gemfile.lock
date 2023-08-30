@@ -17,6 +17,7 @@ GEM
     ast (2.4.2)
     backports (3.23.0)
     bcrypt (3.1.18)
+    brakeman (5.4.1)
     builder (3.2.4)
     capybara (3.37.1)
       addressable
@@ -236,6 +237,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord (< 7.0.0)
   bcrypt
+  brakeman
   cucumber (< 4.0.0)
   database_cleaner
   debug (~> 1.8)
