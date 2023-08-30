@@ -49,6 +49,7 @@ jobs:
           # --force required as no /app dir as expected
           # https://github.com/presidentbeef/brakeman/issues/67#issuecomment-4947358
           brakeman_flags: --force
+          reporter: github-pr-review
 
       - name: Run linters and tests
         run: bundle exec rake
