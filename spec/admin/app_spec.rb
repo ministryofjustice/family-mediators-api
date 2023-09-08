@@ -21,7 +21,7 @@ describe Admin::App do
 
   context "when a file is unsuccessfully uploades" do
     it "redirects to /upload-fail" do
-      post "/upload", params: { xlsx_file: nil }, session: { "rack.session" => { "user" => "" } }
+      post "/upload", { xlsx_file: nil }, { "rack.session" => { "user" => "" } } # rubocop:disable Rails/HttpPositionalArguments
       follow_redirect!
       expect(last_request.path).to eq("/upload-fail")
     end
@@ -67,7 +67,7 @@ describe Admin::App do
     %w[actions upload upload-success upload-fail].each do |path|
       context "GET /#{path}" do
         it "has 200 status" do
-          get "/#{path}", session: { "rack.session" => { "user" => "" } }
+          get "/#{path}", {}, { "rack.session" => { "user" => "" } } # rubocop:disable Rails/HttpPositionalArguments
           expect(last_response.status).to eq(200)
         end
       end
