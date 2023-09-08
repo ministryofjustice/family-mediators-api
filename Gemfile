@@ -33,5 +33,5 @@ group :test do
 end
 
 group :test, :development do
-  gem 'brakeman'
+  gem "brakeman"
 end
