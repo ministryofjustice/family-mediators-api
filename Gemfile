@@ -31,3 +31,7 @@ group :test do
   gem "selenium-webdriver"
   gem "simplecov", require: false
 end
+
+group :test, :development do
+  gem 'brakeman'
+end
