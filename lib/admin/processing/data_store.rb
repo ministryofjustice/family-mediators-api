@@ -4,7 +4,7 @@ module Admin
       def self.save(hashes)
         ActiveRecord::Base.transaction do
           API::Models::Mediator.delete_all
-          API::Models::Mediator.create(with_data_attributes(hashes)) # rubocop:disable Rails/SaveBang
+          API::Models::Mediator.create(with_data_attributes(hashes))
         end
       end
 

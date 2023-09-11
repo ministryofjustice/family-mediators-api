@@ -2,7 +2,7 @@ require "active_record"
 
 module API
   module Models
-    class Mediator < ActiveRecord::Base # rubocop:disable Rais/ApplicationRecord
+    class Mediator < ActiveRecord::Base
       before_create :set_urn_prefix
 
       def set_urn_prefix
