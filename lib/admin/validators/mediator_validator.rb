@@ -4,7 +4,7 @@ module Admin
   module Validators
     class MediatorValidator < Dry::Validation::Contract
       URN_FORMAT = /^\d{4}[TAP]$/
-      YES_NO_VALUES = %w[Yes No]
+      YES_NO_VALUES = %w[Yes No].freeze
 
       schema do
         required(:urn).filled(:string) { format?(URN_FORMAT) }

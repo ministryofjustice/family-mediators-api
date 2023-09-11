@@ -11,16 +11,14 @@ end
 
 module ObservationHelpers
   def get_table_data(selector)
-    data = page.all(selector + " tr").collect do |row|
-      row.all(:xpath, ".//th|td").collect do |cell|
-        cell.text
-      end
+    data = page.all("#{selector} tr").collect do |row|
+      row.all(:xpath, ".//th|td").collect(&:text)
     end
     !data.empty? ? data : [[]]
   end
 
   def get_column_data(selector, position)
-    data = page.all(selector + " tr td[#{position}]").collect { |cell| cell.text }
+    data = page.all(selector + " tr td[#{position}]").collect(&:text)
     !data.empty? ? data : []
   end
 end
@@ -40,7 +38,7 @@ module DataHelpers
     end
 
     def data
-      @mediators[1..-1].map do |row|
+      @mediators[1..].map do |row|
         row << @practice_data
       end
     end
@@ -59,7 +57,7 @@ module DataHelpers
     end
 
     def data
-      @mediators[1..-1]
+      @mediators[1..]
     end
 
     class << self

@@ -2,7 +2,7 @@ module Admin
   module Validators
     describe MediatorValidator do
       subject(:result) do
-        MediatorValidator.new.call(data)
+        described_class.new.call(data)
       end
 
       describe("practices") do
@@ -63,7 +63,7 @@ module Admin
 
       describe("missing properties") do
         subject(:result) do
-          MediatorValidator.new.call(missing_data)
+          described_class.new.call(missing_data)
         end
 
         keys = FactoryBot.create(:mediator_hash).keys - [:ppc_urn]

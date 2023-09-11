@@ -8,7 +8,7 @@ FactoryBot.define do
       address { "15 Smith Street, London" }
     end
 
-    initialize_with { new("#{address}") }
+    initialize_with { new(address.to_s) }
 
     factory :parsed_practice, class: Hash do
       initialize_with { attributes }
@@ -19,14 +19,14 @@ FactoryBot.define do
       url { "http://www.foobar.com/baz/" }
       email { "valid@email.com" }
 
-      initialize_with { new("#{[address, tel, url, email].compact.join('|')}") }
+      initialize_with { new([address, tel, url, email].compact.join("|").to_s) }
 
       factory :shuffled_unparsed_practice do
-        initialize_with { new("#{[address, tel, url, email].shuffle.compact.join('|')}") }
+        initialize_with { new([address, tel, url, email].shuffle.compact.join("|").to_s) }
       end
 
       factory :whitespaced_unparsed_practice do
-        initialize_with { new("#{[address, tel, url, email].compact.join('  |  ')}") }
+        initialize_with { new([address, tel, url, email].compact.join("  |  ").to_s) }
       end
 
       factory :parsed_practice_all_parts do

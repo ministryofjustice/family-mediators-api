@@ -14,7 +14,7 @@ module Admin
 
       it "inserts into DB" do
         expect(API::Models::Mediator).to receive(:create).once
-        DataStore.save(data)
+        described_class.save(data)
       end
     end
   end

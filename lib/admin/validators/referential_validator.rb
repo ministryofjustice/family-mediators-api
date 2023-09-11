@@ -12,7 +12,7 @@ module Admin
       end
 
       def success?
-        @messages.count == 0
+        @messages.count.zero?
       end
     end
 
@@ -31,13 +31,13 @@ module Admin
       def duplicate_urns
         duplicates = urns.select { |registration_number| urns.count(registration_number) > 1 }
         result = duplicates.uniq
-        if result.length > 0
+        if result.length.positive?
           @validation_result.add(ErrorMessage.new(heading: "Duplicate URN", values: result))
         end
       end
 
       def supervisor_presence
-        result = ppc_urns.reject { |urn| urn.blank? } - urns
+        result = ppc_urns.reject(&:blank?) - urns
         if result.any?
           humanised_result = result.map { |val| val.blank? ? "blank" : val }
           @validation_result.add(ErrorMessage.new(heading: "PPC URN not recognised", values: humanised_result))

@@ -4,7 +4,7 @@ module Admin
       describe "registration numbers" do
         context "when unique" do
           let(:result) do
-            ReferentialValidator.new(create(:mediator_list)).validate
+            described_class.new(create(:mediator_list)).validate
           end
 
           it "is valid" do
@@ -23,7 +23,7 @@ module Admin
               create(:mediator_hash, urn: "4567A", ppc_urn: "1000T"),
               create(:mediator_hash, urn: "1000T", ppc_urn: "4567A"),
             ]
-            ReferentialValidator.new(data).validate
+            described_class.new(data).validate
           end
 
           it "is invalid" do
@@ -54,7 +54,7 @@ module Admin
                 create(:mediator_hash, urn: "4567A", ppc_urn: invalid_ppc_urn),
                 create(:mediator_hash, urn: "1000T", ppc_urn: "4567A"),
               ]
-              ReferentialValidator.new(data_with_unrecognised_ppc_urn).validate
+              described_class.new(data_with_unrecognised_ppc_urn).validate
             end
 
             it "is invalid" do
@@ -86,7 +86,7 @@ module Admin
         context "when exists as registration number" do
           let(:result) do
             data = create(:mediator_list)
-            ReferentialValidator.new(data).validate
+            described_class.new(data).validate
           end
 
           it "is valid" do
@@ -107,7 +107,7 @@ module Admin
               create(:mediator_hash, urn: "4567A", ppc_urn: "not known"),
               create(:mediator_hash, urn: "1000T", ppc_urn: "4567A"),
             ]
-            ReferentialValidator.new(data).validate
+            described_class.new(data).validate
           end
 
           it "is invalid" do
@@ -123,7 +123,7 @@ module Admin
               create(:mediator_hash, urn: "4567A", ppc_urn: invalid_ppc_urn),
               create(:mediator_hash, urn: "1000T", ppc_urn: "4567A"),
             ]
-            ReferentialValidator.new(data).validate
+            described_class.new(data).validate
           end
 
           it "is invalid" do

@@ -1,7 +1,7 @@
 module Admin
   module Processing
     describe Marshaler do
-      subject { Marshaler }
+      subject { described_class }
 
       let(:array) do
         [42, "foo", { bish: 5, bosh: "hello" }]

@@ -5,7 +5,7 @@ module Admin
         { 'field_name': "field value" }
       end
 
-      subject(:validation_error) { Admin::Validators::ErrorMessage.new(heading: "heading", values: message) }
+      subject(:validation_error) { described_class.new(heading: "heading", values: message) }
 
       it "has heading" do
         expect(validation_error.heading).to eq("heading")

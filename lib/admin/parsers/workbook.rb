@@ -26,7 +26,7 @@ module Admin
       end
 
       def parse_blacklist
-        blacklist_worksheet[1..-1].map { |row| row.cells.first.value }
+        blacklist_worksheet[1..].map { |row| row.cells.first.value }
       end
 
       def processed_blacklist
@@ -40,13 +40,13 @@ module Admin
       end
 
       def all_values_blank?(row)
-        row.values.all? { |val| (val && val.size == 0) || val.nil? }
+        row.values.all? { |val| (val && val.empty?) || val.nil? }
       end
 
       def transform_mediators
         return [] if mediators_worksheet[0].nil?
 
-        mediators_worksheet[1..-1].map do |row|
+        mediators_worksheet[1..].map do |row|
           processed_headings.size.times.inject({}) do |hash, index|
             cell = row.cells[index]
             value = cell&.value
@@ -56,7 +56,7 @@ module Admin
       end
 
       def processed_headings
-        @_processed_headings ||= @headings_processor.process(
+        @processed_headings ||= @headings_processor.process(
           mediators_worksheet[0].cells.map(&:value),
         )
       end

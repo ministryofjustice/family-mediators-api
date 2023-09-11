@@ -10,7 +10,7 @@ module Admin
 
     helpers Helpers
 
-    set :views, File.dirname(__FILE__) + "/../../views"
+    set :views, "#{File.dirname(__FILE__)}/../../views"
     set :public_folder, "public"
 
     get "/login" do

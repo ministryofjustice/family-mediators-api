@@ -2,7 +2,7 @@ module Admin
   module Validators
     describe PracticeValidator do
       subject(:result) do
-        PracticeValidator.new.call(practice_hash)
+        described_class.new.call(practice_hash)
       end
 
       describe "practices" do

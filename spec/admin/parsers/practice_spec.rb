@@ -31,12 +31,12 @@ module Admin
 
       context "null practice data" do
         it "returns empty array" do
-          expect(Practice.parse(nil)).to eq([])
+          expect(described_class.parse(nil)).to eq([])
         end
       end
 
       context "single unparsed practice" do
-        subject { Practice.parse(unparsed_practice)[0] }
+        subject { described_class.parse(unparsed_practice)[0] }
 
         context "when postcode is present" do
           let(:unparsed_practice) { create(:unparsed_practice) }
@@ -129,7 +129,7 @@ module Admin
       end
 
       context "multiple practices" do
-        subject { Practice.parse(unparsed_practices) }
+        subject { described_class.parse(unparsed_practices) }
         let(:unparsed_practices) do
           "#{create(:unparsed_practice)}
           #{create(:unparsed_practice)}
