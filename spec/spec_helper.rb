@@ -1,19 +1,18 @@
-ENV['RACK_ENV'] = 'test'
-require 'simplecov'
+ENV["RACK_ENV"] = "test"
+require "simplecov"
 $LOAD_PATH.unshift("#{__dir__}/..")
 
-require 'dotenv'
+require "dotenv"
 Dotenv.load
 
-require 'lib/env'
-require 'lib/root_app'
-require 'lib/mediators'
+require "lib/env"
+require "lib/root_app"
+require "lib/mediators"
 
 Dir["#{__dir__}/../support/factories/*.rb"].each { |f| require f }
 Dir["#{__dir__}/support/**/*.rb"].each { |f| require f }
 
 RSpec.configure do |config|
-
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end
@@ -33,7 +32,7 @@ RSpec.configure do |config|
     DatabaseCleaner.clean_with(:truncation)
   end
 
-  config.around(:each) do |example|
+  config.around do |example|
     DatabaseCleaner.cleaning do
       example.run
     end

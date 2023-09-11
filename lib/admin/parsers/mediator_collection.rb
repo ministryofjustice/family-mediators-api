@@ -3,11 +3,11 @@ module Admin
     class MediatorsCollection
       def initialize(hashes)
         @hashes = hashes
-        raise(ArgumentError, ':must be list of hashes') unless valid?(hashes)
+        raise(ArgumentError, ":must be list of hashes") unless valid?(hashes)
       end
 
       def valid?(_hashes)
-        @hashes.all?{ |hash| hash.is_a? Hash }
+        @hashes.all? { |hash| hash.is_a? Hash }
       end
 
       def parsed_data
