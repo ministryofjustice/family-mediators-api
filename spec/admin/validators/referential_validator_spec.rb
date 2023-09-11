@@ -34,7 +34,7 @@ module Admin
             expect(result.messages.count).to eq(1)
           end
 
-          context "error message" do
+          context "when there is a duplicated entry" do
             let(:error_message) { result.messages[0] }
 
             it "has heading 'Duplicate registration numbers'" do
@@ -65,7 +65,7 @@ module Admin
               expect(result.messages.count).to eq(2)
             end
 
-            context "error messages" do
+            context "when there are a couple of duplicated entries" do
               let(:error_messages) { result.messages }
 
               it "has heading 'Duplicate registration numbers'"  do
@@ -134,7 +134,7 @@ module Admin
             expect(result.messages.count).to eq(1)
           end
 
-          context "error message" do
+          context "when a heading does not exist" do
             let(:error_message) { result.messages[0] }
 
             it "has heading 'PPC_ID does not exist'" do

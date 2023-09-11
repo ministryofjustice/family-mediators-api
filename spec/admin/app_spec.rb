@@ -5,7 +5,7 @@ describe Admin::App do
     Admin::App
   end
 
-  context "/healthcheck" do
+  context "when /healthcheck route is called" do
     before do
       get "/healthcheck"
     end
@@ -19,9 +19,9 @@ describe Admin::App do
     end
   end
 
-  context "unsuccessfully uploads file" do
+  context "when a file unsuccessfully uploads" do
     it "redirects to /upload-fail" do
-      post "/upload", { xlsx_file: nil }, { "rack.session" => { "user" => "" } } # rubocop:disable Rails/HttpPositionalArguments
+      post "/upload", { xlsx_file: nil }, { "rack.session" => { "user" => "" } }
       follow_redirect!
       expect(last_request.path).to eq("/upload-fail")
     end
@@ -29,7 +29,7 @@ describe Admin::App do
 
   context "when no user session" do
     %w[actions upload upload-success upload-fail].each do |path|
-      context "GET /#{path}" do
+      context "when GET /#{path} routes are called" do
         before do
           get "/#{path}"
         end
@@ -46,7 +46,7 @@ describe Admin::App do
     end
 
     %w[upload upload-process].each do |path|
-      context "POST /#{path}" do
+      context "when POST /#{path} routes are called" do
         before do
           post "/#{path}"
         end
@@ -65,9 +65,9 @@ describe Admin::App do
 
   context "when user session active" do
     %w[actions upload upload-success upload-fail].each do |path|
-      context "GET /#{path}" do
+      context "when GET /#{path} routes are called" do
         it "has 200 status" do
-          get "/#{path}", {}, { "rack.session" => { "user" => "" } } # rubocop:disable Rails/HttpPositionalArguments
+          get "/#{path}", {}, { "rack.session" => { "user" => "" } }
           expect(last_response.status).to eq(200)
         end
       end
