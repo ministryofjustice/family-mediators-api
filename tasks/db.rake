@@ -25,7 +25,7 @@ class Paths
   end
 end
 
-include ActiveRecord::Tasks
+include ActiveRecord::Tasks # rubocop:disable Style/MixinUsage
 
 db_dir = File.expand_path("../db", __dir__)
 config_dir = File.expand_path("../config", __dir__)

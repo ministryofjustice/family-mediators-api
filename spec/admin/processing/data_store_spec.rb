@@ -14,7 +14,7 @@ module Admin
 
       it "inserts into DB" do
         expect(API::Models::Mediator).to receive(:create).once
-        described_class.save(data)
+        described_class.save(data) # rubocop:disable Rails/SaveBang
       end
     end
   end
