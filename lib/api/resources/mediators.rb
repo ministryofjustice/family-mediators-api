@@ -7,21 +7,21 @@ module API
         present(
           {
             meta: {
-              count: mediators.size
+              count: mediators.size,
             },
-            data: mediators
+            data: mediators,
           }, with: Entities::Collection
         )
       end
 
-      get ':id' do
+      get ":id" do
         mediators = Models::Mediator.where(urn_prefix: params[:id])
 
         if mediators.any?
           present mediators.first, with: Entities::Mediator
         else
           status 404
-          present({'code' => 'not_found'})
+          present({ "code" => "not_found" })
         end
       end
     end

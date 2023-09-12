@@ -1,28 +1,24 @@
-require_relative '../../support/helpers/temporary_workbook'
+require_relative "../../support/helpers/temporary_workbook"
 
 module UploadHelpers
-
   def upload_spreadsheet(headings, data, blacklist = [])
     temp_workbook = TemporaryWorkbook.new(headings, data, blacklist)
-    visit 'http://localhost:9292/admin/upload'
-    attach_file('spreadsheet_file', temp_workbook.file_path)
+    visit "http://localhost:9292/admin/upload"
+    attach_file("spreadsheet_file", temp_workbook.file_path)
     find('input[type="submit"]').click
   end
-
 end
 
 module ObservationHelpers
   def get_table_data(selector)
-    data = page.all(selector + ' tr').collect do |row|
-      row.all(:xpath, './/th|td').collect do |cell|
-        cell.text
-      end
+    data = page.all("#{selector} tr").collect do |row|
+      row.all(:xpath, ".//th|td").collect(&:text)
     end
     !data.empty? ? data : [[]]
   end
 
-  def get_column_data(selector,position)
-    data = page.all(selector + " tr td[#{position}]").collect { |cell| cell.text }
+  def get_column_data(selector, position)
+    data = page.all(selector + " tr td[#{position}]").collect(&:text)
     !data.empty? ? data : []
   end
 end
@@ -32,17 +28,17 @@ module DataHelpers
     extend Forwardable
     delegate [:each] => :@mediators
 
-    def initialize(data_table, practice_data: '15 Smith Street, London WC1R 4RL|01234567890')
+    def initialize(data_table, practice_data: "15 Smith Street, London WC1R 4RL|01234567890")
       @mediators = data_table
       @practice_data = practice_data
     end
 
     def headings
-      @mediators[0] << 'Practices'
+      @mediators[0] << "Practices"
     end
 
     def data
-      @mediators[1..-1].map do |row|
+      @mediators[1..].map do |row|
         row << @practice_data
       end
     end
@@ -50,7 +46,7 @@ module DataHelpers
 
   class MediatorsDataTable
     extend Forwardable
-    delegate [:each, :[]] => :@mediators
+    delegate %i[each \[\]] => :@mediators
 
     def initialize(data_table)
       @mediators = data_table
@@ -61,21 +57,21 @@ module DataHelpers
     end
 
     def data
-      @mediators[1..-1]
+      @mediators[1..]
     end
 
     class << self
       def create_mediator
         mediator = {
-            'URN' => '1234A',
-            'DCC' => 'Yes',
-            'Title' => 'Mr',
-            'First Name' => 'John',
-            'Last Name' => 'Smith',
-            'FMCA Date' => '27/03/2001',
-            'Legal Aid Qualified' => 'Yes',
-            'Legal Aid Franchise' => 'No',
-            'PPC URN' => ''
+          "URN" => "1234A",
+          "DCC" => "Yes",
+          "Title" => "Mr",
+          "First Name" => "John",
+          "Last Name" => "Smith",
+          "FMCA Date" => "27/03/2001",
+          "Legal Aid Qualified" => "Yes",
+          "Legal Aid Franchise" => "No",
+          "PPC URN" => "",
         }
         new([mediator.keys, mediator.values])
       end
@@ -85,10 +81,10 @@ end
 
 module AuthenticationHelpers
   def login
-    visit 'http://localhost:9292/admin/login'
-    fill_in 'username', :with => 'username'
-    fill_in 'password', :with => 'password'
-    click_button 'Login'
+    visit "http://localhost:9292/admin/login"
+    fill_in "username", with: "username"
+    fill_in "password", with: "password"
+    click_button "Login"
   end
 end
 

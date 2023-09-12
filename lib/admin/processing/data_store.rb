@@ -1,8 +1,6 @@
 module Admin
   module Processing
-
     class DataStore
-
       def self.save(hashes)
         ActiveRecord::Base.transaction do
           API::Models::Mediator.delete_all
@@ -15,10 +13,9 @@ module Admin
       # the items with all the keys under the 'data' attribute.
       def self.with_data_attributes(hashes)
         hashes.map do |item|
-          { 'data' => item }
+          { "data" => item }
         end
       end
-
     end
   end
 end

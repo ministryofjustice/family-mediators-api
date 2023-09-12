@@ -1,10 +1,10 @@
-require_relative 'practice_validator'
+require_relative "practice_validator"
 
 module Admin
   module Validators
     class MediatorValidator < Dry::Validation::Contract
       URN_FORMAT = /^\d{4}[TAP]$/
-      YES_NO_VALUES = %w(Yes No)
+      YES_NO_VALUES = %w[Yes No].freeze
 
       schema do
         required(:urn).filled(:string) { format?(URN_FORMAT) }
@@ -23,12 +23,12 @@ module Admin
       register_macro(:date_string) do
         if value.present?
           begin
-            no_of_parts = value.split('/').length
-            Date.strptime(value, '%d/%m/%Y') if no_of_parts == 3
-            Date.strptime(value, '%m/%Y') if no_of_parts == 2
-            Date.strptime(value, '%Y') if no_of_parts == 1
+            no_of_parts = value.split("/").length
+            Date.strptime(value, "%d/%m/%Y") if no_of_parts == 3
+            Date.strptime(value, "%m/%Y") if no_of_parts == 2
+            Date.strptime(value, "%Y") if no_of_parts == 1
           rescue ArgumentError
-            key.failure('must be dd/mm/yyyy')
+            key.failure("must be dd/mm/yyyy")
           end
         end
       end
@@ -43,8 +43,8 @@ module Admin
       rule(:training_date).validate(:date_string)
 
       rule(:training_date) do
-        unless values[:fmca_date].present?
-          key.failure('FMCA Date or Training Date must be present') unless value.present?
+        if !values[:fmca_date].present? && !value.present?
+          key.failure("FMCA Date or Training Date must be present")
         end
       end
     end
