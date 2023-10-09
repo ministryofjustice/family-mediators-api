@@ -4,7 +4,7 @@ source "https://rubygems.org"
 
 ruby File.read(".ruby-version")
 
-gem "activerecord", "< 7.0.0"
+gem "activerecord", "< 8.0.0"
 gem "bcrypt"
 gem "dotenv"
 gem "dry-validation"
