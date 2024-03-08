@@ -80,14 +80,6 @@ jobs:
           build_tag=$PREFIX-$branch-$short_sha
           echo "build_tag=$build_tag" >> $GITHUB_OUTPUT
 
-      - name: Update image tag
-        env:
-          ECR_URL: ${{ vars.ECR_URL }}
-          IMAGE_TAG: ${{ github.sha }}
-        run: |
-          cat config/kubernetes/staging/deployment.tpl | envsubst > config/kubernetes/staging/deployment.yaml
-          cat config/kubernetes/staging/migrations.tpl | envsubst > config/kubernetes/staging/migrations.yaml
-
       - name: Authenticate to the cluster
         env:
           KUBE_CERT: ${{ secrets.KUBE_CERT }}
@@ -156,14 +148,6 @@ jobs:
           short_sha=$(git rev-parse --short ${{ github.sha }})
           build_tag=$PREFIX-$branch-$short_sha
           echo "build_tag=$build_tag" >> $GITHUB_OUTPUT
-
-      - name: Update image tag
-        env:
-          ECR_URL: ${{ vars.ECR_URL }}
-          IMAGE_TAG: ${{ github.sha }}
-        run: |
-          cat config/kubernetes/production/deployment.tpl | envsubst > config/kubernetes/production/deployment.yaml
-          cat config/kubernetes/production/migrations.tpl | envsubst > config/kubernetes/production/migrations.yaml
 
       - name: Authenticate to the cluster
         env:
