@@ -1,0 +1,58 @@
+name: Test Workflow
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: test-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    env:
+      RACK_ENV: test
+
+    services:
+      postgres:
+        image: postgres:14-alpine
+        env:
+          POSTGRES_DB: mediators_ci_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: ""
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby and install gems
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Setup test database
+        run: |
+          cp config/database.ci.yml config/database.yml
+          bundle exec rake db:create
+          bundle exec rake db:schema:load
+
+      - name: Lint Ruby files
+        run: bundle exec rubocop
+
+      - name: Security audit application code
+        run: bundle exec brakeman -q
+
+      - name: Run tests
+        run: bundle exec rspec
+
+  build-and-deploy:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    needs: test
+    uses: ./.github/workflows/deploy.yml
+    secrets: inherit
