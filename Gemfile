@@ -17,7 +17,7 @@ gem "rubyXL"
 gem "sentry-raven", "~> 3.0"
 gem "sinatra"
 gem "sinatra-contrib"
-gem "slim", "< 4.0.0"
+gem "slim", "< 6.0.0"
 
 group :test do
   gem "cucumber", "< 4.0.0"
