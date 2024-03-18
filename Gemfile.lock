@@ -17,7 +17,8 @@ GEM
     ast (2.4.2)
     backports (3.23.0)
     bcrypt (3.1.18)
-    brakeman (5.4.1)
+    brakeman (6.1.2)
+      racc
     builder (3.2.4)
     capybara (3.37.1)
       addressable
