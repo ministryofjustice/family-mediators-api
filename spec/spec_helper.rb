@@ -1,5 +1,18 @@
-ENV["RACK_ENV"] = "test"
 require "simplecov"
+require "simplecov-json"
+SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new([
+  SimpleCov::Formatter::HTMLFormatter,
+  SimpleCov::Formatter::JSONFormatter,
+])
+
+SimpleCov.start do
+  add_filter "/spec/"
+  add_filter "/features/"
+  add_group "API", "lib/api"
+  add_group "Admin", "lib/admin"
+end
+
+ENV["RACK_ENV"] = "test"
 $LOAD_PATH.unshift("#{__dir__}/..")
 
 require "dotenv"

@@ -56,6 +56,13 @@ jobs:
       - name: Run tests
         run: bundle exec rspec
 
+      - name: Code coverage
+        uses: joshmfrankel/simplecov-check-action@main
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          minimum_suite_coverage: 93
+          minimum_file_coverage: 36
+
   build-and-deploy:
     if: ${{ github.ref == 'refs/heads/main' }}
     needs: test
