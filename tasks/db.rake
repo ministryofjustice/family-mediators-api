@@ -15,6 +15,12 @@ module Rails
   end
 end
 
+class Configuration
+  def load_database_yaml
+    {}
+  end
+end
+
 class Paths
   def paths
     { "db/migrate" => [File.expand_path("../db/migrate", __dir__)] }
@@ -22,6 +28,10 @@ class Paths
 
   def load_seed
     load File.expand_path("../db/seeds.rb", __dir__)
+  end
+
+  def config
+    Configuration.new
   end
 end
 
@@ -33,7 +43,7 @@ config_dir = File.expand_path("../config", __dir__)
 DatabaseTasks.root = File.dirname(__FILE__)
 DatabaseTasks.env = ENV["RACK_ENV"] || "development"
 DatabaseTasks.db_dir = db_dir
-DatabaseTasks.database_configuration = YAML.load(File.read(File.join(config_dir, "database.yml")))
+DatabaseTasks.database_configuration = YAML.load(File.read(File.join(config_dir, "database.yml")), aliases: true)
 DatabaseTasks.migrations_paths = File.join(db_dir, "migrate")
 
 desc "Setup database connection"
