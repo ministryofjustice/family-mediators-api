@@ -4,7 +4,7 @@ source "https://rubygems.org"
 
 ruby File.read(".ruby-version")
 
-gem "activerecord", "< 7.0.0"
+gem "activerecord"
 gem "bcrypt"
 gem "dotenv"
 gem "dry-validation"
@@ -14,7 +14,7 @@ gem "pg"
 gem "puma"
 gem "rake"
 gem "rubyXL"
-gem "sentry-raven", "~> 3.0"
+gem "sentry-ruby"
 gem "sinatra"
 gem "sinatra-contrib"
 gem "slim", "< 6.0.0"

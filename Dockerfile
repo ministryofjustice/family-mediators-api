@@ -1,5 +1,4 @@
-FROM ruby:3.1.4-alpine as base
-MAINTAINER UCPD Cross Justice Delivery
+FROM ruby:3.2.3-alpine as base
 
 # build dependencies:
 #   - virtual: create virtual package for later deletion
