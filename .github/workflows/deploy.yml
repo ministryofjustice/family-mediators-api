@@ -188,6 +188,10 @@ jobs:
           docker push ${{ vars.ECR_URL }}:production.latest
 
       - name: Authenticate to the cluster
+        env:
+          KUBE_CERT: ${{ secrets.KUBE_PROD_CERT }}
+          KUBE_TOKEN: ${{ secrets.KUBE_PROD_TOKEN }}
+          KUBE_CLUSTER: ${{ secrets.KUBE_PROD_CLUSTER }}
         run: |
           echo "${KUBE_CERT}" > ca.crt
           kubectl config set-cluster ${KUBE_CLUSTER} --certificate-authority=./ca.crt --server=https://${KUBE_CLUSTER}
