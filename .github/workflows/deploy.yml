@@ -54,11 +54,7 @@ jobs:
 
       - name: Push to ECR
         run: |
-          docker tag ${{ vars.ECR_URL }}:${{ github.sha }} ${{ vars.ECR_URL }}:staging.latest
-          docker tag ${{ vars.ECR_URL }}:${{ github.sha }} ${{ vars.ECR_URL }}:production.latest
-          docker push ${{ vars.ECR_URL }}:${{ github.sha }}
-          docker push ${{ vars.ECR_URL }}:staging.latest
-          docker push ${{ vars.ECR_URL }}:production.latest
+          docker tag ${{ vars.ECR_URL }}:$SHA
 
   deploy-staging:
     runs-on: ubuntu-latest
