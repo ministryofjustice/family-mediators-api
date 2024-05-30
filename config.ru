@@ -13,9 +13,6 @@ Sentry.init do |config|
   config.dsn = ENV.fetch("SENTRY_DSN")
   # get breadcrumbs from logs
   config.breadcrumbs_logger = [:sentry_logger, :http_logger]
-
-  config.environment = 'staging'
-  config.environment = 'production'
 end
 
 use Sentry::Rack::CaptureExceptions
