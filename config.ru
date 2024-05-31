@@ -10,7 +10,7 @@ Dotenv::load
 require 'sentry-ruby'
 
 Sentry.init do |config|
-  config.dsn = ENV.fetch("SENTRY_DSN")
+  config.dsn = ENV["SENTRY_DSN"]
   # get breadcrumbs from logs
   config.breadcrumbs_logger = [:sentry_logger, :http_logger]
 end
