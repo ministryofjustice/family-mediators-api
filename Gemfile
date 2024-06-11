@@ -20,7 +20,7 @@ gem "sinatra-contrib"
 gem "slim", "< 6.0.0"
 
 group :test do
-  gem "cucumber", "< 4.0.0"
+  gem "cucumber", "< 10.0.0"
   gem "database_cleaner"
   gem "debug", "~> 1.8"
   gem "factory_bot"
