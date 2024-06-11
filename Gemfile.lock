@@ -21,7 +21,7 @@ GEM
       public_suffix (>= 2.0.2, < 5.0)
     ast (2.4.2)
     base64 (0.2.0)
-    bcrypt (3.1.18)
+    bcrypt (3.1.20)
     bigdecimal (3.1.8)
     brakeman (6.1.2)
       racc
