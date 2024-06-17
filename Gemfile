@@ -22,7 +22,7 @@ gem "slim", "< 6.0.0"
 group :test do
   gem "cucumber", "< 10.0.0"
   gem "database_cleaner"
-  gem "debug", "~> 1.8"
+  gem "debug", "~> 1.9"
   gem "factory_bot"
   gem "poltergeist", ">= 1.4.0"
   gem "rack-test", require: "rack/test"
