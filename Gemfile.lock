@@ -112,13 +112,12 @@ GEM
     factory_bot (6.4.6)
       activesupport (>= 5.0.0)
     ffi (1.17.0)
-    grape (1.7.1)
-      activesupport
-      builder
+    grape (2.1.0)
+      activesupport (>= 6)
       dry-types (>= 1.1)
-      mustermann-grape (~> 1.0.0)
-      rack (>= 1.3.0, < 3)
-      rack-accept
+      mustermann-grape (~> 1.1.0)
+      rack (>= 2)
+      zeitwerk
     grape-entity (0.10.1)
       activesupport (>= 3.0.0)
       multi_json (>= 1.3.2)
@@ -132,12 +131,12 @@ GEM
     matrix (0.4.2)
     mini_mime (1.1.2)
     mini_portile2 (2.8.6)
-    minitest (5.22.3)
+    minitest (5.23.1)
     multi_json (1.15.0)
     multi_test (1.1.0)
     mustermann (2.0.2)
       ruby2_keywords (~> 0.0.1)
-    mustermann-grape (1.0.2)
+    mustermann-grape (1.1.0)
       mustermann (>= 1.0.0)
     mutex_m (0.2.0)
     nio4r (2.7.0)
@@ -157,9 +156,7 @@ GEM
     puma (6.4.2)
       nio4r (~> 2.0)
     racc (1.7.3)
-    rack (2.2.8.1)
-    rack-accept (0.4.5)
-      rack (>= 0.4)
+    rack (2.2.9)
     rack-protection (2.2.3)
       rack
     rack-test (2.1.0)
@@ -268,7 +265,7 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.6.15)
+    zeitwerk (2.6.16)
 
 PLATFORMS
   ruby
@@ -283,7 +280,7 @@ DEPENDENCIES
   dotenv
   dry-validation
   factory_bot
-  grape (~> 1.7, >= 1.7.1)
+  grape (~> 2.1)
   grape-entity
   pg
   poltergeist (>= 1.4.0)
