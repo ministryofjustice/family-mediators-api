@@ -19,9 +19,9 @@ describe RootApp do
     end
   end
 
-  context "when GET /ping.json route is called" do
+  context "when GET /ping route is called" do
     before do
-      get "/ping.json"
+      get "/ping"
     end
 
     it "returns 200" do

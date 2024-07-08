@@ -35,13 +35,13 @@ spec:
             memory: 2Gi
         readinessProbe:
           httpGet:
-            path: /ping.json
+            path: /ping
             port: 9292
           initialDelaySeconds: 5
           periodSeconds: 10
         livenessProbe:
           httpGet:
-            path: /ping.json
+            path: /ping
             port: 9292
           initialDelaySeconds: 15
           periodSeconds: 10
