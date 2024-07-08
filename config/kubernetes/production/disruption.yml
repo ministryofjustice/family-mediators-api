@@ -1,0 +1,10 @@
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: family-mediators-api-pdb-production
+  namespace: family-mediators-api-production
+spec:
+  maxUnavailable: 50%
+  selector:
+    matchLabels:
+      app: family-mediators-api-web-production

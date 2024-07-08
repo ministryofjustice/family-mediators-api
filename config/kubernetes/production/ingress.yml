@@ -1,0 +1,42 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: family-mediators-api-ingress-production
+  namespace: family-mediators-api-production
+  annotations:
+    external-dns.alpha.kubernetes.io/set-identifier: family-mediators-api-ingress-production-family-mediators-api-production-green
+    external-dns.alpha.kubernetes.io/aws-weight: "100"
+    nginx.ingress.kubernetes.io/server-snippet: |
+      location = /.well-known/security.txt {
+        return 301 https://raw.githubusercontent.com/ministryofjustice/security-guidance/main/contact/vulnerability-disclosure-security.txt;
+      }
+      location ~* \.(php|cgi|xml)$ { deny all; access_log off; }
+spec:
+  ingressClassName: default
+  tls:
+  - hosts:
+    - family-mediators-api-production.apps.live.cloud-platform.service.justice.gov.uk
+  - hosts:
+    - familymediators.service.justice.gov.uk
+    secretName: family-mediators-api-tls-certificate
+  rules:
+  - host: family-mediators-api-production.apps.live.cloud-platform.service.justice.gov.uk
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: family-mediators-api-service-production
+            port:
+              number: 80
+  - host: familymediators.service.justice.gov.uk
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: family-mediators-api-service-production
+            port:
+              number: 80

@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: family-mediators-api-configmap-staging
+  namespace: family-mediators-api-staging
+data:
+  LOG_LEVEL: debug
+  RACK_ENV: production
