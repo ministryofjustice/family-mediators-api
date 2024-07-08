@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: family-mediators-api-deployment-staging
+  namespace: family-mediators-api-staging
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: family-mediators-api-web-staging
+  revisionHistoryLimit: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 100%
+  template:
+    metadata:
+      labels:
+        app: family-mediators-api-web-staging
+        tier: frontend
+    spec:
+      containers:
+      - name: webapp
+        image: 754256621582.dkr.ecr.eu-west-2.amazonaws.com/family-justice/family-mediators-api:staging.latest
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 9292
+        resources:
+          requests:
+            cpu: 125m
+            memory: 1Gi
+          limits:
+            cpu: 250m
+            memory: 2Gi
+        readinessProbe:
+          httpGet:
+            path: /ping
+            port: 9292
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /ping
+            port: 9292
+          initialDelaySeconds: 15
+          periodSeconds: 10
+        # non-secret env vars defined in `config_map.yaml`
+        envFrom:
+          - configMapRef:
+              name: family-mediators-api-configmap-staging
+        env:
+          # external secrets defined in kubernetes
+          - name: USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: family-mediators-api-secrets-staging
+                key: username
+          - name: PASSWORD_HASH
+            valueFrom:
+              secretKeyRef:
+                name: family-mediators-api-secrets-staging
+                key: password_hash
+          - name: SESSION_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: family-mediators-api-secrets-staging
+                key: session_secret
+          - name: SENTRY_DSN
+            valueFrom:
+              secretKeyRef:
+                name: family-mediators-api-secrets-staging
+                key: sentry_dsn
+          #
+          # secrets created by `terraform`
+          #
+          - name: DATABASE_URL
+            valueFrom:
+              secretKeyRef:
+                name: rds-instance-family-mediators-api-staging
+                key: url
