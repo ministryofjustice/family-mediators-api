@@ -50,7 +50,7 @@ spec:
           - configMapRef:
               name: family-mediators-api-configmap-production
         env:
-          # external secrets defined in `secrets.yml`
+          # external secrets defined in kubernetes
           - name: USERNAME
             valueFrom:
               secretKeyRef:
