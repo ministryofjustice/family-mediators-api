@@ -6,11 +6,8 @@ RUN apk --no-cache add \
     ruby-dev \
     build-base \
     postgresql-dev \
-    bash \
-    curl \
     nodejs \
-    yarn \
-    python3
+    yarn
 
 COPY .ruby-version Gemfile* package.json api.apib ./
 
@@ -37,10 +34,7 @@ FROM ruby:3.2.3-alpine
 WORKDIR /app
 
 RUN apk --no-cache add \
-    postgresql-client \
-    linux-headers \
-    xz-libs \
-    tzdata
+    postgresql-client
 
 # ensure everything is executable
 RUN chmod +x /usr/local/bin/*
