@@ -26,7 +26,6 @@ spec:
         imagePullPolicy: Always
         ports:
           - containerPort: 9292
-        command: ["./config/docker/entrypoint-webapp.sh"]
         resources:
           requests:
             cpu: 125m
