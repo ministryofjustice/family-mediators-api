@@ -36,9 +36,6 @@ WORKDIR /app
 RUN apk --no-cache add \
     postgresql-client
 
-# ensure everything is executable
-RUN chmod +x /usr/local/bin/*
-
 # add non-root user and group with alpine first available uid, 1000
 RUN addgroup -g 1000 -S appgroup && \
     adduser -u 1000 -S appuser -G appgroup
@@ -46,6 +43,9 @@ RUN addgroup -g 1000 -S appgroup && \
 # Copy files generated in the builder image
 COPY --from=builder /app /app
 COPY --from=builder /usr/local/bundle/ /usr/local/bundle/
+
+# ensure everything is executable
+RUN chmod +x /usr/local/bin/*
 
 # Create log and tmp
 RUN mkdir -p log tmp
