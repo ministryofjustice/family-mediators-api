@@ -64,5 +64,3 @@ ENV APP_GIT_COMMIT ${APP_GIT_COMMIT}
 
 ENV APPUID 1000
 USER $APPUID
-
-ENTRYPOINT ["./config/docker/entrypoint-webapp.sh"]
