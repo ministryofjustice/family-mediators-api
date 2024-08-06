@@ -14,54 +14,88 @@
 
 Maintains a list of family mediators. Provides an API and an admin UI for uploading spreadsheets of mediator data .
 
-## Docker
+## Development
 
-The application can be run inside a docker container. This will take care of the ruby environment, postgres database,
-and any other dependency for you, without having to configure anything in your machine.
+### Working on the Code
 
-* `docker-compose up`
-* `docker-compose build` - when you need to test your docker configurations
+Work should be based off of, and PRed to, the main branch. We use the GitHub
+PR approval process so once your PR is ready you'll need to have one person
+approve it, and the CI tests passing, before it can be merged.
 
-The application will be run in "production" mode, so will be as accurate as possible to a real production environment.
 
-## Local set-up
+### Basic Setup
 
-Assumes Postgres DB is up and running on your machine.
+#### Cloning This Repository
 
-Set up the DB if this is the first time:
+Clone this repository then `cd` into the new directory
 
-    bundle exec rake db:setup
+```
+$ git clone git@github.com:ministryofjustice/correspondence_tool_staff.git
+$ cd correspondence_tool_staff
+```
 
-Run the app:
+### Installing the app for development
 
-    bundle exec rackup
+#### Latest Version of Ruby
 
-...and goto http://localhost:9292/api/v1/mediators/
+If you don't have `rbenv` already installed, install it as follows:
+```
+$ brew install rbenv ruby-build
+$ rbenv init
+```
 
-### To run the tests:
+Follow the instructions printed out from the `rbenv init` command and update your `~/.bash_profile` or equivalent file accordingly, then start a new terminal and navigate to the repo directory.
 
-* `RACK_ENV=test bundle exec rake db:setup db:migrate`
+Use `rbenv` to install the latest version of ruby as defined in `.ruby-version` (make sure you are in the repo path):
 
-### Run build
+```
+$ rbenv install
+```
 
-The default rake command runs specs, features, generates coverage report and runs Rubocop.
+#### Dependencies
 
-    rake
+Postgresql
 
-The coverage report is available under `/coverage/index.html`
+```
+$ brew install postgresql
+```
 
+#### Setup
+
+Use the following commands to install gems and javascript packages then create the database
+
+```
+$ bundle install
+$ bundle exec rake db:setup
+```
+
+#### Running locally:
+
+```
+$ bundle exec rackup
+```
+
+The site will be accessible at http://localhost:9292/api/v1/mediators.
+
+### Run tests:
+
+```
+$ bundle exec rspec
+$ bundle exec cucumber
+```
+
+### Run rubocop:
+
+```
+$ bundle exec rubocop
+```
 
 ## Play around in IRB
 
-    RACK_ENV=development irb -r './lib/env' -r './lib/mediators'
+    RACK_ENV=development irb -r bundle exec './lib/env' -r './lib/mediators'
     irb> require_relative 'lib/mediators'
     irb> API::Models::Mediator.all.to_a
     irb> ...etc
-
-
-## Deploy to kubernetes cloud platform
-
-Refer to the [deploy repository](https://github.com/ministryofjustice/family-mediators-api-deploy)
 
 ## Environment variables
 
@@ -83,20 +117,13 @@ To generate the password hash, use bcrypt-ruby. In irb:
 ...and use the long string generated.
 
 When running the app locally you can set these ENV variables in the `.env` file.
-This file is also used by `docker-compose` but will not be used in production environments.
 
-## API Doc
+## API Docs
 
 Documentation is generated as part of the docker build, using [aglio](https://github.com/danielgtaylor/aglio) to parse
 an [API Blueprint](api.apib).
 
-Although this documentation can be also generated locally, it requires a vast amount of node modules dependencies,
-and a very specific NodeJS version, so if you want to see the generated documentation it is quicker and easier to just
-do `docker-compose up` and go to `http://localhost:9292/api/documentation`
-
-### Admin App
-
-* /admin - Homepage
+Although this documentation can be also generated locally, it requires a vast amount of node modules dependencies, so if you want to see the generated documentation it is quicker and easier to view on the live site - https://familymediators.service.justice.gov.uk/api/documentation
 
 ### Endpoints
 

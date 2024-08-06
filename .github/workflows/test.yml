@@ -55,8 +55,11 @@ jobs:
           # https://github.com/presidentbeef/brakeman/issues/67#issuecomment-4947358
           brakeman_flags: --force
 
-      - name: Run tests
+      - name: Run unit tests
         run: bundle exec rspec
+
+      - name: Run feature tests
+        run: bundle exec cucumber
 
       - name: Code coverage
         uses: joshmfrankel/simplecov-check-action@main
