@@ -77,25 +77,25 @@ $ bundle exec rackup
 
 The site will be accessible at http://localhost:9292/api/v1/mediators.
 
-### To run the tests:
+### Run tests:
 
-* `RACK_ENV=test bundle exec rake db:setup db:migrate`
+```
+$ bundle exec rspec
+$ bundle exec cucumber
+```
 
-### Run build
+### Run rubocop:
 
-The default rake command runs specs, features, generates coverage report and runs Rubocop.
-
-    rake
-
-The coverage report is available under `/coverage/index.html`
+```
+$ bundle exec rubocop
+```
 
 ## Play around in IRB
 
-    RACK_ENV=development irb -r './lib/env' -r './lib/mediators'
+    RACK_ENV=development irb -r bundle exec './lib/env' -r './lib/mediators'
     irb> require_relative 'lib/mediators'
     irb> API::Models::Mediator.all.to_a
     irb> ...etc
-
 
 ## Environment variables
 
@@ -118,16 +118,12 @@ To generate the password hash, use bcrypt-ruby. In irb:
 
 When running the app locally you can set these ENV variables in the `.env` file.
 
-## API Doc
+## API Docs
 
 Documentation is generated as part of the docker build, using [aglio](https://github.com/danielgtaylor/aglio) to parse
 an [API Blueprint](api.apib).
 
 Although this documentation can be also generated locally, it requires a vast amount of node modules dependencies, so if you want to see the generated documentation it is quicker and easier to view on the live site - https://familymediators.service.justice.gov.uk/api/documentation
-
-### Admin App
-
-* /admin - Homepage
 
 ### Endpoints
 
