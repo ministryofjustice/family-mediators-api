@@ -1,74 +1,55 @@
-FROM ruby:3.2.3-alpine as base
+FROM ruby:3.2.3-alpine as builder
 
-# build dependencies:
-#   - virtual: create virtual package for later deletion
-#   - build-base for alpine fundamentals
-#   - libxml2-dev/libxslt-dev for nokogiri, at least
-#   - postgresql-dev for pg/activerecord gems
-#
-RUN apk --no-cache add --virtual build-deps \
-  build-base \
-  libxml2-dev \
-  libxslt-dev \
-  postgresql-dev \
-  bash \
-  curl \
-&& apk --no-cache add \
-  postgresql-client \
-  linux-headers \
-  xz-libs \
-  tzdata
+WORKDIR /app
 
-# ensure everything is executable
-RUN chmod +x /usr/local/bin/*
+RUN apk --no-cache add \
+    ruby-dev \
+    build-base \
+    postgresql-dev \
+    nodejs \
+    yarn
+
+COPY .ruby-version Gemfile* package.json api.apib ./
+
+RUN bundle config deployment true && \
+    bundle config without development test && \
+    bundle install --jobs 4 --retry 3 && \
+    yarn install --frozen-lockfile
+
+COPY . .
+
+# create documentation directory for api docs
+RUN mkdir -p documentation
+
+# Produce the API documentation (using `aglio`)
+RUN yarn build
+
+# Cleanup to save space in the production image
+RUN rm -rf node_modules log/* tmp/* /tmp && \
+    rm -rf /usr/local/bundle/cache
+
+# Build runtime image
+FROM ruby:3.2.3-alpine
+
+WORKDIR /app
+
+RUN apk --no-cache add \
+    postgresql-client
 
 # add non-root user and group with alpine first available uid, 1000
 RUN addgroup -g 1000 -S appgroup && \
     adduser -u 1000 -S appuser -G appgroup
 
-# create app directory in conventional, existing dir /usr/src
-RUN mkdir -p /usr/src/app && mkdir -p /usr/src/app/tmp
+# Copy files generated in the builder image
+COPY --from=builder /app /app
+COPY --from=builder /usr/local/bundle/ /usr/local/bundle/
 
-# create documentation directory for api docs
-RUN mkdir -p /usr/src/app/documentation
+# ensure everything is executable
+RUN chmod +x /usr/local/bin/*
 
-WORKDIR /usr/src/app
-
-COPY Gemfile* .ruby-version ./
-
-RUN gem install bundler -v 2.4.19
-RUN bundle config deployment true && \
-    bundle config without development test && \
-    bundle install --jobs 4 --retry 3
-
-COPY . .
-
-#### begin documentation ####
-
-FROM base AS documentation
-
-RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/v3.7/main/ \
-  nodejs=8.9.3-r1 \
-  yarn \
-  python3
-
-COPY package.json api.apib ./
-RUN yarn install --frozen-lockfile
-
-# Produce the API documentation (using `aglio`)
-RUN npm run-script build
-
-#### end documentation ####
-
-FROM base
-
-COPY --from=documentation /usr/src/app/documentation/output.html ./documentation/output.html
-
-# tidy up installation
-RUN apk del build-deps && rm -rf /tmp/*
-
-# non-root/appuser should own only what they need to
-RUN chown -R appuser:appgroup tmp db
+# Create log and tmp
+RUN mkdir -p log tmp
+RUN chown -R appuser:appgroup db log tmp
 
 ENV RACK_ENV production
 
@@ -84,4 +65,4 @@ ENV APP_GIT_COMMIT ${APP_GIT_COMMIT}
 ENV APPUID 1000
 USER $APPUID
 
-ENTRYPOINT ["./run.sh"]
+ENTRYPOINT ["./config/docker/entrypoint-webapp.sh"]
