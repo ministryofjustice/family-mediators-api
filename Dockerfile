@@ -1,6 +1,14 @@
-FROM ruby:3.2.3-alpine as builder
+FROM ruby:3.3.4-alpine as base
 
 WORKDIR /app
+
+RUN apk --no-cache add \
+    postgresql-client
+
+# Ensure latest rubygems is installed
+RUN gem update --system
+
+FROM base as builder
 
 RUN apk --no-cache add \
     ruby-dev \
@@ -29,12 +37,7 @@ RUN rm -rf node_modules log/* tmp/* /tmp && \
     rm -rf /usr/local/bundle/cache
 
 # Build runtime image
-FROM ruby:3.2.3-alpine
-
-WORKDIR /app
-
-RUN apk --no-cache add \
-    postgresql-client
+FROM base
 
 # add non-root user and group with alpine first available uid, 1000
 RUN addgroup -g 1000 -S appgroup && \
@@ -44,25 +47,18 @@ RUN addgroup -g 1000 -S appgroup && \
 COPY --from=builder /app /app
 COPY --from=builder /usr/local/bundle/ /usr/local/bundle/
 
-# ensure everything is executable
-RUN chmod +x /usr/local/bin/*
-
 # Create log and tmp
 RUN mkdir -p log tmp
-RUN chown -R appuser:appgroup db log tmp
+RUN chown -R appuser:appgroup ./*
 
-ENV RACK_ENV production
+# Set user
+USER 1000
 
 ARG APP_BUILD_DATE
-ENV APP_BUILD_DATE ${APP_BUILD_DATE}
-
 ARG APP_BUILD_TAG
-ENV APP_BUILD_TAG ${APP_BUILD_TAG}
-
 ARG APP_GIT_COMMIT
+ENV APP_BUILD_DATE ${APP_BUILD_DATE}
+ENV APP_BUILD_TAG ${APP_BUILD_TAG}
 ENV APP_GIT_COMMIT ${APP_GIT_COMMIT}
-
-ENV APPUID 1000
-USER $APPUID
 
 ENTRYPOINT ["./config/docker/entrypoint-webapp.sh"]

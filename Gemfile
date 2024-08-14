@@ -1,8 +1,6 @@
-# frozen_string_literal: true
-
 source "https://rubygems.org"
 
-ruby File.read(".ruby-version")
+ruby file: ".ruby-version"
 
 gem "activerecord"
 gem "bcrypt"
