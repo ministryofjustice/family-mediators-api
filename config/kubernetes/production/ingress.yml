@@ -1,10 +1,10 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: family-mediators-api-ingress-production
+  name: family-mediators-api-ingress-modsec-production
   namespace: family-mediators-api-production
   annotations:
-    external-dns.alpha.kubernetes.io/set-identifier: family-mediators-api-ingress-production-family-mediators-api-production-green
+    external-dns.alpha.kubernetes.io/set-identifier: family-mediators-api-ingress-modsec-production-family-mediators-api-production-green
     external-dns.alpha.kubernetes.io/aws-weight: "100"
     nginx.ingress.kubernetes.io/enable-modsecurity: "true"
     nginx.ingress.kubernetes.io/modsecurity-snippet: |
