@@ -6,7 +6,7 @@ module Admin
           it "returns true" do
             data = create(:mediator_list)
             validations = described_class.new(data)
-            expect(validations.valid?).to eq(true)
+            expect(validations.valid?).to be(true)
           end
         end
 
@@ -14,7 +14,7 @@ module Admin
           it "returns false" do
             data = [create(:mediator_hash), create(:mediator_hash, :invalid)]
             validations = described_class.new(data)
-            expect(validations.valid?).to eq(false)
+            expect(validations.valid?).to be(false)
           end
         end
       end
@@ -38,7 +38,7 @@ module Admin
           end
 
           it "returns ValidationErrorMessage class" do
-            expect(item_errors[0]).to be_kind_of(Admin::Validators::ErrorMessage)
+            expect(item_errors[0]).to be_a(Admin::Validators::ErrorMessage)
           end
         end
       end

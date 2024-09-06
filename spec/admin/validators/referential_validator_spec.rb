@@ -8,7 +8,7 @@ module Admin
           end
 
           it "is valid" do
-            expect(result.success?).to eq(true)
+            expect(result.success?).to be(true)
           end
 
           it "has no error messages" do
@@ -27,7 +27,7 @@ module Admin
           end
 
           it "is invalid" do
-            expect(result.success?).to eq(false)
+            expect(result.success?).to be(false)
           end
 
           it "has 1 error message" do
@@ -58,7 +58,7 @@ module Admin
             end
 
             it "is invalid" do
-              expect(result.success?).to eq(false)
+              expect(result.success?).to be(false)
             end
 
             it "has 2 error message" do
@@ -90,7 +90,7 @@ module Admin
           end
 
           it "is valid" do
-            expect(result.success?).to eq(true)
+            expect(result.success?).to be(true)
           end
 
           it "has no error messages" do
@@ -111,7 +111,7 @@ module Admin
           end
 
           it "is invalid" do
-            expect(result.success?).to eq(false)
+            expect(result.success?).to be(false)
           end
         end
 
@@ -127,7 +127,7 @@ module Admin
           end
 
           it "is invalid" do
-            expect(result.success?).to eq(false)
+            expect(result.success?).to be(false)
           end
 
           it "has 1 error message" do
