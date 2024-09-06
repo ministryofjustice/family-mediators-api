@@ -5,7 +5,7 @@ module Admin
         subject(:empty_file) { described_class.new([], []) }
 
         it "Deems invalid" do
-          expect(empty_file.valid?).to eq(false)
+          expect(empty_file.valid?).to be(false)
         end
 
         it "Error message" do
@@ -21,7 +21,7 @@ module Admin
           subject(:bad_entry_file) { described_class.new(mediators, %w[foo]) }
 
           it "if deemed valid" do
-            expect(bad_entry_file.valid?).to eq(true)
+            expect(bad_entry_file.valid?).to be(true)
           end
         end
 
@@ -29,7 +29,7 @@ module Admin
           subject(:clean_file) { described_class.new(mediators, %w[bobbins]) }
 
           it "Deems invalid" do
-            expect(clean_file.valid?).to eq(false)
+            expect(clean_file.valid?).to be(false)
           end
 
           it "Error message" do
