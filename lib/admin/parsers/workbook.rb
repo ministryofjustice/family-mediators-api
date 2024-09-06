@@ -23,6 +23,7 @@ module Admin
       def parse_mediators
         as_hashes = transform_mediators
         remove_blank_rows(as_hashes)
+        remove_students(as_hashes)
       end
 
       def parse_blacklist
@@ -31,6 +32,16 @@ module Admin
 
       def processed_blacklist
         @headings_processor.process(parse_blacklist)
+      end
+
+      def remove_students(hashes)
+        hashes.each_with_object([]) do |row, without_students|
+          without_students << row unless is_student?(row)
+        end
+      end
+
+      def is_student?(row)
+        row[:urn].last == "S"
       end
 
       def remove_blank_rows(hashes)
