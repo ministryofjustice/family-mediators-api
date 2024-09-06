@@ -3,7 +3,7 @@ require_relative "practice_validator"
 module Admin
   module Validators
     class MediatorValidator < Dry::Validation::Contract
-      URN_FORMAT = /^\d{4}[TAP]$/
+      URN_FORMAT = /^\d{4}[TAPS]$/
       YES_NO_VALUES = %w[Yes No].freeze
 
       schema do
