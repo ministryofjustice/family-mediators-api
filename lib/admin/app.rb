@@ -5,7 +5,7 @@ module Admin
   class App < Sinatra::Base
     use Rack::Session::Cookie,
         key: "_fma_session",
-        expire_after: 600,  # 10 minutes
+        expire_after: 600, # 10 minutes
         secret: ENV.fetch("SESSION_SECRET") { SecureRandom.hex(64) }
 
     helpers Helpers
