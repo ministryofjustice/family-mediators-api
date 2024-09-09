@@ -77,6 +77,12 @@ $ bundle exec rackup
 
 The site will be accessible at http://localhost:9292/api/v1/mediators.
 
+#### Local console:
+
+```
+$ bundle exec rack-console
+```
+
 ### Run tests:
 
 ```

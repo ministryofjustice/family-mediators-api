@@ -34,3 +34,7 @@ end
 group :test, :development do
   gem "brakeman"
 end
+
+group :development do
+  gem "rack-console"
+end
