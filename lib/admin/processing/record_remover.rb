@@ -25,7 +25,7 @@ module Admin
 
       def remove_students
         @records.each_with_object([]) do |record, without_students|
-          without_students << row unless is_student?(record)
+          without_students << record unless is_student?(record)
         end
       end
 
