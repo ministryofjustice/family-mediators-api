@@ -30,7 +30,7 @@ module Admin
       end
 
       def is_student?(record)
-        record[:urn].last == "S"
+        record[:urn]&.last == "S"
       end
     end
   end
