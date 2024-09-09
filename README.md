@@ -152,7 +152,7 @@ All dates are in ISO 8601 standard. All booleans are a string 'Yes' or 'No', to 
 
 #### Simple detail
 * **id** *int*: internal ID of the mediator
-* **urn** *string*: registration number of the mediator, composed of a numeric root followed by a letter [ATP] indicating the status of the mediator. 'A' means certified, 'P' provisionally certified, and 'T' in training.
+* **urn** *string*: registration number of the mediator, composed of a numeric root followed by a letter [ATP] indicating the status of the mediator. 'A' means certified, 'P' provisionally certified 'T' in training and 'S' student. Students are removed on import.
 * **dcc** *boolean*: Whether the mediator is habilitated to work with children directly.
 * **title** *string*: 'Mr', 'Mrs', etc.
 * **first_name** *string*: Given name - 'Sue', 'Peter', etc.
