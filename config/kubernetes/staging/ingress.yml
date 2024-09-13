@@ -11,6 +11,7 @@ metadata:
         return 301 https://raw.githubusercontent.com/ministryofjustice/security-guidance/main/contact/vulnerability-disclosure-security.txt;
       }
       location ~* \.(php|cgi|xml)$ { deny all; access_log off; }
+      client_max_body_size 10m;
     nginx.ingress.kubernetes.io/enable-modsecurity: "true"
     nginx.ingress.kubernetes.io/modsecurity-snippet: |
       SecRuleEngine On
