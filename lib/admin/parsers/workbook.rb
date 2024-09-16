@@ -21,8 +21,7 @@ module Admin
     private
 
       def parse_mediators
-        as_hashes = transform_mediators
-        remove_blank_rows(as_hashes)
+        Processing::RecordRemover.new(transform_mediators).call
       end
 
       def parse_blacklist
@@ -30,17 +29,7 @@ module Admin
       end
 
       def processed_blacklist
-        @headings_processor.process(parse_blacklist)
-      end
-
-      def remove_blank_rows(hashes)
-        hashes.each_with_object([]) do |row, compacted|
-          compacted << row unless all_values_blank?(row)
-        end
-      end
-
-      def all_values_blank?(row)
-        row.values.all? { |val| (val && val.empty?) || val.nil? }
+        @headings_processor.call(parse_blacklist)
       end
 
       def transform_mediators
@@ -56,7 +45,7 @@ module Admin
       end
 
       def processed_headings
-        @processed_headings ||= @headings_processor.process(
+        @processed_headings ||= @headings_processor.call(
           mediators_worksheet[0].cells.map(&:value),
         )
       end
