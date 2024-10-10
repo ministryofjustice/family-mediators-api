@@ -15,12 +15,7 @@ Sentry.init do |config|
   config.breadcrumbs_logger = [:sentry_logger, :http_logger]
 end
 
-require 'prometheus/middleware/collector'
-require 'prometheus/middleware/exporter'
-
 use Sentry::Rack::CaptureExceptions
-use Prometheus::Middleware::Collector
-use Prometheus::Middleware::Exporter
 
 require 'lib/env'
 require 'lib/root_app'
