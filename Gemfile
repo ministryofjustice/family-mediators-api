@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 ruby file: ".ruby-version"
 
-gem "activerecord"
+gem "activerecord", ">= 7.2"
 gem "bcrypt"
 gem "dotenv"
 gem "dry-validation"
