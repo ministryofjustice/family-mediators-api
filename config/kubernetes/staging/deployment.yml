@@ -81,6 +81,7 @@ spec:
                 name: rds-instance-family-mediators-api-staging
                 key: url
       - name: metrics
+        image: 754256621582.dkr.ecr.eu-west-2.amazonaws.com/family-justice/family-mediators-api:staging.latest
         imagePullPolicy: Always
         ports:
           - containerPort: 9394
