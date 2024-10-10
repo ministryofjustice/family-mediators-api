@@ -154,8 +154,8 @@ GEM
       capybara (>= 2.1, < 4)
       cliver (~> 0.3.1)
       websocket-driver (>= 0.2.0)
-    prometheus-client (4.2.3)
-      base64
+    prometheus_exporter (2.1.1)
+      webrick
     psych (5.1.2)
       stringio
     public_suffix (6.0.1)
@@ -269,6 +269,7 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.5.0)
+    webrick (1.8.2)
     websocket (1.2.11)
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
@@ -294,7 +295,7 @@ DEPENDENCIES
   grape-entity
   pg
   poltergeist (>= 1.4.0)
-  prometheus-client
+  prometheus_exporter
   puma
   rack-console
   rack-test
