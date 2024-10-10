@@ -21,6 +21,12 @@ require 'lib/env'
 require 'lib/root_app'
 require 'lib/mediators'
 
+require "prometheus/middleware/collector"
+require "prometheus/middleware/exporter"
+
+use Prometheus::Middleware::Collector
+use Prometheus::Middleware::Exporter
+
 map '/' do
   run RootApp
 end
