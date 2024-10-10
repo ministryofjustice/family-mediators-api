@@ -21,11 +21,8 @@ require 'lib/env'
 require 'lib/root_app'
 require 'lib/mediators'
 
-require "prometheus/middleware/collector"
-require "prometheus/middleware/exporter"
-
-use Prometheus::Middleware::Collector
-use Prometheus::Middleware::Exporter
+require "govuk_app_config/govuk_prometheus_exporter"
+GovukPrometheusExporter.configure
 
 map '/' do
   run RootApp
