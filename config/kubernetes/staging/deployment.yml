@@ -80,3 +80,20 @@ spec:
               secretKeyRef:
                 name: rds-instance-family-mediators-api-staging
                 key: url
+      - name: metrics
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 9394
+        command: ['sh', '-c', 'bundle exec prometheus_exporter --bind 0.0.0.0']
+        livenessProbe:
+          httpGet:
+            path: /metrics
+            port: 9394
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /metrics
+            port: 9394
+          initialDelaySeconds: 15
+          periodSeconds: 10
