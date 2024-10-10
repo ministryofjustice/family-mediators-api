@@ -13,7 +13,7 @@ gem "puma"
 gem "rake"
 gem "rubyXL"
 gem "sentry-ruby"
-gem "sinatra"
+gem "sinatra", ">= 4"
 gem "sinatra-contrib"
 gem "slim", "< 6.0.0"
 
