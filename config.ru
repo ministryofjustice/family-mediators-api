@@ -17,14 +17,8 @@ end
 
 use Sentry::Rack::CaptureExceptions
 
-require "prometheus_exporter/instrumentation"
-require "prometheus_exporter/middleware"
-
-PrometheusExporter::Client.default = PrometheusExporter::Client.new(
-  host: "127.0.0.1", port: 9394
-)
-
-PrometheusExporter::Instrumentation::Process.start(type: "master")
+require "prometheus_middleware"
+use PrometheusMiddleware
 
 require 'lib/env'
 require 'lib/root_app'
