@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 ruby file: ".ruby-version"
 
-gem "activerecord"
+gem "activerecord", ">= 7.2"
 gem "bcrypt"
 gem "dotenv"
 gem "dry-validation"
@@ -14,7 +14,7 @@ gem "puma"
 gem "rake"
 gem "rubyXL"
 gem "sentry-ruby"
-gem "sinatra"
+gem "sinatra", ">= 4"
 gem "sinatra-contrib"
 gem "slim", "< 6.0.0"
 
