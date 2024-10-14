@@ -133,7 +133,6 @@ GEM
     logger (1.6.1)
     matrix (0.4.2)
     mini_mime (1.1.5)
-    mini_portile2 (2.8.6)
     minitest (5.25.1)
     multi_json (1.15.0)
     multi_test (1.1.0)
@@ -142,8 +141,7 @@ GEM
     mustermann-grape (1.1.0)
       mustermann (>= 1.0.0)
     nio4r (2.7.3)
-    nokogiri (1.16.5)
-      mini_portile2 (~> 2.8.2)
+    nokogiri (1.16.7-arm64-darwin)
       racc (~> 1.4)
     parallel (1.26.3)
     parser (3.3.5.0)
@@ -154,6 +152,8 @@ GEM
       capybara (>= 2.1, < 4)
       cliver (~> 0.3.1)
       websocket-driver (>= 0.2.0)
+    prometheus_exporter (2.1.1)
+      webrick
     psych (5.1.2)
       stringio
     public_suffix (6.0.1)
@@ -272,6 +272,7 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.5.0)
+    webrick (1.8.2)
     websocket (1.2.11)
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
@@ -281,6 +282,7 @@ GEM
     zeitwerk (2.6.17)
 
 PLATFORMS
+  arm64-darwin-23
   ruby
 
 DEPENDENCIES
@@ -297,6 +299,7 @@ DEPENDENCIES
   grape-entity
   pg
   poltergeist (>= 1.4.0)
+  prometheus_exporter
   puma
   rack-console
   rack-test

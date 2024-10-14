@@ -17,6 +17,9 @@ end
 
 use Sentry::Rack::CaptureExceptions
 
+require "prometheus_middleware"
+use PrometheusMiddleware
+
 require 'lib/env'
 require 'lib/root_app'
 require 'lib/mediators'
