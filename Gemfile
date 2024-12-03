@@ -6,7 +6,7 @@ gem "activerecord", ">= 7.2"
 gem "bcrypt"
 gem "dotenv"
 gem "dry-validation"
-gem "grape", "~> 2.1"
+gem "grape", "~> 2.2"
 gem "grape-entity"
 gem "pg"
 gem "prometheus_exporter"
@@ -38,4 +38,5 @@ end
 
 group :development do
   gem "rack-console"
+  gem "rackup"
 end
