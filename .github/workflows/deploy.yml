@@ -16,6 +16,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    outputs:
+      build_tag: ${{ steps.vars.outputs.build_tag }}
+
     permissions:
       id-token: write # This is required for requesting the JWT
       contents: read  # This is required for actions/checkout
@@ -82,14 +85,6 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v2
         id: login-ecr
 
-      - name: Store build tag
-        id: vars
-        run: |
-          branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
-          short_sha=$(git rev-parse --short $SHA)
-          build_tag=$PREFIX-$branch-$short_sha
-          echo "build_tag=$build_tag" >> $GITHUB_OUTPUT
-
       - name: Tag build and push to ECR
         run: |
           docker pull ${{ vars.ECR_URL }}:$SHA
@@ -115,34 +110,14 @@ jobs:
           webapp="${{ vars.ECR_URL }}:$SHA" \
           metrics="${{ vars.ECR_URL }}:$SHA"
 
-      - name: Send deploy notification to product Slack channel
-        uses: slackapi/slack-github-action@v2.0.0
-        with:
-          webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
-          webhook-type: incoming-webhook
-          payload: |
-            {
-              "attachments": [
-                {
-                  "color": "#1d990c",
-                  "text": "${{ github.actor }} deployed *${{ steps.vars.outputs.build_tag }}* to *Staging*",
-                  "fields": [
-                    {
-                      "title": "Project",
-                      "value": "Family Mediators API",
-                      "short": true
-                    }
-                  ],
-                  "actions": [
-                    {
-                      "text": "Visit Job",
-                      "type": "button",
-                      "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-                    }
-                  ]
-                }
-              ]
-            }
+  notify-staging:
+    needs: [build, deploy-staging]
+    uses: ./.github/workflows/notification.yml
+    secrets:
+      webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+    with:
+      build_tag: ${{ needs.build.outputs.build_tag }}
+      environment: Staging
 
   deploy-production:
     runs-on: ubuntu-latest
@@ -171,14 +146,6 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v2
         id: login-ecr
 
-      - name: Store build tag
-        id: vars
-        run: |
-          branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
-          short_sha=$(git rev-parse --short $SHA)
-          build_tag=$PREFIX-$branch-$short_sha
-          echo "build_tag=$build_tag" >> $GITHUB_OUTPUT
-
       - name: Tag build and push to ECR
         run: |
           docker pull ${{ vars.ECR_URL }}:$SHA
@@ -204,60 +171,20 @@ jobs:
           webapp="${{ vars.ECR_URL }}:$SHA" \
           metrics="${{ vars.ECR_URL }}:$SHA"
 
-      - name: Send deploy notification to product Slack channel
-        uses: slackapi/slack-github-action@v2.0.0
-        with:
-          webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
-          webhook-type: incoming-webhook
-          payload: |
-            {
-              "attachments": [
-                {
-                  "color": "#1d990c",
-                  "text": "${{ github.actor }} deployed *${{ steps.vars.outputs.build_tag }}* to *Production*",
-                  "fields": [
-                    {
-                      "title": "Project",
-                      "value": "Family Mediators API",
-                      "short": true
-                    }
-                  ],
-                  "actions": [
-                    {
-                      "text": "Visit Job",
-                      "type": "button",
-                      "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-                    }
-                  ]
-                }
-              ]
-            }
+  notify-production:
+    needs: [build, deploy-production]
+    uses: ./.github/workflows/notification.yml
+    secrets:
+      webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+    with:
+      build_tag: ${{ needs.build.outputs.build_tag }}
+      environment: Production
 
-      - name: Send deploy notification to product Slack channel
-        uses: slackapi/slack-github-action@v2.0.0
-        with:
-          webhook: ${{ secrets.PROD_SLACK_WEBHOOK_URL }}
-          webhook-type: incoming-webhook
-          payload: |
-            {
-              "attachments": [
-                {
-                  "color": "#1d990c",
-                  "text": "${{ github.actor }} deployed *${{ steps.vars.outputs.build_tag }}* to *Production*",
-                  "fields": [
-                    {
-                      "title": "Project",
-                      "value": "Family Mediators API",
-                      "short": true
-                    }
-                  ],
-                  "actions": [
-                    {
-                      "text": "Visit Job",
-                      "type": "button",
-                      "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-                    }
-                  ]
-                }
-              ]
-            }
+  notify-production-2:
+    needs: [build, deploy-production]
+    uses: ./.github/workflows/notification.yml
+    secrets:
+      webhook_url: ${{ secrets.PROD_SLACK_WEBHOOK_URL }}
+    with:
+      build_tag: ${{ needs.build.outputs.build_tag }}
+      environment: Production
