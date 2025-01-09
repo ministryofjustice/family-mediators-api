@@ -69,6 +69,9 @@ jobs:
 
     env:
       KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
+      KUBE_CERT: ${{ secrets.KUBE_CERT }}
+      KUBE_TOKEN: ${{ secrets.KUBE_TOKEN }}
+      KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
 
     steps:
       - name: Checkout
@@ -91,10 +94,6 @@ jobs:
           docker push ${{ vars.ECR_URL }}:staging.latest
 
       - name: Authenticate to the cluster
-        env:
-          KUBE_CERT: ${{ secrets.KUBE_CERT }}
-          KUBE_TOKEN: ${{ secrets.KUBE_TOKEN }}
-          KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
         run: |
           echo "${KUBE_CERT}" > ca.crt
           kubectl config set-cluster ${KUBE_CLUSTER} --certificate-authority=./ca.crt --server=https://${KUBE_CLUSTER}
@@ -129,7 +128,10 @@ jobs:
       contents: read  # This is required for actions/checkout
 
     env:
-      KUBE_NAMESPACE: ${{ secrets.KUBE_PROD_NAMESPACE }}
+      KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
+      KUBE_CERT: ${{ secrets.KUBE_CERT }}
+      KUBE_TOKEN: ${{ secrets.KUBE_TOKEN }}
+      KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
 
     steps:
       - name: Checkout
@@ -152,10 +154,6 @@ jobs:
           docker push ${{ vars.ECR_URL }}:production.latest
 
       - name: Authenticate to the cluster
-        env:
-          KUBE_CERT: ${{ secrets.KUBE_PROD_CERT }}
-          KUBE_TOKEN: ${{ secrets.KUBE_PROD_TOKEN }}
-          KUBE_CLUSTER: ${{ secrets.KUBE_PROD_CLUSTER }}
         run: |
           echo "${KUBE_CERT}" > ca.crt
           kubectl config set-cluster ${KUBE_CLUSTER} --certificate-authority=./ca.crt --server=https://${KUBE_CLUSTER}
