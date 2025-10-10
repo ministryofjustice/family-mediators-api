@@ -183,7 +183,7 @@ GEM
     puma (6.5.0)
       nio4r (~> 2.0)
     racc (1.8.1)
-    rack (3.2.2)
+    rack (3.2.3)
     rack-console (1.4.1)
       rack (~> 3.0)
       rack-test
