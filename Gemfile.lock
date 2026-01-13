@@ -174,7 +174,7 @@ GEM
       prettyprint
     prettyprint (0.2.0)
     prism (1.7.0)
-    prometheus_exporter (2.2.0)
+    prometheus_exporter (2.3.1)
       webrick
     psych (5.2.6)
       date
@@ -312,7 +312,7 @@ GEM
       unicode-emoji (~> 4.1)
     unicode-emoji (4.1.0)
     uri (1.1.1)
-    webrick (1.9.1)
+    webrick (1.9.2)
     websocket (1.2.11)
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
