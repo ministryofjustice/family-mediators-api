@@ -186,7 +186,8 @@ GEM
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.2.4)
-    rack-console (1.4.1)
+    rack-console (2.0.0)
+      irb
       rack (~> 3.0)
       rack-test
     rack-protection (4.2.1)
