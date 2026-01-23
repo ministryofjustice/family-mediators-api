@@ -341,7 +341,7 @@ DEPENDENCIES
   factory_bot
   grape (~> 2.2)
   grape-entity
-  pg (~> 1.5, >= 1.5.9)
+  pg (~> 1.6, >= 1.6.3)
   poltergeist (>= 1.4.0)
   prometheus_exporter
   puma
