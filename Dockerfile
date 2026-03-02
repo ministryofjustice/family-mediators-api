@@ -3,6 +3,7 @@ FROM ruby:3.3.5-alpine as base
 WORKDIR /app
 
 RUN apk --no-cache add \
+    libc6-compat \
     postgresql-client
 
 # Ensure latest rubygems is installed
