@@ -58,9 +58,6 @@ jobs:
       - name: Run unit tests
         run: bundle exec rspec
 
-      - name: Run feature tests
-        run: bundle exec cucumber
-
       - name: Code coverage
         uses: joshmfrankel/simplecov-check-action@main
         with:

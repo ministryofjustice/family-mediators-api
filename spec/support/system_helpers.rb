@@ -3,7 +3,7 @@ require_relative "../../support/helpers/temporary_workbook"
 module UploadHelpers
   def upload_spreadsheet(headings, data, blacklist = [])
     temp_workbook = TemporaryWorkbook.new(headings, data, blacklist)
-    visit "http://localhost:9292/admin/upload"
+    visit "/admin/upload"
     attach_file("spreadsheet_file", temp_workbook.file_path)
     find('input[type="submit"]').click
   end
@@ -15,11 +15,6 @@ module ObservationHelpers
       row.all(:xpath, ".//th|td").collect(&:text)
     end
     !data.empty? ? data : [[]]
-  end
-
-  def get_column_data(selector, position)
-    data = page.all(selector + " tr td[#{position}]").collect(&:text)
-    !data.empty? ? data : []
   end
 end
 
@@ -46,7 +41,7 @@ module DataHelpers
 
   class MediatorsDataTable
     extend Forwardable
-    delegate %i[each \[\]] => :@mediators
+    delegate %i[each []] => :@mediators
 
     def initialize(data_table)
       @mediators = data_table
@@ -81,14 +76,15 @@ end
 
 module AuthenticationHelpers
   def login
-    visit "http://localhost:9292/admin/login"
+    visit "/admin/login"
     fill_in "username", with: "username"
     fill_in "password", with: "password"
     click_button "Login"
   end
 end
 
-World(UploadHelpers)
-World(ObservationHelpers)
-World(DataHelpers)
-World(AuthenticationHelpers)
+RSpec.configure do |config|
+  config.include UploadHelpers, type: :feature
+  config.include ObservationHelpers, type: :feature
+  config.include AuthenticationHelpers, type: :feature
+end

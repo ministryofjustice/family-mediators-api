@@ -19,15 +19,13 @@ gem "sinatra-contrib"
 gem "slim", "< 6.0.0"
 
 group :test do
-  gem "cucumber", "< 11.0.0"
+  gem "capybara"
   gem "database_cleaner"
   gem "debug", "~> 1.9"
   gem "factory_bot"
-  gem "poltergeist", ">= 1.4.0"
   gem "rack-test", require: "rack/test"
   gem "rspec"
   gem "rubocop-govuk", require: false
-  gem "selenium-webdriver"
   gem "simplecov", require: false
   gem "simplecov-json", require: false
 end
