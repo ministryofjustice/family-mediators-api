@@ -1,12 +1,19 @@
 require "sinatra/json"
 require "securerandom"
+require "rack/protection/content_security_policy"
 
 module Admin
   class App < Sinatra::Base
+    use Rack::Protection::ContentSecurityPolicy,
+        default_src: "'self'",
+        form_action: "'self'",
+        frame_ancestors: "'none'"
+
     use Rack::Session::Cookie,
         key: "_fma_session",
         expire_after: 600, # 10 minutes
-        secret: ENV.fetch("SESSION_SECRET") { SecureRandom.hex(64) }
+        secret: ENV.fetch("SESSION_SECRET") { SecureRandom.hex(64) },
+        secure: Sinatra::Base.environment == :production
 
     helpers Helpers
 
