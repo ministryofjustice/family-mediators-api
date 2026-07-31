@@ -4,6 +4,9 @@
       h1.bold-large Spreadsheet upload complete
       p
         | Thank you
+      - if uploaded_count
+        p
+          strong = "#{uploaded_count} records successfully written to the database."
 
     p We have processed the spreadsheet data and updated the data served by the Family Mediators API.
     p
