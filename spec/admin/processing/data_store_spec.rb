@@ -22,6 +22,11 @@ module Admin
         allow(API::Models::Mediator).to receive(:create).and_return(created)
         expect(described_class.save(data)).to eq(2)
       end
+
+      it "returns zero when no records are written" do
+        allow(API::Models::Mediator).to receive(:create).and_return([])
+        expect(described_class.save([])).to eq(0)
+      end
     end
   end
 end
