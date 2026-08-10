@@ -19,8 +19,8 @@ module Admin
         data_validations = @data_validator.new(with_expanded_practices)
 
         if data_validations.valid?
-          @data_store.save(with_expanded_practices)
-          [true, {}]
+          count = @data_store.save(with_expanded_practices)
+          [true, { count: count }]
         else
           [false, invalid_locals(data_validations)]
         end

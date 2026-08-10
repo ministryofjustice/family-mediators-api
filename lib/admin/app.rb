@@ -86,23 +86,35 @@ module Admin
 
     post "/upload-process" do
       authenticate!
-      success, details = Services::ProcessData.new(params[:dump]).call
+      begin
+        success, details = Services::ProcessData.new(params[:dump]).call
 
-      if success
-        redirect to("/upload-success")
-      else
-        slim :data_errors, locals: details
+        if success
+          session[:upload_count] = details[:count]
+          redirect to("/upload-success")
+        else
+          slim :data_errors, locals: details
+        end
+      rescue StandardError => e
+        LOGGER.fatal "Failed /upload-process: #{e.message}"
+        redirect to("/upload-fail")
       end
     end
 
     get "/upload-success" do
       authenticate!
-      slim :upload_success
+      count = session.delete(:upload_count)
+      slim :upload_success, locals: { uploaded_count: count }
     end
 
     get "/upload-fail" do
       authenticate!
       slim :upload_fail
+    end
+
+    error Rack::Multipart::EmptyContentError do
+      LOGGER.warn "Empty or truncated multipart upload body"
+      redirect to("/upload-fail")
     end
   end
 end
