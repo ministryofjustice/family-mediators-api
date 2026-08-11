@@ -55,6 +55,13 @@ jobs:
           # https://github.com/presidentbeef/brakeman/issues/67#issuecomment-4947358
           brakeman_flags: --force
 
+      - name: Snyk vulnerability scan
+        uses: snyk/actions/ruby@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=high --file=Gemfile.lock
+
       - name: Run unit tests
         run: bundle exec rspec
 
