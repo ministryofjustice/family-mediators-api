@@ -96,6 +96,20 @@ $ bundle exec cucumber
 $ bundle exec rubocop
 ```
 
+### Building the Docker image
+
+Use the `bin/docker-build` wrapper rather than calling `docker build` directly - it automatically
+passes the Ruby version from `.ruby-version` as a build arg, so the image always builds with the
+correct Ruby version:
+
+```
+$ bin/docker-build -t family-mediators-api
+```
+
+Any additional arguments are passed straight through to `docker build`. CI builds the image the
+same way, so bumping `.ruby-version` is enough to upgrade the Ruby version used everywhere - there's
+no need to edit the Dockerfile or workflow files.
+
 ## Play around in IRB
 
     RACK_ENV=development irb -r bundle exec './lib/env' -r './lib/mediators'
