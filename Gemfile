@@ -37,4 +37,5 @@ end
 group :development do
   gem "rack-console"
   gem "rackup"
+  gem "selenium-webdriver"
 end
