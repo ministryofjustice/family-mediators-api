@@ -232,6 +232,11 @@ GEM
       rubyzip (>= 3.2.2)
     rubyzip (3.7.0)
     securerandom (0.4.1)
+    selenium-webdriver (4.51.0)
+      base64 (~> 0.2)
+      logger (~> 1.4)
+      rubyzip (>= 1.2.2, < 4.0)
+      websocket (~> 1.0)
     sentry-ruby (6.7.0)
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
@@ -273,6 +278,7 @@ GEM
     unicode-emoji (4.2.0)
     uri (1.1.1)
     webrick (1.9.2)
+    websocket (1.2.11)
     xpath (3.2.0)
       nokogiri (~> 1.8)
     zeitwerk (2.7.5)
@@ -304,6 +310,7 @@ DEPENDENCIES
   rspec
   rubocop-govuk
   rubyXL
+  selenium-webdriver
   sentry-ruby
   simplecov
   simplecov-json
