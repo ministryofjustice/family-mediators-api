@@ -1,4 +1,4 @@
-ARG RUBY_VERSION=4.0.3
+ARG RUBY_VERSION=4.0.10
 
 FROM ruby:${RUBY_VERSION}-alpine as base
 
